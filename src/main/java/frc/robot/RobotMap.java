@@ -41,15 +41,6 @@ public class RobotMap {
 
   }
 
-  public interface DriveTrain {
-
-    public static CANSparkMax DRIVE_TRAIN_LEFT_FRONT_MOTOR =  new CANSparkMax(1, MotorType.kBrushless);
-    public static CANSparkMax DRIVE_TRAIN_RIGHT_FRONT_MOTOR = new CANSparkMax(3, MotorType.kBrushless);
-    public static CANSparkMax DRIVE_TRAIN_BACK_RIGHT_CONTROLLER = new CANSparkMax(4, MotorType.kBrushless);
-    public static CANSparkMax DRIVE_TRAIN_BACK_LEFT_CONTROLLER = new CANSparkMax(2, MotorType.kBrushless);
-  }
-  
-
 
   
   
