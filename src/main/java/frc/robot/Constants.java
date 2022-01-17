@@ -27,8 +27,16 @@ public class Constants {
         public static final int LEFT_MIDDLE_MOTOR_ID = 2;
         public static final int RIGHT_MIDDLE_MOTOR_ID = 3;
         public static final int BACK_LEFT_MOTOR_ID = 4;
-        public static final int BACK_RIGHT_MOTOR_ID = 5; 
+        public static final int BACK_RIGHT_MOTOR_ID = 5;
     }
-     
+
+    public static final class JoystickConstants {
+        // joystick ports
+        public static final int JOYSTICK_PORT = 1;
+        public static final int XBOX_PORT = 0;
+
+        public static final int LEFT_DRIVETRAIN = 1;
+        public static final int RIGHT_DRIVETRAIN = -1;
+    }    
 }
 
