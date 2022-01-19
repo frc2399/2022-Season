@@ -22,12 +22,17 @@ package frc.robot;
 public class Constants {
     public static final class DriveConstants {
         // motor ids
-        public static final int LEFT_FRONT_MOTOR_ID = 0;
-        public static final int RIGHT_FRONT_MOTOR_ID = 1;
-        public static final int LEFT_MIDDLE_MOTOR_ID = 2;
+        public static final int LEFT_FRONT_MOTOR_ID = 8;
+        public static final int RIGHT_FRONT_MOTOR_ID = 2;
+        public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int RIGHT_MIDDLE_MOTOR_ID = 3;
-        public static final int BACK_LEFT_MOTOR_ID = 4;
+        public static final int BACK_LEFT_MOTOR_ID = 6;
         public static final int BACK_RIGHT_MOTOR_ID = 5;
+
+        //solenoids
+        public static final int SHIFTER_HOT_SOLENOID_PORT = 2;
+	    public static final int SHIFTER_DANGEROUS_SOLENOID_PORT= 3;
+        public static final int PCM_ADDRESS = 3;
     }
 
     public static final class JoystickConstants {
@@ -37,6 +42,10 @@ public class Constants {
 
         public static final int LEFT_DRIVETRAIN = 1;
         public static final int RIGHT_DRIVETRAIN = -1;
-    }    
+
+        public static final int kArcadeDriveSpeedAxis = 1;
+        public static final int kArcadeDriveTurnAxis = 3; 
+    }  
+
 }
 
