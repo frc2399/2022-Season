@@ -33,6 +33,9 @@ public class Constants {
         public static final int SHIFTER_HOT_SOLENOID_PORT = 2;
 	    public static final int SHIFTER_DANGEROUS_SOLENOID_PORT= 3;
         public static final int PCM_ADDRESS = 3;
+        public static final boolean SHIFTER_SOLENOID_DANGEROUS= true;
+	    public static final boolean SHIFTER_SOLENOID_HOT= true;
+        public static final double SHIFT_TIMER = 0.5;
     }
 
     public static final class JoystickConstants {
@@ -44,7 +47,10 @@ public class Constants {
         public static final int RIGHT_DRIVETRAIN = -1;
 
         public static final int kArcadeDriveSpeedAxis = 1;
-        public static final int kArcadeDriveTurnAxis = 3; 
+        public static final int kArcadeDriveTurnAxis = 4; 
+
+        public static final int kShiftHot = 5; 
+        public static final int kShiftDangerous = 6; 
     }  
 
 }
