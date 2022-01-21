@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+//import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
   
   // public static Joystick pilot_stick = new Joystick(0);
   //public static Joystick copilot_stick = new Joystick(1);
-  public static Joystick shooter_stick = new Joystick(2);     //Shooter controller - Logitech Extreme 3D Pro
-  public static Joystick shooter_stick_bottom = new Joystick(3);     //Second Shooter controller - Logitech Extreme 3D Pro
+  public static Joystick shooter_stick = new Joystick(1);     //Shooter controller - Logitech Extreme 3D Pro
+  public static Joystick shooter_stick_bottom = new Joystick(2);     //Second Shooter controller - Logitech Extreme 3D Pro
   
   public static TalonSRX shoottop = new TalonSRX(1);
   public static TalonSRX shootbottom = new TalonSRX(2);
@@ -91,14 +91,14 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     
     double shooterStickValue;
-    shooterStickValue = shooter_stick.getRawAxis(3);    //Gets Slider Value (Axis 3)
+    shooterStickValue = shooter_stick.getRawAxis(2);    //Gets Slider Value (Axis 3)
     shooterStickValue = ((shooterStickValue + 1)/2);
 
     //System.out.println(shooterStickValue);              //Prints Slider Value (From 0 to 1)
 
 
     double bottomShooterStickValue;
-    bottomShooterStickValue = shooter_stick_bottom.getRawAxis(3); //Gets Slider Value (Axis 3) from secondary joystick
+    bottomShooterStickValue = shooter_stick_bottom.getRawAxis(2); //Gets Slider Value (Axis 3) from secondary joystick
     bottomShooterStickValue = ((bottomShooterStickValue + 1)/2);
 
     //System.out.println(bottomShooterStickValue); // Prints Slider Value (From 0 to 1)
@@ -125,14 +125,14 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     double shooterStickValue;
-    shooterStickValue = shooter_stick.getRawAxis(3);    //Gets Slider Value (Axis 3)
+    shooterStickValue = shooter_stick.getRawAxis(2);    //Gets Slider Value (Axis 3)
     shooterStickValue = ((shooterStickValue + 1)/2);
 
     //System.out.println(shooterStickValue);              //Prints Slider Value (From 0 to 1)
 
 
     double bottomShooterStickValue;
-    bottomShooterStickValue = shooter_stick_bottom.getRawAxis(3); //Gets Slider Value (Axis 3) from secondary joystick
+    bottomShooterStickValue = shooter_stick_bottom.getRawAxis(2); //Gets Slider Value (Axis 3) from secondary joystick
     bottomShooterStickValue = ((bottomShooterStickValue + 1)/2);
 
     //System.out.println(bottomShooterStickValue); // Prints Slider Value (From 0 to 1)
