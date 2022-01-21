@@ -36,8 +36,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
 
-  private static RobotContainer m_robotContainer = new RobotContainer();
-
   
 // The robot's subsystems
     public final DriveTrain m_driveTrain = new DriveTrain();
@@ -55,6 +53,7 @@ public class RobotContainer {
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
 	// private static Button shiftToDangerousButt = new Button(XBOX, 3);
 
+  private static RobotContainer m_robotContainer = new RobotContainer();
 
 
   
@@ -76,6 +75,8 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
+    System.out.println("Hello, I am in RobotContainer");
+
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
     () -> -XBOX.getRawAxis(JoystickConstants.kArcadeDriveSpeedAxis),
     () -> XBOX.getRawAxis(JoystickConstants.kArcadeDriveTurnAxis))//

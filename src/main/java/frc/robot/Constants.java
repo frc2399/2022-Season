@@ -27,7 +27,7 @@ public class Constants {
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int RIGHT_MIDDLE_MOTOR_ID = 3;
         public static final int BACK_LEFT_MOTOR_ID = 6;
-        public static final int BACK_RIGHT_MOTOR_ID = 5;
+        public static final int BACK_RIGHT_MOTOR_ID = 4;
 
         //solenoids
         public static final int SHIFTER_HOT_SOLENOID_PORT = 2;

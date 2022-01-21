@@ -22,6 +22,7 @@ public class Shift extends CommandBase {
 	 * @param shiftDangerousValue: Should be set to either the RobotMap value (on) or !RobotMap value (off)
 	 */
 	public Shift(boolean shiftHotValue, boolean shiftDangerousValue) {
+		System.out.println("Hello" + shifter);
 		this.shiftHotValue = shiftHotValue;
 		this.shiftDangerousValue = shiftDangerousValue;
         addRequirements(shifter);
@@ -32,8 +33,9 @@ public class Shift extends CommandBase {
 	 * Sets how long the timer should run for
 	 */
 	public void initialize() {
-		withTimeout(DriveConstants.SHIFT_TIMER);
+		//withTimeout(DriveConstants.SHIFT_TIMER);
 		SmartDashboard.putBoolean("   ", shiftHotValue);
+		System.out.println("Shift initialized");
 		SmartDashboard.putBoolean("    ", shiftDangerousValue);
 	}
 
@@ -43,6 +45,7 @@ public class Shift extends CommandBase {
 	 */
 	public void execute() {
 		shifter.setShifterHotSolenoid(shiftHotValue);
+		System.out.println("Shift executed");
 		shifter.setShifterDangerousSolenoid(shiftDangerousValue);
 	}
 
@@ -52,13 +55,14 @@ public class Shift extends CommandBase {
 	 */
 	public boolean isFinished() {
 		//return isTimedOut();
-        return false;
+        return true;
 	}
 
 	/**
 	 * Called once after isFinished returns true
 	 */
 	protected void end() {
+		System.out.println("Shift ended");
 	}
 
 	/**

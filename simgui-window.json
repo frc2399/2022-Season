@@ -28,7 +28,7 @@
     },
     "###NetworkTables": {
       "Collapsed": "0",
-      "Pos": "298,23",
+      "Pos": "291,20",
       "Size": "750,185"
     },
     "###Other Devices": {
@@ -49,7 +49,7 @@
     "###Timing": {
       "Collapsed": "0",
       "Pos": "128,24",
-      "Size": "162,142"
+      "Size": "162,168"
     },
     "Debug##Default": {
       "Collapsed": "0",
