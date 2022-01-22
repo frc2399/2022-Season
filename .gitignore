@@ -1,6 +1,11 @@
 # This gitignore has been specially created by the WPILib team.
 # If you remove items from this file, intellisense might break.
 
+#custom frc 2399. Ignoring the simulator config files
+simgui-ds.json
+simgui-window.json
+simgui.json
+
 # Prerequisites
 *.d
 
