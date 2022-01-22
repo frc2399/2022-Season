@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/* // Import Statements for Talon Controllers and 775 motors
+// Import Statements for Talon Controllers and 775 motors
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.ControlMode; */
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 // Import Statements for Spark Max Controllers and Neo 550 Motors
 import com.revrobotics.RelativeEncoder;
@@ -50,7 +50,8 @@ public class Robot extends TimedRobot {
   private RelativeEncoder a_encoder, b_encoder;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput, maxRPM;
   
-  // public static TalonSRX shoottop = new TalonSRX(1);
+  // intake motor
+  public static TalonSRX intake = new TalonSRX(1);
   // public static TalonSRX shootbottom = new TalonSRX(2);
   // public static TalonSRX winch = new TalonSRX(3);
   
@@ -67,6 +68,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     System.out.println("BEGIN robotInit()");
+
+    // intake code
+    intake.configFactoryDefault();
+    intake.setNeutralMode(NeutralMode.Coast);
+    intake.configVoltageCompSaturation(11);
+    intake.enableVoltageCompensation(true);
  
     /* // current limit drive falcons
      * // TODO: fix for Spark Max
@@ -94,7 +101,7 @@ public class Robot extends TimedRobot {
     
     // Begin Spark Max Code
     // https://github.com/REVrobotics/SPARK-MAX-Examples/tree/master/Java/Velocity%20Closed%20Loop%20Control
-    
+
     // initialize NEO 550 motors
     a_motor = new CANSparkMax(deviceA, MotorType.kBrushless);
     b_motor = new CANSparkMax(deviceB, MotorType.kBrushless);
@@ -162,15 +169,13 @@ public class Robot extends TimedRobot {
     double shooterStickValue;
     shooterStickValue = shooter_stick_a.getRawAxis(2);    //Gets Slider Value (Axis 3)
     shooterStickValue = ((shooterStickValue + 1)/2);
-
     //System.out.println(shooterStickValue);              //Prints Slider Value (From 0 to 1)
-
 
     double bottomShooterStickValue;
     bottomShooterStickValue = shooter_stick_b.getRawAxis(2); //Gets Slider Value (Axis 3) from secondary joystick
     bottomShooterStickValue = ((bottomShooterStickValue + 1)/2);
-
     //System.out.println(bottomShooterStickValue); // Prints Slider Value (From 0 to 1)
+
     System.out.printf("%-30.30s  %-30.30s%n",shooterStickValue,bottomShooterStickValue);
   }
 
@@ -231,6 +236,13 @@ public class Robot extends TimedRobot {
     System.out.printf("%-30.30s  %-30.30s%n", shooterAStickValue, shooterBStickValue);
     SmartDashboard.putNumber("Shooter A RPM", shooterARPM);
     SmartDashboard.putNumber("Shooter B RPM", shooterBRPM);
+
+    // intake control
+    if (Robot.shooter_stick_a.getRawButton(2) == true)
+      { Robot.intake.set(ControlMode.PercentOutput, 1);}
+    else 
+      { Robot.intake.set(ControlMode.PercentOutput, 0);}
+
 
     // Joystick Slider Control -- TALONS
     // Robot.a_motor.set(ControlMode.PercentOutput, shooterAStickValue);
