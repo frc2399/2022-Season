@@ -223,7 +223,7 @@ public class Robot extends TimedRobot {
     shooterAStickValue = (shooter_stick_a.getRawAxis(2) + 1) / 2;    //Gets Slider Value (Axis 3)
     shooterARPM = shooterAStickValue * maxRPM;
     // shooterAStickValue = ((shooterStickValue + 1)/2);
-    a_pidController.setReference(shooterARPM, CANSparkMax.ControlType.kVelocity);
+    a_pidController.setReference(-shooterARPM, CANSparkMax.ControlType.kVelocity); //NEGATIVE
     // Robot.a_motor.set(shooterARPM, CANSparkMax.ControlType.kVelocity);
 
     double shooterBStickValue, shooterBRPM;
