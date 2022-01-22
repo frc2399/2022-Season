@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     shootbottom.configFactoryDefault();
  
     // current limit drive falcons
+    // TODO: fix for Spark Max
     // SupplyCurrentLimitConfiguration falconlimit = new SupplyCurrentLimitConfiguration();
     // falconlimit.enable = true;
     // falconlimit.currentLimit =  10;
