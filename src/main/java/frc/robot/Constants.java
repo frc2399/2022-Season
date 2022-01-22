@@ -30,8 +30,8 @@ public class Constants {
         public static final int BACK_RIGHT_MOTOR_ID = 4;
 
         //solenoids
-        public static final int SHIFTER_HOT_SOLENOID_PORT = 2;
-	    public static final int SHIFTER_DANGEROUS_SOLENOID_PORT= 3;
+        public static final int SHIFTER_HOT_SOLENOID_PORT = 0;
+	    public static final int SHIFTER_DANGEROUS_SOLENOID_PORT= 1;
         public static final int PCM_ADDRESS = 3;
         public static final boolean SHIFTER_SOLENOID_DANGEROUS= true;
 	    public static final boolean SHIFTER_SOLENOID_HOT= true;
