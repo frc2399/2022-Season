@@ -51,7 +51,15 @@ public class Constants {
 
         public static final int kShiftHot = 5; 
         public static final int kShiftDangerous = 6; 
+
+        public static final int INTAKE = 2; 
+
     }  
+
+    public static final class IntakeConstants {
+        public static final int INTAKE_MOTOR_ID = 1;
+        public static final int INTAKESPEED = 1;
+    }
 
 }
 

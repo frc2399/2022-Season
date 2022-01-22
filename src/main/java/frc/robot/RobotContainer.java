@@ -13,10 +13,10 @@
 package frc.robot;
 
 import frc.robot.commands.*;
-import frc.robot.commands.ArcadeDriveCmd;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,6 +40,7 @@ public class RobotContainer {
 // The robot's subsystems
     public final DriveTrain m_driveTrain = new DriveTrain();
     public final static Shifter m_shifter = new Shifter();
+    public final static Intake m_intake = new Intake();
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
@@ -48,6 +49,9 @@ public class RobotContainer {
   //Shift
   private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
   private static Shift shiftToHot = new Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+
+  //Intake
+  private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
 
   //Buttons
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
@@ -83,6 +87,8 @@ public class RobotContainer {
     () -> XBOX.getRawAxis(JoystickConstants.kArcadeDriveTurnAxis))//
 );
 
+    m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
+
     // Configure default commands
 
 
@@ -116,7 +122,11 @@ public class RobotContainer {
       .whenPressed(shiftToHot);
       new JoystickButton(JOYSTICK, JoystickConstants.kShiftDangerous)
       .whenPressed(shiftToDangerous);
+
+      new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
     }
+
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
