@@ -53,12 +53,13 @@ public class RobotContainer {
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
 	// private static Button shiftToDangerousButt = new Button(XBOX, 3);
 
-  private static RobotContainer m_robotContainer = new RobotContainer();
 
 
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  private static RobotContainer m_robotContainer = new RobotContainer();
 
   /**
   * The container for the robot.  Contains subsystems, OI devices, and commands.

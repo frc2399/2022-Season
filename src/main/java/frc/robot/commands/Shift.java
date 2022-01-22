@@ -32,6 +32,7 @@ public class Shift extends CommandBase {
 	/**
 	 * Sets how long the timer should run for
 	 */
+	@Override
 	public void initialize() {
 		//withTimeout(DriveConstants.SHIFT_TIMER);
 		SmartDashboard.putBoolean("   ", shiftHotValue);
@@ -43,6 +44,7 @@ public class Shift extends CommandBase {
 	 *  Sets the Solenoids to values passed to the constructor
 	 *  Called repeatedly when this Command is scheduled to run
 	 */
+	@Override
 	public void execute() {
 		shifter.setShifterHotSolenoid(shiftHotValue);
 		System.out.println("Shift executed");
@@ -53,6 +55,7 @@ public class Shift extends CommandBase {
 	 * If the command returns true (the timer has run out), stop executing the command
 	 * Make this return true when this Command no longer needs to run execute()
 	 */
+	@Override
 	public boolean isFinished() {
 		//return isTimedOut();
         return true;
@@ -61,14 +64,8 @@ public class Shift extends CommandBase {
 	/**
 	 * Called once after isFinished returns true
 	 */
-	protected void end() {
+	@Override
+	public void end(boolean interrupted) {
 		System.out.println("Shift ended");
-	}
-
-	/**
-	 * Called when another command which requires one or more of the same
-	 * subsystems is scheduled to run
-	 */
-	protected void interrupted() {
 	}
 }
