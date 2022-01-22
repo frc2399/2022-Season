@@ -223,13 +223,13 @@ public class Robot extends TimedRobot {
     shooterAStickValue = shooter_stick_a.getRawAxis(2);    //Gets Slider Value (Axis 3)
     shooterARPM = shooterAStickValue * maxRPM;
     // shooterAStickValue = ((shooterStickValue + 1)/2);
-    a_pidController.setReference(shooterARPM, CANSparkMax.ControlType.kVelocity);
+    Robot.a_pidController.setReference(shooterARPM, CANSparkMax.ControlType.kVelocity);
 
     double shooterBStickValue, shooterBRPM;
     shooterBStickValue = shooter_stick_b.getRawAxis(2); //Gets Slider Value (Axis 3) from secondary joystick
     shooterBRPM = shooterBStickValue * maxRPM;
     // bottomShooterStickValue = ((shooterBStickValue + 1)/2);
-    b_pidController.setReference(shooterBRPM, CANSparkMax.ControlType.kVelocity);
+    Robot.b_pidController.setReference(shooterBRPM, CANSparkMax.ControlType.kVelocity);
 
     // System.out.println(shooterAStickValue);  //Prints Slider Value (From 0 to 1)
     // System.out.println(shooterBStickValue); // Prints Slider Value (From 0 to 1)
