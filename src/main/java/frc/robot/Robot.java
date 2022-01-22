@@ -42,8 +42,8 @@ public class Robot extends TimedRobot {
   public static Joystick shooter_stick_b = new Joystick(2);  //Second Shooter controller - Logitech Attack 3
 
   // setting up the SparkMax values
-  private static final int deviceA = 1; // device ID for shooter A
-  private static final int deviceB = 2; // device ID for shooter B
+  private static final int deviceA = 3; // device ID for shooter A
+  private static final int deviceB = 4; // device ID for shooter B
 
   private CANSparkMax a_motor, b_motor;
   private SparkMaxPIDController a_pidController, b_pidController;
