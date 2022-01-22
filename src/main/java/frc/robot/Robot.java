@@ -238,7 +238,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Shooter B RPM", shooterBRPM);
 
     // intake control
-    if (Robot.shooter_stick_a.getRawButton(2) == true)
+    if (Robot.shooter_stick_a.getRawButton(1) == true)
       { Robot.intake.set(ControlMode.PercentOutput, 1);}
     else 
       { Robot.intake.set(ControlMode.PercentOutput, 0);}
