@@ -15,6 +15,7 @@ package frc.robot;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -41,6 +42,8 @@ public class RobotContainer {
     public final DriveTrain m_driveTrain = new DriveTrain();
     public final static Shifter m_shifter = new Shifter();
     public final static Intake m_intake = new Intake();
+    public final static Shooter m_shooter = new Shooter();
+
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
@@ -88,6 +91,8 @@ public class RobotContainer {
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
+    m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
+
 
     // Configure default commands
 
@@ -124,6 +129,10 @@ public class RobotContainer {
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
+
+      new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whileHeld(
+        new SetShootPowerCmd(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED)
+      );
     }
 
 
@@ -135,7 +144,8 @@ public class RobotContainer {
   */
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
-    return m_chooser.getSelected();
+    //return m_chooser.getSelected();
+    return new SetShootPowerCmd (m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED);
   }
   
 
