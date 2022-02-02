@@ -116,6 +116,11 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
   }
 
+  public void runShooter ()
+  {
+    setMotors(ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED);
+  }
+
   //THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART DASHBOARD
   // @Override
   // public void teleopPeriodic() {

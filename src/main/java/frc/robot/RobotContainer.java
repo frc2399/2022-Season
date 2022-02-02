@@ -12,20 +12,36 @@
 
 package frc.robot;
 
-import frc.robot.commands.*;
-import frc.robot.subsystems.*;
-import frc.robot.Constants.JoystickConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
+//import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Joystick;
-//import edu.wpi.first.wpilibj.XboxController.Button;
-
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.ShooterConstants;
+
+import frc.robot.commands.ArcadeDriveCmd;
+import frc.robot.commands.AutonomousCommand;
+import frc.robot.commands.DriveForwardGivenTime;
+import frc.robot.commands.IntakeCmd;
+import frc.robot.commands.SetShootPowerCmd;
+import frc.robot.commands.Shift;
+
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shifter;
+import frc.robot.subsystems.Shooter;
 
 
 
@@ -75,6 +91,7 @@ public class RobotContainer {
     // Smartdashboard Subsystems
     SmartDashboard.putData(m_driveTrain);
 
+    CameraServer.startAutomaticCapture();
 
     // SmartDashboard Buttons
     SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
@@ -145,7 +162,13 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     //return m_chooser.getSelected();
-    return new SetShootPowerCmd (m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED);
+    // return new ShootForNSeconds(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED, 5);
+    return new SequentialCommandGroup(
+
+      new InstantCommand(m_shooter::runShooter, m_shooter),
+      new WaitCommand(5)
+      ); 
+ 
   }
   
 
