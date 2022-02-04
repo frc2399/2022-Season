@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.XboxController.Button;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -145,7 +147,13 @@ public class RobotContainer {
   */
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
-    return m_chooser.getSelected();
+    //return m_chooser.getSelected();
+
+    return new SequentialCommandGroup(
+      new IntakeCmdForGivenTime(m_intake, 1.0, 3),
+      new IndexerCmdForGivenTime(m_indexer, 1.0, 3)
+
+    );
   }
   
 
