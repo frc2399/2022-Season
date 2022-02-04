@@ -54,11 +54,18 @@ public class Constants {
 
         public static final int INTAKE = 2; 
 
+        public static final int INDEXER = 3;
+
     }  
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 1;
         public static final int INTAKESPEED = 1;
+    }
+
+    public static final class IndexerConstants {
+        public static final int INDEXER_MOTOR_ID = 5;
+        public static final int INDEXERSPEED = 1;
     }
 
 }

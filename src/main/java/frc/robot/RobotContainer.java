@@ -16,6 +16,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -41,6 +42,7 @@ public class RobotContainer {
     public final DriveTrain m_driveTrain = new DriveTrain();
     public final static Shifter m_shifter = new Shifter();
     public final static Intake m_intake = new Intake();
+    public final static Indexer m_indexer = new Indexer();
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
@@ -52,6 +54,11 @@ public class RobotContainer {
 
   //Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
+
+  //Indexer
+  private static IndexerCmd indexerCmd = new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED);
+
+
 
   //Buttons
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
@@ -88,6 +95,7 @@ public class RobotContainer {
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
+    m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
 
     // Configure default commands
 
@@ -124,6 +132,8 @@ public class RobotContainer {
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
+
+      new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
     }
 
 
