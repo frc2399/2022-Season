@@ -75,10 +75,13 @@ public class Constants {
         public static final double SHOOTER_SPEED_INCREMENT = 0;
 
         public static final double SHOOTER_SPEED = 0.06;
+
+        public static final double TOP_SETPOINT = 700;
+        public static final double BOTTOM_SETPOINT = 1800;
     }
 
     public static final class IndexerConstants {
-        public static final int INDEXER_MOTOR_ID = 5;
+        public static final int INDEXER_MOTOR_ID = 9;
         public static final int INDEXERSPEED = 1;
     }
 

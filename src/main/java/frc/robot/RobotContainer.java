@@ -166,7 +166,7 @@ public class RobotContainer {
 
       new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whileHeld(
         //new SetShootPowerCmd(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED)
-        new InstantCommand(() -> m_shooter.setSpeedWithPID(700, 700), m_shooter) 
+        new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter) 
       );
       new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
     }

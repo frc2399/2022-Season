@@ -32,15 +32,16 @@ public class Shooter extends SubsystemBase {
   private RelativeEncoder topEncoder, bottomEncoder;
 
   //? - don't know if these are right/go with sparks
-  public double topSpeed = 0.1;
-  public double bottomSpeed = 0.1;
+  private double topSetpoint;
+  private double bottomSetpoint;
+  private static final double RANGE = 50;
 
   //PID constants 
   //TODO: MOVE TO CONSTANTS FILE!
   public static final double SHOOTER_KP = 0;//1.875;
 	public static final double SHOOTER_KI = 0;//0.006;
 	public static final double SHOOTER_KD = 0;//52.5;
-  public static final double SHOOTER_KF = 0.000086;//0.15;
+  public static final double SHOOTER_KF = 0.000086; //0.15;
   public static final double SHOOTER_KIZ = 0;
   public static final double SHOOTER_K_MAX_OUTPUT = 1;
   public static final double SHOOTER_K_MIN_OUTPUT = 0;
@@ -107,8 +108,9 @@ public class Shooter extends SubsystemBase {
   {
     SmartDashboard.putNumber("Top velocity", topEncoder.getVelocity());
     SmartDashboard.putNumber("Bottom velocity", bottomEncoder.getVelocity());
-    //System.out.println("top Velocity: " + top_encoder.getVelocity());
-    //System.out.println("bottom Velocity: " + bottom_encoder.getVelocity());
+    SmartDashboard.putBoolean("Top Speed in Range", checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
+    SmartDashboard.putBoolean("Bottom Speed in Range", checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+
     SmartDashboard.putNumber("P Gain", SHOOTER_KP);
     SmartDashboard.putNumber("I Gain", SHOOTER_KI);
     SmartDashboard.putNumber("D Gain", SHOOTER_KD);
@@ -116,6 +118,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Feed Forward", SHOOTER_KF);
     SmartDashboard.putNumber("Max Output", SHOOTER_K_MAX_OUTPUT);
     SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
+
   }
 
   public void runShooter ()
@@ -128,6 +131,14 @@ public class Shooter extends SubsystemBase {
   {
     bottomPIDController.setReference(bottomRPM, CANSparkMax.ControlType.kVelocity); 
     topPIDController.setReference(topRPM, CANSparkMax.ControlType.kVelocity);
+    topSetpoint = topRPM;
+    bottomSetpoint = bottomRPM;
+  }
+
+  // Checks if the current value is within the range of the setpoint being passed
+  public boolean checkWithinRange(double setpoint, double currentValue, double range)
+  {
+    return (Math.abs(currentValue-setpoint) < range);
   }
 
   //THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART DASHBOARD
