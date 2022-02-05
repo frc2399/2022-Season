@@ -12,8 +12,18 @@
 
 package frc.robot;
 
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.XboxController.Button;
@@ -23,12 +33,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.JoystickConstants;
+// import frc.robot.Constants.DriveConstants;
+// import frc.robot.Constants.IntakeConstants;
+// import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.ShooterConstants;
 
 import frc.robot.commands.ArcadeDriveCmd;
@@ -59,7 +71,7 @@ public class RobotContainer {
     public final static Shifter m_shifter = new Shifter();
     public final static Intake m_intake = new Intake();
     public final static Shooter m_shooter = new Shooter();
-
+    public final static Indexer m_indexer = new Indexer();
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
@@ -71,6 +83,11 @@ public class RobotContainer {
 
   //Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
+
+  //Indexer
+  private static IndexerCmd indexerCmd = new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED);
+
+
 
   //Buttons
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
@@ -109,7 +126,7 @@ public class RobotContainer {
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
     m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
-
+    m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
 
     // Configure default commands
 
@@ -151,6 +168,7 @@ public class RobotContainer {
         //new SetShootPowerCmd(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED)
         new InstantCommand(() -> m_shooter.setSpeedWithPID(700, 700), m_shooter) 
       );
+      new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
     }
 
 
@@ -163,6 +181,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     //return m_chooser.getSelected();
+
     // return new ShootForNSeconds(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED, 5);
     return new SequentialCommandGroup(
 
@@ -170,8 +189,12 @@ public class RobotContainer {
       new WaitCommand(5)
       ); 
  
+    // return new SequentialCommandGroup(
+    //   new IntakeCmdForGivenTime(m_intake, 1.0, 3),
+    //   new IndexerCmdForGivenTime(m_indexer, 1.0, 3)
+
+    // );
   }
-  
 
 }
 
