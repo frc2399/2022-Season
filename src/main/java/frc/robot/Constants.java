@@ -74,7 +74,7 @@ public class Constants {
         public static final int BOTTOM_MOTOR_ID = 5;
         public static final double SHOOTER_SPEED_INCREMENT = 0;
 
-        public static final double SHOOTER_SPEED = 0.1;
+        public static final double SHOOTER_SPEED = 0.06;
     }
 }
 
