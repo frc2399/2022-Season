@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.IndexerConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Indexer extends SubsystemBase {
   
@@ -28,5 +29,7 @@ public class Indexer extends SubsystemBase {
   public void setSpeed(double indexerSpeed)
   {
     indexerMotorController.set(indexerSpeed);
+    System.out.println("Indexer setSpeed" + indexerSpeed);
+    SmartDashboard.putNumber("Indexer speed ", indexerSpeed);
   }
 }

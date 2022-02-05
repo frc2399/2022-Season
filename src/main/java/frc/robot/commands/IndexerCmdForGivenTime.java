@@ -31,7 +31,6 @@ public class IndexerCmdForGivenTime extends CommandBase {
     public void execute() {
         this.indexerSubsystem.setSpeed(speed);
         //System.out.println("Indexer speed " + speed);
-        SmartDashboard.putNumber("Indexer speed ", speed);
     }
 
     @Override
