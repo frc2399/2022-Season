@@ -54,6 +54,8 @@ public class Constants {
 
         public static final int INTAKE = 2; 
 
+        public static final int TURN_TO_N = 12;
+
     }  
 
     public static final class IntakeConstants {

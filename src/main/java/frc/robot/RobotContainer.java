@@ -25,6 +25,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 
@@ -38,7 +40,8 @@ public class RobotContainer {
 
   
 // The robot's subsystems
-    public final DriveTrain m_driveTrain = new DriveTrain();
+    public final static DriveTrain m_driveTrain = new DriveTrain();
+    //public final DriveTrain m_driveTrain = new DriveTrain();
     public final static Shifter m_shifter = new Shifter();
     public final static Intake m_intake = new Intake();
 
@@ -52,6 +55,8 @@ public class RobotContainer {
 
   //Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
+
+  public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
 
   //Buttons
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
@@ -75,7 +80,7 @@ public class RobotContainer {
 
     // SmartDashboard Buttons
     SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
-    SmartDashboard.putData("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, m_driveTrain));
+    SmartDashboard.putData("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
 
     // Configure the button bindings
     configureButtonBindings();
@@ -97,6 +102,7 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
 
     SmartDashboard.putData("Auto Mode", m_chooser);
+
   }
 
   public static RobotContainer getInstance() {
@@ -124,6 +130,9 @@ public class RobotContainer {
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
+      
+      new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
+
     }
 
 
@@ -135,7 +144,19 @@ public class RobotContainer {
   */
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
-    return m_chooser.getSelected();
+    //return m_chooser.getSelected();
+    return new SequentialCommandGroup(
+      //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+      new TurnToNAngle(90, m_driveTrain),
+      //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+      new TurnToNAngle(180, m_driveTrain),
+      //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+      new TurnToNAngle(270, m_driveTrain),
+      //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+      new TurnToNAngle(360, m_driveTrain),
+      new TurnToNAngle(180, m_driveTrain),
+      new TurnToNAngle(360, m_driveTrain)
+    );
   }
   
 
