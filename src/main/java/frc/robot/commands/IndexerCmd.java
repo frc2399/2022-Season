@@ -17,19 +17,18 @@ public class IndexerCmd extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("Indexer cmd started!");
+        System.out.println("IndexerCmd started!");
     }
 
     @Override
     public void execute() {
         this.indexerSubsystem.setSpeed(speed);
-        //System.out.println("Indexer speed " + speed);
         SmartDashboard.putNumber("Indexer speed ", speed);
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Indexer cmd ended!");
+        System.out.println("IndexerCmd ended!");
     }
 
     @Override

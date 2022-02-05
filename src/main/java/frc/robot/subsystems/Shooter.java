@@ -141,6 +141,12 @@ public class Shooter extends SubsystemBase {
     return (Math.abs(currentValue-setpoint) < range);
   }
 
+  // Checks to see if both motors are within range of the setpoints
+  public boolean correctSpeed()
+  {
+    return (checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE) && 
+            checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+  }
   //THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART DASHBOARD
   // @Override
   // public void teleopPeriodic() {

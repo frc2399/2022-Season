@@ -29,7 +29,6 @@ public class Indexer extends SubsystemBase {
   public void setSpeed(double indexerSpeed)
   {
     indexerMotorController.set(indexerSpeed);
-    System.out.println("Indexer setSpeed" + indexerSpeed);
     SmartDashboard.putNumber("Indexer speed ", indexerSpeed);
   }
 }

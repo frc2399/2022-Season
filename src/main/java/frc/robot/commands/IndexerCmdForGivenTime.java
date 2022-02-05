@@ -22,7 +22,7 @@ public class IndexerCmdForGivenTime extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("Indexer time started!");
+        System.out.println("IndexerCmdForGivenTime started!");
         timer.reset();
         timer.start();
     }
@@ -30,12 +30,11 @@ public class IndexerCmdForGivenTime extends CommandBase {
     @Override
     public void execute() {
         this.indexerSubsystem.setSpeed(speed);
-        //System.out.println("Indexer speed " + speed);
     }
 
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Indexer time ended!");
+        System.out.println("IndexerCmdForGivenTime ended!");
         this.indexerSubsystem.setSpeed(0);
     }
 
@@ -43,7 +42,6 @@ public class IndexerCmdForGivenTime extends CommandBase {
     public boolean isFinished() {
         if (timer.get() >= time)
         {
-            //System.out.println("indexer time end");
             return true;
         }
         return false;

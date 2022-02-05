@@ -33,6 +33,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 //import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -42,14 +43,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 // import frc.robot.Constants.IntakeConstants;
 // import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.ShooterConstants;
-
-import frc.robot.commands.ArcadeDriveCmd;
-import frc.robot.commands.AutonomousCommand;
-import frc.robot.commands.DriveForwardGivenTime;
-import frc.robot.commands.IntakeCmd;
-import frc.robot.commands.SetShootPowerCmd;
-import frc.robot.commands.Shift;
-
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shifter;
@@ -153,8 +146,6 @@ public class RobotContainer {
 
     
 
-      // shiftToHotButt.whenPressed(shiftToHot);
-		  // shiftToDangerousButt.whenPressed(shiftToDangerous);
       System.out.println (JOYSTICK);
       System.out.println ("************************************");
       new JoystickButton(JOYSTICK, JoystickConstants.kShiftHot)
@@ -163,10 +154,13 @@ public class RobotContainer {
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
-
-      new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whileHeld(
-        //new SetShootPowerCmd(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED)
-        new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter) 
+      // Indexer runs for 2 seconds when the shooter gets to the correct speed
+      new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
+        new SequentialCommandGroup(
+          new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),
+          new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+          new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
+        )
       );
       new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
     }

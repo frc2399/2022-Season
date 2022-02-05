@@ -56,7 +56,7 @@ public class Constants {
 
         public static final int SHOOTER_BTN = 3; 
 
-        public static final int INDEXER = 7;
+        public static final int INDEXER = 9;
     }  
 
     public static final class IntakeConstants {
@@ -77,7 +77,7 @@ public class Constants {
         public static final double SHOOTER_SPEED = 0.06;
 
         public static final double TOP_SETPOINT = 700;
-        public static final double BOTTOM_SETPOINT = 1800;
+        public static final double BOTTOM_SETPOINT = 800;
     }
 
     public static final class IndexerConstants {
