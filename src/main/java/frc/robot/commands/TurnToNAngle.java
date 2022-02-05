@@ -19,6 +19,7 @@ public class TurnToNAngle extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.targetAngle = targetAngle;
     m_driveTrain = subsystem;
+    addRequirements(m_driveTrain);
 
   }
 
