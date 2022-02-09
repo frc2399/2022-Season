@@ -31,7 +31,7 @@ public class DriveForwardGivenTime extends CommandBase {
         sp = speed;
         tm = time;
         m_driveTrain = subsystem;
-        
+        addRequirements(m_driveTrain);
         //set command to be interruptible
 		//setInterruptible(true);
 
