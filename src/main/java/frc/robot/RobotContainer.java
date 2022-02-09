@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 
@@ -148,13 +149,18 @@ public class RobotContainer {
     return new SequentialCommandGroup(
       //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
       new TurnToNAngle(90, m_driveTrain),
+      new WaitCommand(2),
       //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
       new TurnToNAngle(180, m_driveTrain),
+      new WaitCommand(2),
+      new TurnToNAngle(-180, m_driveTrain),
+      new WaitCommand(2),
       //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
       new TurnToNAngle(270, m_driveTrain),
+      new WaitCommand(2),
       //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
       new TurnToNAngle(360, m_driveTrain),
-      new TurnToNAngle(180, m_driveTrain),
+      new WaitCommand(2),
       new TurnToNAngle(360, m_driveTrain)
     );
   }

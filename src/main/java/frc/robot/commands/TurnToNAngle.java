@@ -58,7 +58,8 @@ public class TurnToNAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Math.abs(modAngle(targetAngle - currentAngle)) <= 3) {
+    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 3);
+    if (Math.abs(modAngle(targetAngle - currentAngle)) <= errorTolerance) {
       return true;
     }
     return false;
