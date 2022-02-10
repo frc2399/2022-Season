@@ -23,6 +23,7 @@ public class Intake extends SubsystemBase {
 
 private CANSparkMax intakeMotorController;
 
+
 SlewRateLimiter filter;
 
 
@@ -30,6 +31,7 @@ SlewRateLimiter filter;
 
         //Define all Motor Controllers
         intakeMotorController = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushed);
+        filter = new SlewRateLimiter(0.2);
 
         
         filter = new SlewRateLimiter(SmartDashboard.getNumber("Intake Slew Rate", 0.5));
