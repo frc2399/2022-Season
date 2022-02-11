@@ -54,6 +54,9 @@ public class Constants {
 
         public static final int INTAKE = 2; 
 
+        public static final int SHOOTER_BTN = 3; 
+
+        public static final int INDEXER = 9;
         public static final int TURN_TO_N = 12;
 
     }  
@@ -63,5 +66,29 @@ public class Constants {
         public static final int INTAKESPEED = 1;
     }
 
+    public static final class ShooterConstants {
+        public static final int PID_IDX = 0;
+        public static final int CAN_TIMEOUT = 10;
+        public static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
+        public static final double GEAR_RATIO = 84.0 / 54.0;
+        public static final double TALON_100MS_IN_1S = 10.0;
+        public static final int TOP_MOTOR_ID = 10; 
+        public static final int BOTTOM_MOTOR_ID = 5;
+        public static final double SHOOTER_SPEED_INCREMENT = 0;
+
+        public static final double SHOOTER_SPEED = 0.06;
+
+        public static final double TOP_SETPOINT = 700;
+        public static final double BOTTOM_SETPOINT = 800;
+    }
+
+    public static final class IndexerConstants {
+        public static final int INDEXER_MOTOR_ID = 9;
+        public static final int INDEXERSPEED = 1;
+    }
+
 }
+
+
+
 
