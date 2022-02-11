@@ -39,7 +39,7 @@ public class Constants {
     }
 
     public static final class JoystickConstants {
-        // joystick ports\
+        // joystick ports
         public static final int JOYSTICK_PORT = 1;
         public static final int XBOX_PORT = 0;
 
@@ -57,6 +57,8 @@ public class Constants {
         public static final int SHOOTER_BTN = 3; 
 
         public static final int INDEXER = 9;
+        public static final int TURN_TO_N = 12;
+
     }  
 
     public static final class IntakeConstants {

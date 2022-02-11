@@ -23,7 +23,8 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.XboxController.Button;
@@ -38,6 +39,9 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+//import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 // import frc.robot.Constants.DriveConstants;
 // import frc.robot.Constants.IntakeConstants;
@@ -60,7 +64,8 @@ public class RobotContainer {
 
   
 // The robot's subsystems
-    public final DriveTrain m_driveTrain = new DriveTrain();
+    public final static DriveTrain m_driveTrain = new DriveTrain();
+    //public final DriveTrain m_driveTrain = new DriveTrain();
     public final static Shifter m_shifter = new Shifter();
     public final static Intake m_intake = new Intake();
     public final static Shooter m_shooter = new Shooter();
@@ -81,14 +86,23 @@ public class RobotContainer {
   private static IndexerCmd indexerCmd = new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED);
 
 
+  public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
 
   //Buttons
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
 	// private static Button shiftToDangerousButt = new Button(XBOX, 3);
 
+  // A simple auto routine that drives forward a specified distance, and then stops.
+  private static Command m_turnAuto =
+      new SequentialCommandGroup(
+        new TurnToNAngle(90, m_driveTrain),
+        new WaitCommand(2),
+        new TurnToNAngle(0, m_driveTrain)
+      );
+
+  private static Command m_driveStraightAuto = new DriveForwardGivenTime(0.3, 1, m_driveTrain);
 
 
-  
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -103,9 +117,17 @@ public class RobotContainer {
 
     CameraServer.startAutomaticCapture();
 
+    // Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("Turn Auto", m_turnAuto);
+    m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
+
+    // Put the chooser on the dashboard
+    SmartDashboard.putData(m_chooser);
+
     // SmartDashboard Buttons
-    SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
-    SmartDashboard.putData("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, m_driveTrain));
+    Shuffleboard.getTab("Test").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
+    Shuffleboard.getTab("Test").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+
 
     // Configure the button bindings
     configureButtonBindings();
@@ -126,9 +148,9 @@ public class RobotContainer {
 
     // Configure autonomous sendable chooser
 
-    m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
+    // m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
 
-    SmartDashboard.putData("Auto Mode", m_chooser);
+
   }
 
   public static RobotContainer getInstance() {
@@ -154,6 +176,7 @@ public class RobotContainer {
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
+      
       // Indexer runs for 2 seconds when the shooter gets to the correct speed
       new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
         new SequentialCommandGroup(
@@ -162,7 +185,12 @@ public class RobotContainer {
           new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
         )
       );
+
+    
       new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
+      
+      new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
+
     }
 
 
@@ -174,19 +202,24 @@ public class RobotContainer {
   */
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
-    //return m_chooser.getSelected();
-
-    // return new ShootForNSeconds(m_shooter, ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED, 5);
-    return new SequentialCommandGroup(
-
-      new InstantCommand(m_shooter::runShooter, m_shooter),
-      new WaitCommand(5)
-      ); 
- 
+    System.out.println("Autonomous command!" + m_chooser.getSelected());
+    return m_chooser.getSelected();
     // return new SequentialCommandGroup(
-    //   new IntakeCmdForGivenTime(m_intake, 1.0, 3),
-    //   new IndexerCmdForGivenTime(m_indexer, 1.0, 3)
-
+    //   //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+    //   new TurnToNAngle(90, m_driveTrain),
+    //   new WaitCommand(2),
+    //   //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+    //   new TurnToNAngle(180, m_driveTrain),
+    //   new WaitCommand(2),
+    //   new TurnToNAngle(-180, m_driveTrain),
+    //   new WaitCommand(2),
+    //   //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+    //   new TurnToNAngle(270, m_driveTrain),
+    //   new WaitCommand(2),
+    //   //new DriveForwardGivenTime(2, 0.5, m_driveTrain),
+    //   new TurnToNAngle(360, m_driveTrain),
+    //   new WaitCommand(2),
+    //   new TurnToNAngle(360, m_driveTrain)
     // );
   }
 
