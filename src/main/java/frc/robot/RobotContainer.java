@@ -19,6 +19,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.Joystick;
 //import edu.wpi.first.wpilibj.XboxController.Button;
 
@@ -93,9 +95,8 @@ m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
 // Put the chooser on the dashboard
 SmartDashboard.putData(m_chooser);
     // SmartDashboard Buttons
-    SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
-    SmartDashboard.putData("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
-    SmartDashboard.putData("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("Test").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
+    Shuffleboard.getTab("Test").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
 
 
     // Configure the button bindings

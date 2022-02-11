@@ -40,28 +40,27 @@ public class DriveForwardGivenTime extends CommandBase {
     
 
 	// Called just before this Command runs the first time
+    @Override
     public void initialize() {
         timer.reset();
         timer.start();
     }
 
     // Called repeatedly when this Command is scheduled to run
+    @Override
     public void execute() {
         m_driveTrain.setMotors(sp, sp);
        
     }
 
     // Make this return true when this Command no longer needs to run execute()
+    @Override
     public boolean isFinished() {
         return timer.get() >= tm; 
     }
 
     // Called once after isFinished returns true
-    protected void end() {
-    }
-
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
+    @Override
+    public void end(boolean interrupted) {
     }
 }
