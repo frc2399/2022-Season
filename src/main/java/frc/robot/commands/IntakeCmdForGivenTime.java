@@ -42,7 +42,6 @@ public class IntakeCmdForGivenTime extends CommandBase {
     public boolean isFinished() {
         if (timer.get() >= tm)
         {
-            //System.out.println("intake time end");
             return true;
         }
         return false;

@@ -23,7 +23,6 @@ public class IntakeCmd extends CommandBase {
     @Override
     public void execute() {
         this.intakeSubsystem.setMotor(speed);
-        //System.out.println("Intake speed " + speed);
         SmartDashboard.putNumber("Intake speed ", speed);
     }
 
