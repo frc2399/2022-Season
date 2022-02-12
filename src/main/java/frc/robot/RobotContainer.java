@@ -189,6 +189,7 @@ public class RobotContainer {
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
       
       // Indexer runs for 2 seconds when the shooter gets to the correct speed
+      // Shooter stays at the correct speed 
       new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
         new SequentialCommandGroup(
           new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),
