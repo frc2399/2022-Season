@@ -100,7 +100,9 @@ public class DriveTrain extends SubsystemBase {
         leftBackMotorController = new CANSparkMax(DriveConstants.BACK_LEFT_MOTOR_ID, MotorType.kBrushed);
         rightBackMotorController = new CANSparkMax(DriveConstants.BACK_RIGHT_MOTOR_ID, MotorType.kBrushed);
 
-        leftFrontMotorController.setInverted(true);
+        leftFrontMotorController.setInverted(false);
+        rightFrontMotorController.setInverted(true);
+
         //sets motor controllers following leaders
         leftMiddleMotorController.follow(leftFrontMotorController);
         rightMiddleMotorController.follow(rightFrontMotorController);

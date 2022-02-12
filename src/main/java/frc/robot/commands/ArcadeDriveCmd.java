@@ -3,6 +3,7 @@ package frc.robot.commands;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
@@ -25,8 +26,8 @@ public class ArcadeDriveCmd extends CommandBase {
 
     @Override
     public void execute() {
-        double realTimeSpeed = speedFunction.get();
-        double realTimeTurn = turnFunction.get();
+        double realTimeSpeed = speedFunction.get() * Constants.JoystickConstants.FORWARD_JOYSTICK_INVERT;
+        double realTimeTurn = turnFunction.get() * Constants.JoystickConstants.TURN_JOYSTICK_INVERT;
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
