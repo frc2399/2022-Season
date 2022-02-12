@@ -12,6 +12,7 @@
 
 package frc.robot;
 
+import java.util.Map;
 
 //import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -23,6 +24,7 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.Joystick;
@@ -127,6 +129,15 @@ public class RobotContainer {
     // SmartDashboard Buttons
     Shuffleboard.getTab("Test").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
     Shuffleboard.getTab("Test").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+
+    // Changing the "a" value on shuffleboard to alter joystick drive sensitivity
+    // Shuffleboard.getTab("Drive")
+    // .add("a value", 1) 
+    // .withWidget(BuiltInWidgets.kNumberSlider)
+    // .withProperties(Map.of("min", 0, "max", 1))
+    // .getEntry();
+
+    SmartDashboard.putNumber("a value", JoystickConstants.JOYSTICK_SENSITIVITY);
 
 
     // Configure the button bindings
