@@ -13,7 +13,7 @@
 package frc.robot;
 
 
-import edu.wpi.first.cameraserver.CameraServer;
+//import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -115,7 +115,7 @@ public class RobotContainer {
     // Smartdashboard Subsystems
     SmartDashboard.putData(m_driveTrain);
 
-    CameraServer.startAutomaticCapture();
+    //CameraServer.startAutomaticCapture();
 
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Turn Auto", m_turnAuto);
@@ -125,8 +125,13 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
 
     // SmartDashboard Buttons
-    Shuffleboard.getTab("Test").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
-    Shuffleboard.getTab("Test").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("Robot").add("Index and Shoot",  new SequentialCommandGroup(
+          new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),
+          new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+          new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
+    ));
 
 
     // Configure the button bindings
