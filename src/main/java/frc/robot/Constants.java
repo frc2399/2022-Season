@@ -36,6 +36,9 @@ public class Constants {
         public static final boolean SHIFTER_SOLENOID_DANGEROUS= true;
 	    public static final boolean SHIFTER_SOLENOID_HOT= true;
         public static final double SHIFT_TIMER = 0.5;
+
+        //follow target cmd speeds
+        public static final double TARGET_FOLLOWING_SPEED = 0.5;
     }
 
     public static final class JoystickConstants {

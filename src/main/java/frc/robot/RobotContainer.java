@@ -132,6 +132,8 @@ public class RobotContainer {
           new WaitUntilCommand(() -> m_shooter.correctSpeed()),
           new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
     ));
+    Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
+
 
 
     // Configure the button bindings
