@@ -39,6 +39,7 @@ public class Constants {
 
         //follow target cmd speeds
         public static final double TARGET_FOLLOWING_SPEED = 0.5;
+        public static final double BUTTERY_FOLLOWING_SPEED = 0.5/180;
     }
 
     public static final class JoystickConstants {

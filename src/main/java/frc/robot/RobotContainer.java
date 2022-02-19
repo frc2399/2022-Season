@@ -133,8 +133,8 @@ public class RobotContainer {
           new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
     ));
     Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
-
-
+    Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
+    
 
     // Configure the button bindings
     configureButtonBindings();
