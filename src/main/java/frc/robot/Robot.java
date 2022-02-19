@@ -18,8 +18,8 @@ import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +34,8 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+    public static double targetAngle = 0.0;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -44,6 +46,7 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         m_robotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+        SmartDashboard.putNumber("Error Tolerance", 3);
     }
 
     /**
@@ -80,6 +83,7 @@ public class Robot extends TimedRobot {
     @Override
     public void autonomousInit() {
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        System.out.println("We are in auton init!" + m_autonomousCommand);
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
@@ -92,6 +96,7 @@ public class Robot extends TimedRobot {
     */
     @Override
     public void autonomousPeriodic() {
+
     }
 
     @Override

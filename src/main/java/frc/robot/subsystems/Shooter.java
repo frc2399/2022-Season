@@ -1,137 +1,174 @@
-// /*----------------------------------------------------------------------------*/
-// /* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-// /* Open Source Software - may be modified and shared by FRC teams. The code   */
-// /* must be accompanied by the FIRST BSD license file in the root directory of */
-// /* the project.                                                               */
-// /*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
-// package frc.robot.subsystems;
+package frc.robot.subsystems;
 
-// import edu.wpi.first.wpilibj2.command.CommandBase;
-// import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import frc.robot.Constants;
-// import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
-// // import com.ctre.phoenix.motorcontrol.ControlMode;
-// // import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-// // Import Statements for Spark Max Controllers and Neo 550 Motors
-// import com.revrobotics.RelativeEncoder;
-// import com.revrobotics.SparkMaxPIDController;
-// import com.revrobotics.CANSparkMax;
-// import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+// Import Statements for Spark Max Controllers and Neo 550 Motors
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
-// /**
-//  * Drivetrain subsystem.
-//  */
-// public class Shooter extends SubsystemBase {
+/**
+ * Drivetrain subsystem.
+ */
+public class Shooter extends SubsystemBase {
   
-//   //instantiate motor controllers
-//   private CANSparkMax bottom;
-//   private CANSparkMax top;
+  //instantiate motor controllers
+  private CANSparkMax bottomMotorController;
+  private CANSparkMax topMotorController;
+  private SparkMaxPIDController topPIDController, bottomPIDController;
+  private RelativeEncoder topEncoder, bottomEncoder;
 
-//   //? - don't know if these are right/go with sparks
-//   private static final int PID_IDX = 0;
-//   private static final int CAN_TIMEOUT = 10;
-//   private static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
-//   private static final double GEAR_RATIO = 84.0 / 54.0;
-//   private static final double TALON_100MS_IN_1S = 10.0;
-//   public double topSpeed = 0.1;
-//   public double bottomSpeed = 0.1;
+  //? - don't know if these are right/go with sparks
+  private double topSetpoint;
+  private double bottomSetpoint;
+  private static final double RANGE = 50;
 
-//   public static final double SHOOTER_KP = 1.875;
-// 	public static final double SHOOTER_KI = 0.006;
-// 	public static final double SHOOTER_KD = 52.5;
-//   public static final double SHOOTER_KF = 0.15;
+  //PID constants 
+  //TODO: MOVE TO CONSTANTS FILE!
+  public static final double SHOOTER_KP = 0;//1.875;
+	public static final double SHOOTER_KI = 0;//0.006;
+	public static final double SHOOTER_KD = 0;//52.5;
+  public static final double SHOOTER_KF = 0.000086; //0.15;
+  public static final double SHOOTER_KIZ = 0;
+  public static final double SHOOTER_K_MAX_OUTPUT = 1;
+  public static final double SHOOTER_K_MIN_OUTPUT = 0;
+  public static final double SHOOTER_MAX_RPM = 5700;
 
-//   //constructor
-//   public Shooter() {
+  //constructor
+  public Shooter() {
       
-//     //initialize motor controllers
-//     bottom = RobotMap.Shooter.PRIMARY_SHOOTER_LOWER;
-//     top = RobotMap.Shooter.PRIMARY_SHOOTER_UPPER;
+    //initialize motor controllers
+    bottomMotorController = new CANSparkMax(ShooterConstants.BOTTOM_MOTOR_ID, MotorType.kBrushless);
+    topMotorController = new CANSparkMax(ShooterConstants.TOP_MOTOR_ID, MotorType.kBrushless);
 
-//     bottom.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, PID_IDX, CAN_TIMEOUT);
-//     top.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, PID_IDX, CAN_TIMEOUT);
-//     // the function to flip the direction of an encoder reading 
-//     bottom.setSensorPhase(false);
-//     top.setSensorPhase(true);    
+    //restore factory settings to reset to a known state
+    bottomMotorController.restoreFactoryDefaults();
+    topMotorController.restoreFactoryDefaults();
+
+    //initialize motor encoders
+    bottomEncoder = bottomMotorController.getEncoder();
+    topEncoder = topMotorController.getEncoder();
+
+    //initialize motor PID controllers
+    bottomPIDController = bottomMotorController.getPIDController();
+    topPIDController = topMotorController.getPIDController();
+
+    //assigns values to PID controllers
+    bottomPIDController.setP(SHOOTER_KP);
+    bottomPIDController.setI(SHOOTER_KI);
+    bottomPIDController.setD(SHOOTER_KD);
+    bottomPIDController.setIZone(SHOOTER_KIZ);
+    bottomPIDController.setFF(SHOOTER_KF);
+    bottomPIDController.setOutputRange(SHOOTER_K_MIN_OUTPUT, SHOOTER_K_MAX_OUTPUT);
+
+    topPIDController.setP(SHOOTER_KP);
+    topPIDController.setI(SHOOTER_KI);
+    topPIDController.setD(SHOOTER_KD);
+    topPIDController.setIZone(SHOOTER_KIZ);
+    topPIDController.setFF(SHOOTER_KF);
+    topPIDController.setOutputRange(SHOOTER_K_MIN_OUTPUT, SHOOTER_K_MAX_OUTPUT);
     
-//   }
+    //invert the bottom motor controller so shooter wheels spin in the right directions
+    bottomMotorController.setInverted(true);
+    topMotorController.setInverted(false);
+    
+    //bottomMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, ShooterConstants.PID_IDX, ShooterConstants.CAN_TIMEOUT);
+    //topMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, ShooterConstants.PID_IDX, ShooterConstants.CAN_TIMEOUT);
 
-//   //ready ball
-//   public void increaseTopSpeed()
-//   {
-//     topSpeed += RobotMap.Shooter.SHOOTER_SPEED_INCREMENT;
-//     if (topSpeed >= 1)
-//     {
-//       topSpeed = 1;
-//     }
-//     System.out.println("top speed: " + topSpeed);
-//     SmartDashboard.putNumber("topSpeed ", topSpeed);
-//   }
+    // the function to flip the direction of an encoder reading
 
-//   public void decreaseTopSpeed()
-//   {
-//     topSpeed -= RobotMap.Shooter.SHOOTER_SPEED_INCREMENT;
-//     if (topSpeed <= -1)
-//     {
-//       topSpeed = -1;
-//     }
-//     System.out.println("top speed: " + topSpeed);
-//     SmartDashboard.putNumber("topSpeed ", topSpeed);
-//   }
+    //bottomMotorController.setSensorPhase(false);
+    //topMotorController.setSensorPhase(true);    
+  }
 
-//   public void increaseBottomSpeed()
-//   {
-//     bottomSpeed += RobotMap.Shooter.SHOOTER_SPEED_INCREMENT;
-//     if (bottomSpeed >= 1)
-//     {
-//       bottomSpeed = 1;
-//     }
-//     System.out.println("bottom speed: " + bottomSpeed);
-//     SmartDashboard.putNumber("bottomSpeed ", bottomSpeed);
-//   }
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
-//   public void decreaseBottomSpeed()
-//   {
-//     bottomSpeed -= RobotMap.Shooter.SHOOTER_SPEED_INCREMENT;
-//     if (bottomSpeed <= -1)
-//     {
-//       bottomSpeed = -1;
-//     }
-//     System.out.println("bottom speed: " + bottomSpeed);
-//     SmartDashboard.putNumber("bottomSpeed ", bottomSpeed);
-//   }
+  //Set speed of top and bottom motors
+  public void setMotors(double topSpeed, double bottomSpeed) {
+    bottomMotorController.set(bottomSpeed);
+    topMotorController.set(topSpeed); 
+  }
 
-//   //set bottom primary motor speed
-//   public void setLowerPrimaryShooterSpeed(double speed){
-//     bottom.set(ControlMode.PercentOutput, speed * - 1.0);
-//   }
+  @Override 
+  public void periodic()
+  {
+    SmartDashboard.putNumber("Top velocity", topEncoder.getVelocity());
+    SmartDashboard.putNumber("Bottom velocity", bottomEncoder.getVelocity());
+    SmartDashboard.putBoolean("Top Speed in Range", checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
+    SmartDashboard.putBoolean("Bottom Speed in Range", checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
 
-//   //set top secondary motor speed
-//   public void setUpperPrimaryShooterSpeed(double speed){
-//     top.set(ControlMode.PercentOutput, -0.25 *speed * 1.0);
-//   }
+    SmartDashboard.putNumber("P Gain", SHOOTER_KP);
+    SmartDashboard.putNumber("I Gain", SHOOTER_KI);
+    SmartDashboard.putNumber("D Gain", SHOOTER_KD);
+    SmartDashboard.putNumber("I Zone", SHOOTER_KIZ);
+    SmartDashboard.putNumber("Feed Forward", SHOOTER_KF);
+    SmartDashboard.putNumber("Max Output", SHOOTER_K_MAX_OUTPUT);
+    SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
 
-//   public double toRotationsPerSecondFromNativeTalon(double talonNative) {
-//     return talonNative * ((Math.PI / ENCODER_TICKS_PER_REVOLUTION)) * GEAR_RATIO * TALON_100MS_IN_1S;
-//   }
+  }
 
-//   public double getTopRotationsPerSecond() {
-//     return toRotationsPerSecondFromNativeTalon(top.getSelectedSensorVelocity());
-//   }
+  public void runShooter ()
+  {
+    setMotors(ShooterConstants.SHOOTER_SPEED, ShooterConstants.SHOOTER_SPEED);
+  }
 
-//   public double getBottomRotationsPerSecond() {
-//     return toRotationsPerSecondFromNativeTalon(bottom.getSelectedSensorVelocity());
-//   }
+  //Sets the RPM using PID
+  public void setSpeedWithPID(double topRPM, double bottomRPM)
+  {
+    bottomPIDController.setReference(bottomRPM, CANSparkMax.ControlType.kVelocity); 
+    topPIDController.setReference(topRPM, CANSparkMax.ControlType.kVelocity);
+    topSetpoint = topRPM;
+    bottomSetpoint = bottomRPM;
+  }
 
-//   //set default command
-//   public void initDefaultCommand(Command c) {
-//     setDefaultCommand(c);
-//   }
+  // Checks if the current value is within the range of the setpoint being passed
+  public boolean checkWithinRange(double setpoint, double currentValue, double range)
+  {
+    return (Math.abs(currentValue-setpoint) < range);
+  }
 
-//   @Override
-//   public void initDefaultCommand() {
-//   }
-// }
+  // Checks to see if both motors are within range of the setpoints
+  public boolean correctSpeed()
+  {
+    return (checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE) && 
+            checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+  }
+  //THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART DASHBOARD
+  // @Override
+  // public void teleopPeriodic() {
+  //   double p = SmartDashboard.getNumber("P Gain", 0);
+  //   double i = SmartDashboard.getNumber("I Gain", 0);
+  //   double d = SmartDashboard.getNumber("D Gain", 0);
+  //   double iz = SmartDashboard.getNumber("I Zone", 0);
+  //   double ff = SmartDashboard.getNumber("Feed Forward", 0);
+  //   double max = SmartDashboard.getNumber("Max Output", 0);
+  //   double min = SmartDashboard.getNumber("Min Output", 0);
+
+  //   // if PID coefficients on SmartDashboard have changed, write new values to controller
+  //   if((p != kP)) { a_pidController.setP(p); b_pidController.setP(p); kP = p; }
+  //   if((i != kI)) { a_pidController.setI(i); b_pidController.setI(i); kI = i; }
+  //   if((d != kD)) { a_pidController.setD(d); b_pidController.setD(d); kD = d; }
+  //   if((iz != kIz)) { a_pidController.setIZone(iz); b_pidController.setIZone(iz); kIz = iz; }
+  //   if((ff != kFF)) { a_pidController.setFF(ff); b_pidController.setFF(ff); kFF = ff; }
+  //   if((max != kMaxOutput) || (min != kMinOutput)) { 
+  //     a_pidController.setOutputRange(min, max); 
+  //     b_pidController.setOutputRange(min, max); 
+  //     kMinOutput = min; kMaxOutput = max; 
+  // }
+
+
+}
