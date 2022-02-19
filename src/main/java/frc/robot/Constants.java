@@ -94,8 +94,8 @@ public class Constants {
     }
 
     public static final class PrototypeDriveConstants {
-        public static final int LEFT_FRONT_MOTOR_ID = 10;
-        public static final int LEFT_MIDDLE_MOTOR_ID = 5;
+        public static final int LEFT_FRONT_MOTOR_ID = 8;
+        public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int BACK_LEFT_MOTOR_ID = 6;
 
     }
