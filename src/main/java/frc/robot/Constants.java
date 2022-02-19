@@ -26,6 +26,7 @@ public class Constants {
         public static final int RIGHT_FRONT_MOTOR_ID = 2;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int RIGHT_MIDDLE_MOTOR_ID = 3;
+        // TODO: change name 
         public static final int BACK_LEFT_MOTOR_ID = 6;
         public static final int BACK_RIGHT_MOTOR_ID = 4;
 
@@ -90,6 +91,13 @@ public class Constants {
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 9;
         public static final int INDEXERSPEED = 1;
+    }
+
+    public static final class PrototypeDriveConstants {
+        public static final int LEFT_FRONT_MOTOR_ID = 8;
+        public static final int LEFT_MIDDLE_MOTOR_ID = 7;
+        public static final int BACK_LEFT_MOTOR_ID = 6;
+
     }
 
 }
