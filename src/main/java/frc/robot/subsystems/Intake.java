@@ -64,7 +64,6 @@ private CANSparkMax intakeMotorController;
 
     public void setMotor(double intakeSpeed) {
         intakeMotorController.set(intakeSpeed);
-        System.out.println("intake setspeed" + intakeSpeed);
         SmartDashboard.putNumber("Intake speed ", intakeSpeed);
         }
 
