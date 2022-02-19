@@ -127,18 +127,13 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
 
     // SmartDashboard Buttons
-<<<<<<< HEAD
-    Shuffleboard.getTab("Test").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
-    Shuffleboard.getTab("Test").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
-=======
-    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
     Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
     Shuffleboard.getTab("Robot").add("Index and Shoot",  new SequentialCommandGroup(
           new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),
           new WaitUntilCommand(() -> m_shooter.correctSpeed()),
           new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
     ));
->>>>>>> main
 
     // Changing the "a" value on shuffleboard to alter joystick drive sensitivity
     // Shuffleboard.getTab("Drive")
