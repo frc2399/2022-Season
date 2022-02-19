@@ -69,7 +69,8 @@ public class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 1;
-        public static final int INTAKESPEED = 1;
+        public static final double INTAKESPEED = 0.6;
+        public static final double INTAKE_SLEW = 5;
     }
 
     public static final class ShooterConstants {
