@@ -30,8 +30,11 @@ public class TurnNAngle extends CommandBase {
     System.out.println("TurnNAngle initialized, turnAngle: " + turnAngle);
     SmartDashboard.putNumber("turn angle", turnAngle);
 
-    newAngle = currentAngle + turnAngle;
+    currentAngle = m_driveTrain.getAngle();
+    currentAngle = modAngle(currentAngle);
     
+    newAngle = modAngle(currentAngle + turnAngle);
+
     SmartDashboard.putNumber("new Angle", newAngle);
   }
 
