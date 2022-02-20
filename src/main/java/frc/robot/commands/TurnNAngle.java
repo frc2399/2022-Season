@@ -29,8 +29,10 @@ public class TurnNAngle extends CommandBase {
   public void initialize() {
     System.out.println("TurnNAngle initialized, turnAngle: " + turnAngle);
     SmartDashboard.putNumber("turn angle", turnAngle);
-    
+
     newAngle = currentAngle + turnAngle;
+    
+    SmartDashboard.putNumber("new Angle", newAngle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
