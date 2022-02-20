@@ -29,7 +29,7 @@ public class ButterySmoothFollowTarget extends CommandBase {
     public void execute() {
         double x_angle = Robot.tx.getDouble(1);
 
-        this.driveSubsystem.setMotors(-DriveConstants.BUTTERY_FOLLOWING_SPEED * x_angle, DriveConstants.BUTTERY_FOLLOWING_SPEED * x_angle);
+        this.driveSubsystem.setMotors(DriveConstants.BUTTERY_FOLLOWING_SPEED * x_angle, -DriveConstants.BUTTERY_FOLLOWING_SPEED * x_angle);
         SmartDashboard.putString("churning buttery", "churning buttery");
         SmartDashboard.putNumber("buttery speed left", DriveConstants.BUTTERY_FOLLOWING_SPEED * x_angle);
         SmartDashboard.putNumber("buttery speed right", -DriveConstants.BUTTERY_FOLLOWING_SPEED * x_angle);
