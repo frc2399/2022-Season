@@ -50,9 +50,6 @@ public class ArcadeDriveCmd extends CommandBase {
             realTimeTurn = turnFunction.get() * JoystickConstants.TURN_JOYSTICK_INVERT;
         }
 
-        SmartDashboard.putNumber("realTimeSpeed", realTimeSpeed);
-        SmartDashboard.putNumber("realTimeTurn", realTimeTurn);
-
         double a = SmartDashboard.getNumber("a value", 0);
 
         // altering driving joystick sensitivity
@@ -61,8 +58,8 @@ public class ArcadeDriveCmd extends CommandBase {
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
 
-        SmartDashboard.putNumber("left", left);
-        SmartDashboard.putNumber("right", right);
+        SmartDashboard.putNumber("left speed", left);
+        SmartDashboard.putNumber("right speed", right);
 
         this.driveSubsystem.setMotors(left, right);
     }
