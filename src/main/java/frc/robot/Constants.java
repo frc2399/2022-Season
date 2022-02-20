@@ -46,18 +46,9 @@ public class Constants {
     public static final class JoystickConstants {
         // joystick ports
         public static final int JOYSTICK_PORT = 1;
-        public static final int XBOX_PORT = 0;
 
         public static final int FORWARD_JOYSTICK_INVERT = 1;
         public static final int TURN_JOYSTICK_INVERT = 1;
-
-        public static final double FORWARD_DEADBAND = 0.05;
-        public static final double TURN_DEADBAND = 0.05;
-
-        public static final double JOYSTICK_SENSITIVITY = 0.5;
-
-        public static final int ARCADE_DRIVE_SPEED_AXIS = 1;
-        public static final int ARCADE_DRIVE_TURN_AXIS = 4; 
 
         public static final int SHIFT_HIGH_SPEED = 5; 
         public static final int SHIFT_HIGH_GEAR = 6; 
@@ -70,6 +61,23 @@ public class Constants {
         public static final int TURN_TO_N = 12;
 
     }  
+
+    public static final class XboxConstants {
+        public static final int XBOX_PORT = 0;
+
+        public static final int ARCADE_DRIVE_SPEED_AXIS = 1;
+        public static final int ARCADE_DRIVE_TURN_AXIS = 4; 
+
+        public static final double FORWARD_DEADBAND = 0.05;
+        public static final double TURN_DEADBAND = 0.05;
+
+        public static final double JOYSTICK_SENSITIVITY = 0.5;
+
+        public static final int TURN_RIGHT = 2;
+        public static final int TURN_LEFT = 3;
+        public static final int TURN_180 = 1;
+
+    }
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 1;
