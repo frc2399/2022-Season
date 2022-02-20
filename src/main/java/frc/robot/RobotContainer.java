@@ -134,6 +134,9 @@ public class RobotContainer {
           new WaitUntilCommand(() -> m_shooter.correctSpeed()),
           new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
     ));
+    Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
+    Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
+    
 
     // Changing the "a" value on shuffleboard to alter joystick drive sensitivity
     // Shuffleboard.getTab("Drive")
