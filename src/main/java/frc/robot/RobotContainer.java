@@ -12,6 +12,7 @@
 
 package frc.robot;
 
+import java.util.Map;
 
 //import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -23,6 +24,7 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.Joystick;
@@ -125,7 +127,7 @@ public class RobotContainer {
     SmartDashboard.putData(m_chooser);
 
     // SmartDashboard Buttons
-    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(1, 0.5, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
     Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
     Shuffleboard.getTab("Robot").add("Index and Shoot",  new SequentialCommandGroup(
           new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),
@@ -136,14 +138,24 @@ public class RobotContainer {
     Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
     
 
+    // Changing the "a" value on shuffleboard to alter joystick drive sensitivity
+    // Shuffleboard.getTab("Drive")
+    // .add("a value", 1) 
+    // .withWidget(BuiltInWidgets.kNumberSlider)
+    // .withProperties(Map.of("min", 0, "max", 1))
+    // .getEntry();
+
+    SmartDashboard.putNumber("a value", JoystickConstants.JOYSTICK_SENSITIVITY);
+
+
     // Configure the button bindings
     configureButtonBindings();
     
     System.out.println("Hello, I am in RobotContainer");
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
-    () -> -XBOX.getRawAxis(JoystickConstants.kArcadeDriveSpeedAxis),
-    () -> XBOX.getRawAxis(JoystickConstants.kArcadeDriveTurnAxis))//
+    () -> -XBOX.getRawAxis(JoystickConstants.ARCADE_DRIVE_SPEED_AXIS),
+    () -> XBOX.getRawAxis(JoystickConstants.ARCADE_DRIVE_TURN_AXIS))//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
@@ -177,14 +189,15 @@ public class RobotContainer {
 
       System.out.println (JOYSTICK);
       System.out.println ("************************************");
-      new JoystickButton(JOYSTICK, JoystickConstants.kShiftHot)
+      new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
       .whenPressed(shiftToHot);
-      new JoystickButton(JOYSTICK, JoystickConstants.kShiftDangerous)
+      new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR)
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
       
       // Indexer runs for 2 seconds when the shooter gets to the correct speed
+      // Shooter stays at the correct speed 
       new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
         new SequentialCommandGroup(
           new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),

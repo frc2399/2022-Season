@@ -108,16 +108,16 @@ public class Shooter extends SubsystemBase {
   {
     SmartDashboard.putNumber("Top velocity", topEncoder.getVelocity());
     SmartDashboard.putNumber("Bottom velocity", bottomEncoder.getVelocity());
-    SmartDashboard.putBoolean("Top Speed in Range", checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
-    SmartDashboard.putBoolean("Bottom Speed in Range", checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+    //SmartDashboard.putBoolean("Top Speed in Range", checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
+    //SmartDashboard.putBoolean("Bottom Speed in Range", checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
 
-    SmartDashboard.putNumber("P Gain", SHOOTER_KP);
-    SmartDashboard.putNumber("I Gain", SHOOTER_KI);
-    SmartDashboard.putNumber("D Gain", SHOOTER_KD);
-    SmartDashboard.putNumber("I Zone", SHOOTER_KIZ);
-    SmartDashboard.putNumber("Feed Forward", SHOOTER_KF);
-    SmartDashboard.putNumber("Max Output", SHOOTER_K_MAX_OUTPUT);
-    SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
+    //SmartDashboard.putNumber("P Gain", SHOOTER_KP);
+    //SmartDashboard.putNumber("I Gain", SHOOTER_KI);
+    //SmartDashboard.putNumber("D Gain", SHOOTER_KD);
+    //SmartDashboard.putNumber("I Zone", SHOOTER_KIZ);
+    //SmartDashboard.putNumber("Feed Forward", SHOOTER_KF);
+    //SmartDashboard.putNumber("Max Output", SHOOTER_K_MAX_OUTPUT);
+    //SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
 
   }
 

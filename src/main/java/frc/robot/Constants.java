@@ -26,6 +26,7 @@ public class Constants {
         public static final int RIGHT_FRONT_MOTOR_ID = 2;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int RIGHT_MIDDLE_MOTOR_ID = 3;
+        // TODO: change name 
         public static final int BACK_LEFT_MOTOR_ID = 6;
         public static final int BACK_RIGHT_MOTOR_ID = 4;
 
@@ -47,14 +48,19 @@ public class Constants {
         public static final int JOYSTICK_PORT = 1;
         public static final int XBOX_PORT = 0;
 
-        public static final int LEFT_DRIVETRAIN = 1;
-        public static final int RIGHT_DRIVETRAIN = -1;
+        public static final int FORWARD_JOYSTICK_INVERT = 1;
+        public static final int TURN_JOYSTICK_INVERT = 1;
 
-        public static final int kArcadeDriveSpeedAxis = 1;
-        public static final int kArcadeDriveTurnAxis = 4; 
+        public static final double FORWARD_DEADBAND = 0.05;
+        public static final double TURN_DEADBAND = 0.05;
 
-        public static final int kShiftHot = 5; 
-        public static final int kShiftDangerous = 6; 
+        public static final double JOYSTICK_SENSITIVITY = 0.5;
+
+        public static final int ARCADE_DRIVE_SPEED_AXIS = 1;
+        public static final int ARCADE_DRIVE_TURN_AXIS = 4; 
+
+        public static final int SHIFT_HIGH_SPEED = 5; 
+        public static final int SHIFT_HIGH_GEAR = 6; 
 
         public static final int INTAKE = 2; 
 
@@ -67,7 +73,8 @@ public class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 1;
-        public static final int INTAKESPEED = 1;
+        public static final double INTAKESPEED = 0.6;
+        public static final double INTAKE_SLEW = 5;
     }
 
     public static final class ShooterConstants {
@@ -89,6 +96,13 @@ public class Constants {
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 9;
         public static final int INDEXERSPEED = 1;
+    }
+
+    public static final class PrototypeDriveConstants {
+        public static final int LEFT_FRONT_MOTOR_ID = 8;
+        public static final int LEFT_MIDDLE_MOTOR_ID = 7;
+        public static final int BACK_LEFT_MOTOR_ID = 6;
+
     }
 
 }

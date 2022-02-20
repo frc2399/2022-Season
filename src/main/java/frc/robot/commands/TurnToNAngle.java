@@ -44,7 +44,7 @@ public class TurnToNAngle extends CommandBase {
     double outputSpeed = m_driveTrain.kP * error;
     outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
 
-    m_driveTrain.setMotors(-outputSpeed, outputSpeed);
+    m_driveTrain.setMotors(outputSpeed, -outputSpeed);
 
   }
 
