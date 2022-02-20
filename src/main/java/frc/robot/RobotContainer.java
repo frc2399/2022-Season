@@ -151,8 +151,8 @@ public class RobotContainer {
     System.out.println("Hello, I am in RobotContainer");
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
-    () -> -XBOX.getRawAxis(JoystickConstants.kArcadeDriveSpeedAxis),
-    () -> XBOX.getRawAxis(JoystickConstants.kArcadeDriveTurnAxis))//
+    () -> -XBOX.getRawAxis(JoystickConstants.ARCADE_DRIVE_SPEED_AXIS),
+    () -> XBOX.getRawAxis(JoystickConstants.ARCADE_DRIVE_TURN_AXIS))//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
@@ -186,9 +186,9 @@ public class RobotContainer {
 
       System.out.println (JOYSTICK);
       System.out.println ("************************************");
-      new JoystickButton(JOYSTICK, JoystickConstants.kShiftHot)
+      new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
       .whenPressed(shiftToHot);
-      new JoystickButton(JOYSTICK, JoystickConstants.kShiftDangerous)
+      new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR)
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);

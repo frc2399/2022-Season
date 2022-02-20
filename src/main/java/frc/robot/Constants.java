@@ -52,11 +52,11 @@ public class Constants {
 
         public static final double JOYSTICK_SENSITIVITY = 0.5;
 
-        public static final int kArcadeDriveSpeedAxis = 1;
-        public static final int kArcadeDriveTurnAxis = 4; 
+        public static final int ARCADE_DRIVE_SPEED_AXIS = 1;
+        public static final int ARCADE_DRIVE_TURN_AXIS = 4; 
 
-        public static final int kShiftHot = 5; 
-        public static final int kShiftDangerous = 6; 
+        public static final int SHIFT_HIGH_SPEED = 5; 
+        public static final int SHIFT_HIGH_GEAR = 6; 
 
         public static final int INTAKE = 2; 
 
