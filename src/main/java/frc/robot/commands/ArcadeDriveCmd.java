@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.XboxConstants;
 import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
@@ -35,7 +36,7 @@ public class ArcadeDriveCmd extends CommandBase {
         double realTimeTurn;
 
         // have deadband to prevent joystick drifting
-        if (Math.abs(speedFunction.get()) <= JoystickConstants.FORWARD_DEADBAND) {
+        if (Math.abs(speedFunction.get()) <= XboxConstants.FORWARD_DEADBAND) {
             realTimeSpeed = 0;
         } 
         else {
@@ -43,7 +44,7 @@ public class ArcadeDriveCmd extends CommandBase {
         }
 
         // have deadband to prevent joystick drifting
-        if (Math.abs(turnFunction.get()) <= JoystickConstants.TURN_DEADBAND) {
+        if (Math.abs(turnFunction.get()) <= XboxConstants.TURN_DEADBAND) {
             realTimeTurn = 0;
         } 
         else {

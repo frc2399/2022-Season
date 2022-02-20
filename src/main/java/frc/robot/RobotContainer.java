@@ -49,6 +49,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 // import frc.robot.Constants.IntakeConstants;
 // import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.XboxConstants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shifter;
@@ -75,7 +76,7 @@ public class RobotContainer {
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
-  public static Joystick XBOX = new Joystick(JoystickConstants.XBOX_PORT);
+  public static Joystick XBOX = new Joystick(XboxConstants.XBOX_PORT);
 
   //Shift
   private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
@@ -89,6 +90,10 @@ public class RobotContainer {
 
 
   public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
+
+  public static TurnNAngle m_turnRight = new TurnNAngle(90, m_driveTrain);
+  public static TurnNAngle m_turnLeft = new TurnNAngle(-90, m_driveTrain);
+  public static TurnNAngle m_turn180 = new TurnNAngle(180, m_driveTrain);
 
   //Buttons
   // private static Button shiftToHotButt = new JoystickButton(XBOX, 2);
@@ -145,7 +150,7 @@ public class RobotContainer {
     // .withProperties(Map.of("min", 0, "max", 1))
     // .getEntry();
 
-    SmartDashboard.putNumber("a value", JoystickConstants.JOYSTICK_SENSITIVITY);
+    SmartDashboard.putNumber("a value", XboxConstants.JOYSTICK_SENSITIVITY);
 
 
     // Configure the button bindings
@@ -154,8 +159,8 @@ public class RobotContainer {
     System.out.println("Hello, I am in RobotContainer");
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
-    () -> -XBOX.getRawAxis(JoystickConstants.ARCADE_DRIVE_SPEED_AXIS),
-    () -> XBOX.getRawAxis(JoystickConstants.ARCADE_DRIVE_TURN_AXIS))//
+    () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
+    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS))//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
@@ -210,6 +215,10 @@ public class RobotContainer {
       new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
       
       new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
+
+      new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
+      new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
+      new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
     }
 
