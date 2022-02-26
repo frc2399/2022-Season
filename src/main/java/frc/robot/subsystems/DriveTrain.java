@@ -167,6 +167,7 @@ public class DriveTrain extends SubsystemBase {
             );
 
             field = new Field2d();
+            SmartDashboard.putData("Field", field);
         }
 
     
@@ -192,6 +193,16 @@ public class DriveTrain extends SubsystemBase {
         double fahrenheit = ahrs.getTempC() * (9/5) + 32;
         SmartDashboard.putNumber("temperature", fahrenheit);
 
+        // This will get the simulated sensor readings that we set
+        // in the previous article while in simulation, but will use
+        // real values on the robot itself.
+        odometry.update(
+            gyroSim.getAngle(),
+            leftEncoderSim.getDistance(),
+            rightEncoderSim.getDistance()
+        );
+        field.setRobotPose(odometry.getPoseMeters());
+
     }
 
     @Override
@@ -216,12 +227,6 @@ public class DriveTrain extends SubsystemBase {
         rightEncoderSim.setSpeed(driveSim.getRightVelocityMetersPerSecond());
         gyroSim.setAngle(driveSim.getHeading());
 
-        System.out.println(leftFrontMotorController.get());
-        System.out.println(rightFrontMotorController.get());
-        System.out.println(leftMiddleMotorController.get());
-        System.out.println(driveSim.getHeading());
-        System.out.println(leftEncoderSim.getSpeed());
-        System.out.println(rightEncoderSim.getSpeed());
 
     }
 
