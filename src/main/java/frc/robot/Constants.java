@@ -113,6 +113,13 @@ public class Constants {
 
     }
 
+    public static final class ClimberConstants {
+        public static final int LEFT_CLIMBER_MOTOR_ID = 62;
+        public static final int RIGHT_CLIMBER_MOTOR_ID = 63;
+        public static final double CLIMBER_SPEED = 0.5;
+        public static final double MAX_HEIGHT = 0.9;
+
+    }
 }
 
 
