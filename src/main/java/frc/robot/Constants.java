@@ -104,6 +104,7 @@ public class Constants {
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 9;
         public static final int INDEXERSPEED = 1;
+        public static final int LIMIT_SWITCH_ID = 0;
     }
 
     public static final class PrototypeDriveConstants {
