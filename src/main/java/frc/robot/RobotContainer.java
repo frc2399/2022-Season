@@ -73,6 +73,7 @@ public class RobotContainer {
     public final static Intake m_intake = new Intake();
     public final static Shooter m_shooter = new Shooter();
     public final static Indexer m_indexer = new Indexer();
+    public static final Climber m_climber = new Climber();
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
@@ -166,6 +167,7 @@ public class RobotContainer {
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
     m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
     m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
+    m_climber.setDefaultCommand(new StopClimber(m_climber));
 
     // Configure default commands
 
