@@ -17,11 +17,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Intake extends SubsystemBase {
 
 private CANSparkMax intakeMotorController;
+private DoubleSolenoid intakeArm;
 
 
 SlewRateLimiter filter;
@@ -34,6 +38,11 @@ SlewRateLimiter filter;
         SmartDashboard.putNumber("Intake Slew Rate", SmartDashboard.getNumber ("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
         filter = new SlewRateLimiter(SmartDashboard.getNumber("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
         System.out.println ("SlewRateLimiter " + SmartDashboard.getNumber("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
+
+        //Define Double Solenoid
+        intakeArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.EXTEND_INTAKE_ARM, IntakeConstants.RETRACT_INTAKE_ARM);
+
+        this.retractArm();
 
     }
 
@@ -56,7 +65,15 @@ SlewRateLimiter filter;
         intakeSpeed = filter.calculate(intakeSpeed);
         intakeMotorController.set(intakeSpeed);
         SmartDashboard.putNumber("Intake Speed", intakeSpeed);
-        }
+    }
 
+
+    public void extendArm () {
+        intakeArm.set(Value.kForward);
+    }
+
+     public void retractArm () {
+        intakeArm.set(Value.kReverse);
+    }
 }
 
