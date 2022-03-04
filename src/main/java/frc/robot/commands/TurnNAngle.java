@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnNAngle extends CommandBase {
@@ -30,7 +31,15 @@ public class TurnNAngle extends CommandBase {
     System.out.println("TurnNAngle initialized, turnAngle: " + turnAngle);
     SmartDashboard.putNumber("turn angle", turnAngle);
 
-    currentAngle = m_driveTrain.getAngle();
+    if (RobotBase.isSimulation())
+    {
+      currentAngle = m_driveTrain.gyroSim.getAngle().getDegrees();
+      System.out.println("current angle init" + currentAngle);
+    }
+    else
+    {
+      currentAngle = m_driveTrain.getAngle();
+    }
     currentAngle = modAngle(currentAngle);
     
     newAngle = modAngle(currentAngle + turnAngle);
@@ -42,7 +51,15 @@ public class TurnNAngle extends CommandBase {
   @Override
   public void execute() {
 
-    currentAngle = m_driveTrain.getAngle();
+    if (RobotBase.isSimulation())
+    {
+      currentAngle = m_driveTrain.gyroSim.getAngle().getDegrees();
+      //System.out.println("current angle sim " + currentAngle);
+    }
+    else
+    {
+      currentAngle = m_driveTrain.getAngle();
+    }
     currentAngle = modAngle(currentAngle);
 
     double error = newAngle - currentAngle;
@@ -50,8 +67,16 @@ public class TurnNAngle extends CommandBase {
     error = modAngle(error);
     SmartDashboard.putNumber("error", error);
 
-    double outputSpeed = m_driveTrain.kP * error;
-    outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
+    double outputSpeed;
+    if (RobotBase.isSimulation()) 
+    {
+      outputSpeed = m_driveTrain.kPSim * error;
+    }
+    else
+    {
+      outputSpeed = m_driveTrain.kP * error;
+    }
+    outputSpeed = MathUtil.clamp(outputSpeed, -0.2, 0.2);
 
     m_driveTrain.setMotors(outputSpeed, -outputSpeed);
 
@@ -60,14 +85,17 @@ public class TurnNAngle extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
     m_driveTrain.setMotors(0, 0);
+    
     System.out.println("TurnNangle ended");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 3);
+    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 100);
+    //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
     if (Math.abs(modAngle(newAngle - currentAngle)) <= errorTolerance) {
       return true;
     }

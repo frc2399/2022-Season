@@ -86,6 +86,7 @@ public class DriveTrain extends SubsystemBase {
 
 
     public final double kP = 0.06;
+    public final double kPSim = -0.5;
     static final double kI = 0;
     static final double kD = 0;
     static final double kF = 0;
@@ -102,9 +103,9 @@ public class DriveTrain extends SubsystemBase {
 
     private DifferentialDriveOdometry odometry;
 
-    private SimEncoder leftEncoderSim;
-    private SimEncoder rightEncoderSim;
-    private SimGyro gyroSim;
+    public SimEncoder leftEncoderSim;
+    public SimEncoder rightEncoderSim;
+    public SimGyro gyroSim;
     private DifferentialDrivetrainSim driveSim;
     private Field2d field;
 
@@ -160,7 +161,7 @@ public class DriveTrain extends SubsystemBase {
             driveSim = new DifferentialDrivetrainSim(
                 DCMotor.getNEO(3),       // 3 NEO motors on each side of the drivetrain.
                 8,                       // 8:1 gearing reduction. for now
-                6.15,                       // MOI of 5 kg m^2 (from CAD model). for now
+                20,                       // MOI of 5 kg m^2 (from CAD model). for now
                 Units.lbsToKilograms(140), // The mass of the robot is 140 lbs (with battery) which is 63 kg
                 Units.inchesToMeters(4.2), // The robot uses 4.2" radius wheels.
                 Units.inchesToMeters(27.811), // The track width is 27.811 inches.
@@ -241,13 +242,22 @@ public class DriveTrain extends SubsystemBase {
     // here. Call these from Commands.
 
     public void setMotors(double leftSpeed, double rightSpeed) {
-        leftFrontMotorController.set(leftSpeed);
-        rightFrontMotorController.set(rightSpeed);
+
+        if (RobotBase.isSimulation())
+        {
+            leftEncoderSim.setSpeed(leftSpeed);
+            rightEncoderSim.setSpeed(rightSpeed);
+        }
+        else
+        {
+            leftFrontMotorController.set(leftSpeed);
+            rightFrontMotorController.set(rightSpeed);
+        }
         SmartDashboard.putNumber("outputSpeed", leftSpeed);
     }
 
     public double getAngle()
-    {
+    { 
         return ahrs.getAngle();
     }
 

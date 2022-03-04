@@ -33,19 +33,19 @@ public class IntakeBallShootBothP1 extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelCommandGroup(
-        new ExtendIntakeArm(m_intake), 
+      // new ParallelCommandGroup(
+      //   new ExtendIntakeArm(m_intake), 
         new DriveForwardGivenDistance(0.5, 40, m_driveTrain),
-        new IntakeCmdForGivenTime(m_intake, 0.5, 2)
-      ),
+        //new IntakeCmdForGivenTime(m_intake, 0.5, 2)
+      //),
       new DriveForwardGivenDistance(0.5, -54.96, m_driveTrain),
 
-      new ParallelCommandGroup (
-        new TurnNAngle(22.5, m_driveTrain),
-        new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT)
-      ),
-      new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-      new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
+     // new ParallelCommandGroup (
+        new TurnNAngle(22.5, m_driveTrain)
+        //new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT)
+      //),
+      // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+      // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
      
     );
   }

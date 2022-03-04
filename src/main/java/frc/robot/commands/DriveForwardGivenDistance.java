@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -43,8 +44,20 @@ public class DriveForwardGivenDistance extends CommandBase {
     @Override
     public void initialize() {
         cp = 0;
-        m_driveTrain.leftEncoder.setPosition(0);
-        m_driveTrain.rightEncoder.setPosition(0);
+        if (RobotBase.isSimulation())
+        {
+            m_driveTrain.leftEncoderSim.setDistance(0);
+            m_driveTrain.rightEncoderSim.setDistance(0);
+    
+            System.out.println("get L distance " + m_driveTrain.leftEncoderSim.getDistance());
+            System.out.println("get R distance " + m_driveTrain.rightEncoderSim.getDistance());
+        }
+        else
+        {
+            m_driveTrain.leftEncoder.setPosition(0);
+            m_driveTrain.rightEncoder.setPosition(0);
+        }
+
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -52,7 +65,13 @@ public class DriveForwardGivenDistance extends CommandBase {
     public void execute() {
 
         // Get the average position between leftEncoder and rightEncoder
-        cp = ((m_driveTrain.leftEncoder.getPosition() + m_driveTrain.rightEncoder.getPosition()) / 2);
+        if (RobotBase.isSimulation()) {
+            cp = ((m_driveTrain.leftEncoderSim.getDistance() + m_driveTrain.rightEncoderSim.getDistance()) / 2) * 39.3701;
+        }
+        else
+        {
+            cp = ((m_driveTrain.leftEncoder.getPosition() + m_driveTrain.rightEncoder.getPosition()) / 2);
+        }
 
         SmartDashboard.putNumber("current position", cp);
 
@@ -69,7 +88,10 @@ public class DriveForwardGivenDistance extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        double butteryErrorTolerance = SmartDashboard.getNumber("Error Tolerance Distance", 3);
+        double butteryErrorTolerance = SmartDashboard.getNumber("Error Tolerance Distance", 0.5);
+        SmartDashboard.putNumber("distance bt td and cp", Math.abs(td - cp));
+        //System.out.println("distance bt td and cp " +  Math.abs(td - cp));
+
         if (Math.abs(td - cp) <= butteryErrorTolerance)
         {
             return true;
@@ -81,7 +103,9 @@ public class DriveForwardGivenDistance extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        m_driveTrain.setMotors(0, 0);
-        System.out.println("DriveForwardGivenDistance ended");
+    
+    m_driveTrain.setMotors(0, 0);
+
+    System.out.println("DriveForwardGivenDistance ended");
     }
 }

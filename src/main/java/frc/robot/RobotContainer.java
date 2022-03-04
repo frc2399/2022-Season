@@ -124,6 +124,9 @@ public class RobotContainer {
   private RobotContainer() {
     // Smartdashboard Subsystems
     SmartDashboard.putData(m_driveTrain);
+    SmartDashboard.putData(m_intake);
+    SmartDashboard.putData(m_shooter);
+    SmartDashboard.putData(m_indexer);
 
     //CameraServer.startAutomaticCapture();
 
@@ -137,6 +140,10 @@ public class RobotContainer {
 
     // SmartDashboard Buttons
     Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenDistance", new DriveForwardGivenDistance(0.3, 10, m_driveTrain));
+
+    Shuffleboard.getTab("DriveTrain").add("TurnNAngle", new TurnNAngle(90, m_driveTrain));
+
     Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
     Shuffleboard.getTab("Robot").add("Index and Shoot",  new SequentialCommandGroup(
           new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter),
@@ -164,7 +171,7 @@ public class RobotContainer {
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
     () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
-    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS))//
+    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
