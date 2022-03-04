@@ -17,6 +17,7 @@ import java.util.Map;
 //import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.IntakeBallShootBothP1;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.DriveConstants;
@@ -108,6 +109,7 @@ public class RobotContainer {
       );
 
   private static Command m_driveStraightAuto = new DriveForwardGivenTime(0.3, 1, m_driveTrain);
+  private static Command m_bread = new IntakeBallShootBothP1(m_driveTrain, m_intake, m_shooter, m_indexer);
 
 
   // A chooser for autonomous commands
@@ -125,7 +127,8 @@ public class RobotContainer {
     //CameraServer.startAutomaticCapture();
 
     // Add commands to the autonomous command chooser
-    m_chooser.setDefaultOption("Turn Auto", m_turnAuto);
+    m_chooser.setDefaultOption("Index and Shoot Both", m_bread);
+    m_chooser.addOption("Turn Auto", m_turnAuto);
     m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
 
     // Put the chooser on the dashboard
