@@ -33,8 +33,8 @@ public class Climber extends SubsystemBase {
 
   public Climber() {
     //initialize motor controllers
-    leftMotorController = new CANSparkMax(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, MotorType.kBrushed);
-    rightMotorController = new CANSparkMax(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushed);
+    leftMotorController = new CANSparkMax(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
+    rightMotorController = new CANSparkMax(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
 
     //restore factory settings to reset to a known state
     leftMotorController.restoreFactoryDefaults();
