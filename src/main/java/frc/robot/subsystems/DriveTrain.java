@@ -10,7 +10,6 @@
 
 // ROBOTBUILDER TYPE: Subsystem.
 
-
 //Clare was here!!!!
 
 //Herb was here !!!!
@@ -27,13 +26,13 @@
 
 package frc.robot.subsystems;
 
-
 // import frc.robot.commands.*;
 // import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 
 //import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
@@ -60,6 +59,8 @@ public class DriveTrain extends SubsystemBase {
     private CANSparkMax rightMiddleMotorController;
     private CANSparkMax leftBackMotorController;
     private CANSparkMax rightBackMotorController;
+
+    public RelativeEncoder leftEncoder, rightEncoder;
 
     public static AHRS ahrs;
     public static PIDController turnController;
@@ -112,6 +113,13 @@ public class DriveTrain extends SubsystemBase {
 
         turnController = new PIDController(kP, kI, kD);
         turnController.enableContinuousInput(-180.0f, 180.0f);
+
+       //initialize motor encoder
+        leftEncoder = leftFrontMotorController.getEncoder();
+        rightEncoder = rightFrontMotorController.getEncoder();
+
+        leftEncoder.setPosition(0);
+        rightEncoder.setPosition(0);
 
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
