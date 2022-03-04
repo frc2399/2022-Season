@@ -67,7 +67,8 @@ public class Climber extends SubsystemBase {
     leftMotorController.setInverted(false);
     rightMotorController.setInverted(false);
     
-    
+    leftEncoder.setPosition(0);
+    rightEncoder.setPosition(0);
 
   }
 
