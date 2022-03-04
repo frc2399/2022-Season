@@ -83,6 +83,10 @@ public class Constants {
         public static final int INTAKE_MOTOR_ID = 1;
         public static final double INTAKESPEED = 0.6;
         public static final double INTAKE_SLEW = 5;
+
+        //intake arm
+        public static final int EXTEND_INTAKE_ARM = 2;
+        public static final int RETRACT_INTAKE_ARM = 3;
     }
 
     public static final class ShooterConstants {
@@ -104,6 +108,7 @@ public class Constants {
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 9;
         public static final int INDEXERSPEED = 1;
+        public static final int LIMIT_SWITCH_ID = 0;
     }
 
     public static final class PrototypeDriveConstants {
@@ -112,15 +117,14 @@ public class Constants {
         public static final int BACK_LEFT_MOTOR_ID = 6;
 
     }
-    
-
-    
+  
     public static final class ClimberConstants {
         public static final int LEFT_CLIMBER_MOTOR_ID = 30;
         public static final int RIGHT_CLIMBER_MOTOR_ID = 31;
         public static final double CLIMBER_SPEED = 0.5;
         public static final double MAX_HEIGHT = 0.9;
         public static final double MIN_HEIGHT = 0;
+
     }
 }
 

@@ -33,5 +33,6 @@ public class StopClimber extends CommandBase {
     @Override
     public boolean isFinished() {
         return false;
+
     }
 }
