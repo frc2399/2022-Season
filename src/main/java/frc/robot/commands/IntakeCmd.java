@@ -3,13 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeGeneric;
 
 public class IntakeCmd extends CommandBase {
 
-    private final Intake intakeSubsystem;
+    private final IntakeGeneric intakeSubsystem;
     private final double speed;
 
-    public IntakeCmd(Intake intakeSubsystem, double speed) {
+    public IntakeCmd(IntakeGeneric intakeSubsystem, double speed) {
         this.intakeSubsystem = intakeSubsystem;
         this.speed = speed;
         addRequirements(intakeSubsystem);

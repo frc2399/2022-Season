@@ -67,7 +67,8 @@ public class RobotContainer {
     public final static DriveTrain m_driveTrain = new DriveTrain();
     //public final DriveTrain m_driveTrain = new DriveTrain();
     public final static Shifter m_shifter = new Shifter();
-    public final static Intake m_intake = new Intake();
+    public final static IntakeGeneric m_intake = new IntakeGeneric(new IntakeButter());
+    // public final static Intake m_intake = new Intake();
     public final static Shooter m_shooter = new Shooter();
     public final static Indexer m_indexer = new Indexer();
 
