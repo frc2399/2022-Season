@@ -20,6 +20,9 @@ import frc.robot.commands.*;
 import frc.robot.commands.autonomous.IntakeBallShootBothP1;
 import frc.robot.commands.autonomous.JellyStrawberryAuton;
 import frc.robot.commands.autonomous.Position2Auton;
+import frc.robot.commands.autonomous.Position3Auton;
+import frc.robot.commands.autonomous.Position4AutonStale;
+import frc.robot.commands.autonomous.Position5AutonPB;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.DriveConstants;
@@ -115,6 +118,9 @@ public class RobotContainer {
   private static Command m_bread = new IntakeBallShootBothP1(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_PB = new Position2Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter, m_indexer);
+  private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
+  private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
+  private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
 
 
   // A chooser for autonomous commands
@@ -140,6 +146,9 @@ public class RobotContainer {
     m_chooser.setDefaultOption("Jelly Strawberry auton", m_jellyStrawberryAuton);
     m_chooser.addOption("Turn Auto", m_turnAuto);
     m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
+    m_chooser.addOption("Position 3 (jelly)", m_jelly);
+    m_chooser.addOption("Position 4 (stale bread)", m_stale);
+    m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
 
     // Put the chooser on the dashboard
     SmartDashboard.putData(m_chooser);
