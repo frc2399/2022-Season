@@ -54,7 +54,7 @@ public class TurnNAngle extends CommandBase {
     if (RobotBase.isSimulation())
     {
       currentAngle = m_driveTrain.gyroSim.getAngle().getDegrees();
-      //System.out.println("current angle sim " + currentAngle);
+      System.out.println("current angle sim " + currentAngle);
     }
     else
     {
@@ -63,6 +63,7 @@ public class TurnNAngle extends CommandBase {
     currentAngle = modAngle(currentAngle);
 
     double error = newAngle - currentAngle;
+    System.out.println("error angle " +  error);
 
     error = modAngle(error);
     SmartDashboard.putNumber("error", error);
@@ -94,7 +95,7 @@ public class TurnNAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 100);
+    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 5);
     //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
     if (Math.abs(modAngle(newAngle - currentAngle)) <= errorTolerance) {
       return true;

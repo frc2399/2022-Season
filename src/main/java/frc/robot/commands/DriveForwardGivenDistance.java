@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,17 +22,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveForwardGivenDistance extends CommandBase {
 
     //insantiate global variables
-    double sp;
-    double cp;
-    double td;
+    double speed;
+    double currentPosition;
+    double targetDistance;
+    double newTargetDistance;
     DriveTrain m_driveTrain;
     
  
 	public DriveForwardGivenDistance(double speed, double targetDistance, DriveTrain subsystem) {
         
         //initialize variables
-        sp = speed;
-        td = targetDistance;
+        this.speed = speed;
+        this.targetDistance = targetDistance;
         m_driveTrain = subsystem;
         addRequirements(m_driveTrain);
 
@@ -43,20 +45,12 @@ public class DriveForwardGivenDistance extends CommandBase {
 	// Called just before this Command runs the first time
     @Override
     public void initialize() {
-        cp = 0;
-        if (RobotBase.isSimulation())
-        {
-            m_driveTrain.leftEncoderSim.setDistance(0);
-            m_driveTrain.rightEncoderSim.setDistance(0);
-    
-            System.out.println("get L distance " + m_driveTrain.leftEncoderSim.getDistance());
-            System.out.println("get R distance " + m_driveTrain.rightEncoderSim.getDistance());
-        }
-        else
-        {
-            m_driveTrain.leftEncoder.setPosition(0);
-            m_driveTrain.rightEncoder.setPosition(0);
-        }
+        // Sets the current position to where robot is starting
+        currentPosition = (m_driveTrain.getLeftEncoderPosition() + m_driveTrain.getRightEncoderPosition()) / 2;
+        System.out.println("starting current position " + currentPosition);
+        
+        // find distance robot needs to travel to from its current position
+        newTargetDistance = currentPosition + targetDistance;
 
     }
 
@@ -65,17 +59,11 @@ public class DriveForwardGivenDistance extends CommandBase {
     public void execute() {
 
         // Get the average position between leftEncoder and rightEncoder
-        if (RobotBase.isSimulation()) {
-            cp = ((m_driveTrain.leftEncoderSim.getDistance() + m_driveTrain.rightEncoderSim.getDistance()) / 2) * 39.3701;
-        }
-        else
-        {
-            cp = ((m_driveTrain.leftEncoder.getPosition() + m_driveTrain.rightEncoder.getPosition()) / 2);
-        }
+        currentPosition = (m_driveTrain.getLeftEncoderPosition() + m_driveTrain.getRightEncoderPosition()) / 2;
 
-        SmartDashboard.putNumber("current position", cp);
+        SmartDashboard.putNumber("current position", currentPosition);
 
-        double error = td - cp;
+        double error = newTargetDistance - currentPosition;
 
         SmartDashboard.putNumber("error distance", error);
 
@@ -89,10 +77,10 @@ public class DriveForwardGivenDistance extends CommandBase {
     @Override
     public boolean isFinished() {
         double butteryErrorTolerance = SmartDashboard.getNumber("Error Tolerance Distance", 0.5);
-        SmartDashboard.putNumber("distance bt td and cp", Math.abs(td - cp));
+        SmartDashboard.putNumber("distance bt td and cp", Math.abs(targetDistance - currentPosition));
         //System.out.println("distance bt td and cp " +  Math.abs(td - cp));
 
-        if (Math.abs(td - cp) <= butteryErrorTolerance)
+        if (Math.abs(newTargetDistance - currentPosition) <= butteryErrorTolerance)
         {
             return true;
         }
@@ -104,8 +92,8 @@ public class DriveForwardGivenDistance extends CommandBase {
     @Override
     public void end(boolean interrupted) {
     
-    m_driveTrain.setMotors(0, 0);
+        m_driveTrain.setMotors(0, 0);
 
-    System.out.println("DriveForwardGivenDistance ended");
+        System.out.println("DriveForwardGivenDistance ended");
     }
 }
