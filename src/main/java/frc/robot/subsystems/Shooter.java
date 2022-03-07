@@ -16,6 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 // Import Statements for Spark Max Controllers and Neo 550 Motors
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+
+import java.util.function.BooleanSupplier;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -34,7 +37,7 @@ public class Shooter extends SubsystemBase {
   //? - don't know if these are right/go with sparks
   private double topSetpoint;
   private double bottomSetpoint;
-  private static final double RANGE = 50;
+  public static final double RANGE = 50;
 
   //PID constants 
   //TODO: MOVE TO CONSTANTS FILE!
@@ -118,6 +121,7 @@ public class Shooter extends SubsystemBase {
     //SmartDashboard.putNumber("Feed Forward", SHOOTER_KF);
     //SmartDashboard.putNumber("Max Output", SHOOTER_K_MAX_OUTPUT);
     //SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
+    
 
   }
 
