@@ -197,8 +197,6 @@ public class DriveTrain extends SubsystemBase {
         // outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
         // setMotors(-outputSpeed, outputSpeed);
 
-        double fahrenheit = ahrs.getTempC() * (9/5) + 32;
-        SmartDashboard.putNumber("temperature", fahrenheit);
 
         // This will get the simulated sensor readings that we set
         // in the previous article while in simulation, but will use
