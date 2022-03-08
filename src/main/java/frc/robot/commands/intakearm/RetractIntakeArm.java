@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.intakearm;
 
 import frc.robot.subsystems.Intake;
 
@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * Extend or retract Intake Arm with pneums
  */
 
-public class ExtendIntakeArm extends CommandBase {
+public class RetractIntakeArm extends CommandBase {
 	
     private static Intake m_intake;
 
-	public ExtendIntakeArm(Intake intake) {
+	public RetractIntakeArm(Intake intake) {
 		m_intake = intake;
 	}
 
@@ -25,7 +25,7 @@ public class ExtendIntakeArm extends CommandBase {
 	
 	@Override
 	public void execute() {
-		m_intake.extendArm();
+		m_intake.retractArm();
 	}
 
 	

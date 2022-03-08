@@ -59,6 +59,10 @@ public class Constants {
 
         public static final int INDEXER = 9;
         public static final int TURN_TO_N = 12;
+        public static final int INDEXER_FWD = 5;
+        public static final int INDEXER_BACK = 3;
+
+        public static final int CLIMBER_UP = 6;
 
     }  
 

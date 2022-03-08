@@ -1,9 +1,8 @@
-package frc.robot.commands;
+package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class IndexerCmdForGivenTime extends CommandBase {
 

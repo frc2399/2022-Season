@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.drivetrain;
 
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Shifter;
