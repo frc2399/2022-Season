@@ -93,7 +93,11 @@ public class RobotContainer {
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
 
   //Indexer
-  private static IndexerCmd indexerCmd = new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED);
+  private static IndexerCmd indexerFwdCmd = new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED);
+  private static IndexerCmd indexerBackCmd = new IndexerCmd(m_indexer, -IndexerConstants.INDEXERSPEED);
+
+  //Climber
+  private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 0.5);
 
 
   public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
@@ -143,7 +147,7 @@ public class RobotContainer {
     // Add commands to the autonomous command chooser
     m_chooser.addOption("Index and Shoot Both", m_bread);
     m_chooser.addOption("position 2 auton", m_PB);
-    m_chooser.setDefaultOption("Jelly Strawberry auton", m_jellyStrawberryAuton);
+    m_chooser.addOption("Jelly Strawberry auton", m_jellyStrawberryAuton);
     m_chooser.addOption("Turn Auto", m_turnAuto);
     m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
     m_chooser.addOption("Position 3 (jelly)", m_jelly);
@@ -228,6 +232,8 @@ public class RobotContainer {
       .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
+
+      new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
       
       // Indexer runs for 2 seconds when the shooter gets to the correct speed
       // Shooter stays at the correct speed 
@@ -239,8 +245,8 @@ public class RobotContainer {
         )
       );
 
-    
-      new JoystickButton(JOYSTICK, JoystickConstants.INDEXER).whileHeld(indexerCmd);
+      new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
+      new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
       
       new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
 
