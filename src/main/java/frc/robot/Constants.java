@@ -50,6 +50,7 @@ public class Constants {
         public static final int FORWARD_JOYSTICK_INVERT = 1;
         public static final int TURN_JOYSTICK_INVERT = 1;
 
+        // TODO: switch buttons to x box bumpers
         public static final int SHIFT_HIGH_SPEED = 5; 
         public static final int SHIFT_HIGH_GEAR = 6; 
 
@@ -57,8 +58,13 @@ public class Constants {
 
         public static final int SHOOTER_BTN = 3; 
 
-        public static final int INDEXER = 9;
+        public static final int INDEXER_FWD = 5;
+        public static final int INDEXER_BACK = 3;
+
         public static final int TURN_TO_N = 12;
+
+        public static final int CLIMBER_UP = 6;
+        public static final int CLIMBER_DOWN = 4;
 
     }  
 
@@ -75,7 +81,7 @@ public class Constants {
 
         public static final int TURN_RIGHT = 2;
         public static final int TURN_LEFT = 3;
-        public static final int TURN_180 = 1;
+        public static final int TURN_180 = 4;
 
     }
 
