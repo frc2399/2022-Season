@@ -16,7 +16,7 @@ import frc.robot.subsystems.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeBallShootBothP1 extends SequentialCommandGroup {
+public class Position2Auton extends SequentialCommandGroup {
   /** Creates a new IntakeBallShootBothP1. */
 
   private final DriveTrain m_driveTrain;
@@ -24,7 +24,7 @@ public class IntakeBallShootBothP1 extends SequentialCommandGroup {
   private final Indexer m_indexer;
   private final Shooter m_shooter;
 
-  public IntakeBallShootBothP1(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
+  public Position2Auton(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
     m_driveTrain = dt;
     m_intake = it;
     m_indexer = id;
@@ -35,15 +35,20 @@ public class IntakeBallShootBothP1 extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake), 
-        new DriveForwardGivenDistance(0.5, 40, m_driveTrain),
+        new DriveForwardGivenDistance(0.5, 67.5, m_driveTrain),
         new IntakeCmdForGivenTime(m_intake, 0.5, 2)
       ),
-      new DriveForwardGivenDistance(0.5, -54.96, m_driveTrain),
 
-     new ParallelCommandGroup (
-        new TurnNAngle(22.5, m_driveTrain),
-        new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT)
-      ),
+        new TurnNAngle(-90, m_driveTrain),
+        new DriveForwardGivenDistance(0.5, 34, m_driveTrain),
+        new TurnNAngle(90, m_driveTrain),
+        new DriveForwardGivenDistance(0.5, -91.127, m_driveTrain),
+
+        new ParallelCommandGroup(
+            new TurnNAngle(-45.6, m_driveTrain),
+            new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT)
+        ),
+    
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
      

@@ -44,6 +44,8 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -86,6 +88,7 @@ public class DriveTrain extends SubsystemBase {
 
 
     public final double kP = 0.06;
+    public final double kPSim = 0.5;
     static final double kI = 0;
     static final double kD = 0;
     static final double kF = 0;
@@ -102,9 +105,9 @@ public class DriveTrain extends SubsystemBase {
 
     private DifferentialDriveOdometry odometry;
 
-    private SimEncoder leftEncoderSim;
-    private SimEncoder rightEncoderSim;
-    private SimGyro gyroSim;
+    public SimEncoder leftEncoderSim;
+    public SimEncoder rightEncoderSim;
+    public SimGyro gyroSim;
     private DifferentialDrivetrainSim driveSim;
     private Field2d field;
 
@@ -152,17 +155,18 @@ public class DriveTrain extends SubsystemBase {
 
         // this code is instantiating the simulated sensors and actuators when the robot is in simulation
         if (RobotBase.isSimulation()) {
+
             leftEncoderSim = new SimEncoder("Left Drive");
             rightEncoderSim = new SimEncoder("Right Drive");
             gyroSim = new SimGyro("NavX");
-            odometry = new DifferentialDriveOdometry(gyroSim.getAngle());
+            odometry = new DifferentialDriveOdometry(gyroSim.getAngle(), new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
             // Create the simulation model of our drivetrain.
             driveSim = new DifferentialDrivetrainSim(
                 DCMotor.getNEO(3),       // 3 NEO motors on each side of the drivetrain.
                 8,                       // 8:1 gearing reduction. for now
-                6.15,                       // MOI of 5 kg m^2 (from CAD model). for now
+                6,                       // MOI of 6 kg m^2 (from CAD model). for now
                 Units.lbsToKilograms(140), // The mass of the robot is 140 lbs (with battery) which is 63 kg
-                Units.inchesToMeters(4.2), // The robot uses 4.2" radius wheels.
+                Units.inchesToMeters(2.1), // The robot uses 2.1" radius wheels.
                 Units.inchesToMeters(27.811), // The track width is 27.811 inches.
 
                 // The standard deviations for measurement noise:
@@ -175,6 +179,8 @@ public class DriveTrain extends SubsystemBase {
 
             field = new Field2d();
             SmartDashboard.putData("Field", field);
+
+            //field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
         }
 
     
@@ -201,12 +207,7 @@ public class DriveTrain extends SubsystemBase {
         // This will get the simulated sensor readings that we set
         // in the previous article while in simulation, but will use
         // real values on the robot itself.
-        odometry.update(
-            gyroSim.getAngle(),
-            leftEncoderSim.getDistance(),
-            rightEncoderSim.getDistance()
-        );
-        field.setRobotPose(odometry.getPoseMeters());
+        // finds the position and angle of the robot given gyro and encoders
 
     }
 
@@ -216,8 +217,19 @@ public class DriveTrain extends SubsystemBase {
         // Set the inputs to the system. Note that we need to convert
         // the [-1, 1] PWM signal to voltage by multiplying it by the
         // robot controller voltage.
-        driveSim.setInputs(leftFrontMotorController.get() * RobotController.getInputVoltage(),
-        rightFrontMotorController.get() * RobotController.getInputVoltage());
+
+        odometry.update(
+            // changes the sign of input for turning because the simulator would invert it otherwise (we want CW is positive, CCW is negative)
+            new Rotation2d(-gyroSim.getAngle().getRadians()),
+            leftEncoderSim.getDistance(),
+            rightEncoderSim.getDistance()
+        );
+        field.setRobotPose(odometry.getPoseMeters());
+
+        driveSim.setInputs(
+            leftFrontMotorController.get() * RobotController.getInputVoltage(),
+            rightFrontMotorController.get() * RobotController.getInputVoltage()
+        );
     
 
         // Advance the model by 20 ms. Note that if you are running this
@@ -230,7 +242,8 @@ public class DriveTrain extends SubsystemBase {
         leftEncoderSim.setSpeed(driveSim.getLeftVelocityMetersPerSecond());
         rightEncoderSim.setDistance(driveSim.getRightPositionMeters());
         rightEncoderSim.setSpeed(driveSim.getRightVelocityMetersPerSecond());
-        gyroSim.setAngle(driveSim.getHeading());
+        // inverts so the code reads it as positive after the simulator (we want CW is positive, CCW is negative)
+        gyroSim.setAngle(new Rotation2d(-driveSim.getHeading().getRadians()));
 
 
     }
@@ -239,13 +252,39 @@ public class DriveTrain extends SubsystemBase {
     // here. Call these from Commands.
 
     public void setMotors(double leftSpeed, double rightSpeed) {
+
         leftFrontMotorController.set(leftSpeed);
         rightFrontMotorController.set(rightSpeed);
+
         SmartDashboard.putNumber("outputSpeed", leftSpeed);
     }
 
-    public double getAngle()
+    public double getLeftEncoderPosition()
     {
+        if (RobotBase.isSimulation())
+        {
+            return Units.metersToInches(leftEncoderSim.getDistance());
+        }
+        else
+        {
+            return Units.metersToInches(leftEncoder.getPosition());
+        }
+    }
+
+    public double getRightEncoderPosition()
+    {
+        if (RobotBase.isSimulation())
+        {
+            return Units.metersToInches(rightEncoderSim.getDistance());
+        }
+        else
+        {
+            return Units.metersToInches(rightEncoder.getPosition());
+        }
+    }
+
+    public double getAngle()
+    { 
         return ahrs.getAngle();
     }
 

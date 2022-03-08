@@ -22,13 +22,13 @@ package frc.robot;
 public class Constants {
     public static final class DriveConstants {
         // motor ids
-        public static final int LEFT_FRONT_MOTOR_ID = 8;
-        public static final int RIGHT_FRONT_MOTOR_ID = 2;
+        public static final int LEFT_FRONT_MOTOR_ID = 6;
+        public static final int RIGHT_FRONT_MOTOR_ID = 3;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
-        public static final int RIGHT_MIDDLE_MOTOR_ID = 3;
+        public static final int RIGHT_MIDDLE_MOTOR_ID = 4;
         // TODO: change name 
-        public static final int BACK_LEFT_MOTOR_ID = 6;
-        public static final int BACK_RIGHT_MOTOR_ID = 4;
+        public static final int BACK_LEFT_MOTOR_ID = 8;
+        public static final int BACK_RIGHT_MOTOR_ID = 5;
 
         //solenoids
         public static final int SHIFTER_HOT_SOLENOID_PORT = 0;
@@ -96,7 +96,7 @@ public class Constants {
         public static final double GEAR_RATIO = 84.0 / 54.0;
         public static final double TALON_100MS_IN_1S = 10.0;
         public static final int TOP_MOTOR_ID = 10; 
-        public static final int BOTTOM_MOTOR_ID = 5;
+        public static final int BOTTOM_MOTOR_ID = 9;
         public static final double SHOOTER_SPEED_INCREMENT = 0;
 
         public static final double SHOOTER_SPEED = 0.06;
@@ -106,7 +106,7 @@ public class Constants {
     }
 
     public static final class IndexerConstants {
-        public static final int INDEXER_MOTOR_ID = 9;
+        public static final int INDEXER_MOTOR_ID = 2;
         public static final int INDEXERSPEED = 1;
         public static final int LIMIT_SWITCH_ID = 0;
     }
@@ -119,8 +119,8 @@ public class Constants {
     }
   
     public static final class ClimberConstants {
-        public static final int LEFT_CLIMBER_MOTOR_ID = 30;
-        public static final int RIGHT_CLIMBER_MOTOR_ID = 31;
+        public static final int LEFT_CLIMBER_MOTOR_ID = 12;
+        public static final int RIGHT_CLIMBER_MOTOR_ID = 11;
         public static final double CLIMBER_SPEED = 0.5;
         public static final double MAX_HEIGHT = 0.9;
         public static final double MIN_HEIGHT = 0;
