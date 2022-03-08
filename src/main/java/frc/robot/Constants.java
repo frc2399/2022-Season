@@ -126,6 +126,19 @@ public class Constants {
         public static final double MIN_HEIGHT = 0;
 
     }
+
+    public static final class LimelightConstants {
+        public static final int HEIGHT_INCHES = 18;
+    }
+
+    public static final class PhotonLimelightConstants {
+        public static final double CAMERA_HEIGHT_FEET = 45/12;
+        public static final double TARGET_HEIGHT_FEET = 91/12;
+        public static final double HUB_RADIUS_FEET = 2.25;
+        public static final double TILT_DEGREES = -5.3;
+        // public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+        // public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+    }
 }
 
 

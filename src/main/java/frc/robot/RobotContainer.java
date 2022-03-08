@@ -15,6 +15,7 @@ package frc.robot;
 import java.util.Map;
 
 //import edu.wpi.first.cameraserver.CameraServer;
+import org.photonvision.PhotonCamera;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.commands.*;
 import frc.robot.commands.autonomous.IntakeBallShootBothP1;
@@ -75,6 +76,8 @@ public class RobotContainer {
     public final static Shooter m_shooter = new Shooter();
     public final static Indexer m_indexer = new Indexer();
     public static final Climber m_climber = new Climber();
+    public final static Limelight m_limelight = new Limelight();
+    public final static PhotonLimelight m_photonLimelight = new PhotonLimelight();
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
