@@ -27,43 +27,17 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.IndexerConstants;
-import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.JoystickConstants;
-// import frc.robot.Constants.DriveConstants;
-// import frc.robot.Constants.IntakeConstants;
-// import frc.robot.Constants.JoystickConstants;
+import frc.robot.Constants.*;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.XboxConstants;
 import frc.robot.commands.ButterySmoothFollowTarget;
-import frc.robot.commands.autonomous.IntakeBallShootBothP1;
-import frc.robot.commands.autonomous.JellyStrawberryAuton;
-import frc.robot.commands.autonomous.Position2Auton;
-import frc.robot.commands.autonomous.Position3Auton;
-import frc.robot.commands.autonomous.Position4AutonStale;
-import frc.robot.commands.autonomous.Position5AutonPB;
-import frc.robot.commands.climber.ExtendClimber;
-import frc.robot.commands.climber.StopClimber;
-import frc.robot.commands.drivetrain.ArcadeDriveCmd;
-import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
-import frc.robot.commands.drivetrain.DriveForwardGivenTime;
-import frc.robot.commands.drivetrain.FollowTarget;
-import frc.robot.commands.drivetrain.Shift;
-import frc.robot.commands.drivetrain.TurnNAngle;
-import frc.robot.commands.drivetrain.TurnToNAngle;
-import frc.robot.commands.indexer.IndexerCmd;
-import frc.robot.commands.indexer.IndexerCmdForGivenTime;
-import frc.robot.commands.intake.IntakeCmd;
-import frc.robot.commands.shooter.SetShootPowerCmd;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.PhotonLimelight;
-import frc.robot.subsystems.Shifter;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.autonomous.*;
+import frc.robot.commands.climber.*;
+import frc.robot.commands.drivetrain.*;
+import frc.robot.commands.indexer.*;
+import frc.robot.commands.intake.*;
+import frc.robot.commands.shooter.*;
+import frc.robot.subsystems.*;
 
 
 
@@ -134,10 +108,7 @@ public class RobotContainer {
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   
-  /**
-  * The container for the robot.  Contains subsystems, OI devices, and commands.
-  */
-
+ 
   private RobotContainer() {
     // Smartdashboard Subsystems
     SmartDashboard.putData(m_driveTrain);
@@ -192,24 +163,18 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     
-    System.out.println("Hello, I am in RobotContainer");
 
-    m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
-    () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
-    // TODO WHY IS 0.25 HERE
-    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)//
-);
 
     // Configure default commands
+    m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, 
+      () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
+      // TODO WHY IS 0.25 HERE
+      () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)
+    );
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
     m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
     m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
     m_climber.setDefaultCommand(new StopClimber(m_climber));
-
-
-    // Configure autonomous sendable chooser
-
-    // m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
 
 
   }
@@ -260,12 +225,6 @@ private void configureButtonBindings() {
 }
 
 
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-  */
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     System.out.println("Autonomous command!" + m_chooser.getSelected());
