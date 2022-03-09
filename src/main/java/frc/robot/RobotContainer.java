@@ -140,10 +140,10 @@ public class RobotContainer {
   */
   private RobotContainer() {
     // Smartdashboard Subsystems
-    SmartDashboard.putData(m_driveTrain);
-    SmartDashboard.putData(m_intake);
-    SmartDashboard.putData(m_shooter);
-    SmartDashboard.putData(m_indexer);
+    // SmartDashboard.putData(m_driveTrain);
+    // SmartDashboard.putData(m_intake);
+    // SmartDashboard.putData(m_shooter);
+    // SmartDashboard.putData(m_indexer);
 
     //CameraServer.startAutomaticCapture();
 

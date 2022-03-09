@@ -153,7 +153,7 @@ public class PhotonLimelight extends SubsystemBase {
     // dist between points
     double q = Math.sqrt(dx * dx + dy * dy);
     if (q > 2.0 * r) {
-      System.out.println("ERROR: separation of points > diameter");
+      // System.out.println("ERROR: separation of points > diameter");
       return null;
     }
     // halfway point
