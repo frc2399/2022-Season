@@ -5,10 +5,9 @@
 // bread
 package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+//import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -21,13 +20,11 @@ public class JellyStrawberryAuton extends SequentialCommandGroup {
 
   private final DriveTrain m_driveTrain;
   private final Intake m_intake;
-  private final Indexer m_indexer;
   private final Shooter m_shooter;
 
-  public JellyStrawberryAuton(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
+  public JellyStrawberryAuton(DriveTrain dt, Intake it, Shooter sh) {
     m_driveTrain = dt;
     m_intake = it;
-    m_indexer = id;
     m_shooter = sh;
 
     // Add your commands in the addCommands() call, e.g.
