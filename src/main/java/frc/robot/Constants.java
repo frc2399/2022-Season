@@ -33,7 +33,7 @@ public class Constants {
         //solenoids
         public static final int SHIFTER_HOT_SOLENOID_PORT = 0;
 	    public static final int SHIFTER_DANGEROUS_SOLENOID_PORT= 1;
-        public static final int PCM_ADDRESS = 3;
+        public static final int PCM_ADDRESS = 13;
         public static final boolean SHIFTER_SOLENOID_DANGEROUS= true;
 	    public static final boolean SHIFTER_SOLENOID_HOT= true;
         public static final double SHIFT_TIMER = 0.5;
