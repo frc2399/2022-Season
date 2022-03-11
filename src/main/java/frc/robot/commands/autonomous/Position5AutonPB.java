@@ -5,10 +5,11 @@
 // bread
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -43,7 +44,7 @@ public class Position5AutonPB extends SequentialCommandGroup {
       new DriveForwardGivenDistance(0.5, -91.127, m_driveTrain),
       new ParallelCommandGroup (
         new TurnNAngle(22.5, m_driveTrain),
-        new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT) //run shooter to setpoint
+        new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)        //run shooter to setpoint
       ),
       new TurnNAngle(-24.28, m_driveTrain),
       new ParallelCommandGroup (

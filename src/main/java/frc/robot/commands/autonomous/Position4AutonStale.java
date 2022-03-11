@@ -5,10 +5,11 @@
 // bread
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -40,7 +41,7 @@ public class Position4AutonStale extends SequentialCommandGroup {
       new DriveForwardGivenDistance(0.5, -60, m_driveTrain),
       new ParallelCommandGroup (
         new TurnNAngle(22.5, m_driveTrain),
-        new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT)
+        new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
       ),
       new TurnNAngle(57.4, m_driveTrain),
       new DriveForwardGivenDistance(0.5, 87, m_driveTrain),
