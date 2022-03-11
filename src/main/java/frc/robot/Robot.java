@@ -71,9 +71,9 @@ public class Robot extends TimedRobot {
 
     
         //read values periodically
-        double x = tx.getDouble(5);
-        double y = ty.getDouble(0.0);
-        double area = ta.getDouble(0.0);
+        // double x = tx.getDouble(5);
+        // double y = ty.getDouble(0.0);
+        // double area = ta.getDouble(0.0);
 
         //post to smart dashboard periodically
         // SmartDashboard.putNumber("LimelightX", x);

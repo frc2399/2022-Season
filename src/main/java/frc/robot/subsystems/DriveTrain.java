@@ -117,8 +117,8 @@ public class DriveTrain extends SubsystemBase {
         rightFrontMotorController = new CANSparkMax(DriveConstants.RIGHT_FRONT_MOTOR_ID, MotorType.kBrushless);
         leftMiddleMotorController = new CANSparkMax(DriveConstants.LEFT_MIDDLE_MOTOR_ID, MotorType.kBrushless);
         rightMiddleMotorController = new CANSparkMax(DriveConstants.RIGHT_MIDDLE_MOTOR_ID, MotorType.kBrushless);
-        leftBackMotorController = new CANSparkMax(DriveConstants.BACK_LEFT_MOTOR_ID, MotorType.kBrushless);
-        rightBackMotorController = new CANSparkMax(DriveConstants.BACK_RIGHT_MOTOR_ID, MotorType.kBrushless);
+        leftBackMotorController = new CANSparkMax(DriveConstants.LEFT_BACK_MOTOR_ID, MotorType.kBrushless);
+        rightBackMotorController = new CANSparkMax(DriveConstants.RIGHT_BACK_MOTOR_ID, MotorType.kBrushless);
 
         // Set motors to brake mode 
         leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
