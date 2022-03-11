@@ -20,7 +20,7 @@ public class Climber extends SubsystemBase {
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPIDController, rightPIDController;
 
-  private double climberSetpoint;
+  //private double climberSetpoint;
 
   public static final double CLIMBER_KP = 0;//1.875;
   public static final double CLIMBER_KI = 0;//0.006;
