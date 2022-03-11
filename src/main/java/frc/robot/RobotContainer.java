@@ -53,8 +53,8 @@ public class RobotContainer {
   public static Joystick XBOX = new Joystick(XboxConstants.XBOX_PORT);
 
   //Shift
-  private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
-  private static Shift shiftToHot = new Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+  private static Shift shiftHighGear = new Shift(!DriveConstants.SHIFT_HIGH_SPEED_SOLENOID, DriveConstants.SHIFT_HIGH_GEAR_SOLENOID);
+  private static Shift shiftHighSpeed = new Shift(DriveConstants.SHIFT_HIGH_SPEED_SOLENOID,!DriveConstants.SHIFT_HIGH_GEAR_SOLENOID);
 
   //Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
@@ -183,10 +183,10 @@ private void configureButtonBindings() {
 // Create some buttons
   System.out.println (JOYSTICK);
   System.out.println ("************************************");
-  new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
-  .whenPressed(shiftToHot);
   new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR)
-  .whenPressed(shiftToDangerous);
+  .whenPressed(shiftHighGear);
+  new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
+  .whenPressed(shiftHighSpeed);
 
   new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
 

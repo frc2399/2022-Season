@@ -13,17 +13,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shift extends CommandBase {
 	
 	private Shifter shifter = RobotContainer.m_shifter;
-	private boolean shiftHotValue;
-	private boolean shiftDangerousValue;
+	private boolean shiftHighSpeedValue;
+	private boolean shiftHighGearValue;
 
 	/**
-	 * @param shiftHotValue: Should be set to either the RobotMap value (on) or !RobotMap value (off)
-	 * @param shiftDangerousValue: Should be set to either the RobotMap value (on) or !RobotMap value (off)
+	 * @param shiftHighSpeedValue: Should be set to either the RobotMap value (on) or !RobotMap value (off)
+	 * @param shiftHighGearValue: Should be set to either the RobotMap value (on) or !RobotMap value (off)
 	 */
-	public Shift(boolean shiftHotValue, boolean shiftDangerousValue) {
+	public Shift(boolean shiftHighSpeed, boolean shiftHighGear) {
 		System.out.println("Hello" + shifter);
-		this.shiftHotValue = shiftHotValue;
-		this.shiftDangerousValue = shiftDangerousValue;
+		shiftHighSpeed = shiftHighSpeedValue;
+		shiftHighGear = shiftHighGearValue;
         addRequirements(shifter);
 		//setInterruptible(true);
 	}
@@ -34,9 +34,9 @@ public class Shift extends CommandBase {
 	@Override
 	public void initialize() {
 		//withTimeout(DriveConstants.SHIFT_TIMER);
-		SmartDashboard.putBoolean("   ", shiftHotValue);
+		SmartDashboard.putBoolean("   ", shiftHighSpeedValue);
 		System.out.println("Shift initialized");
-		SmartDashboard.putBoolean("    ", shiftDangerousValue);
+		SmartDashboard.putBoolean("    ", shiftHighGearValue);
 	}
 
 	/**
@@ -45,9 +45,9 @@ public class Shift extends CommandBase {
 	 */
 	@Override
 	public void execute() {
-		shifter.setShifterHotSolenoid(shiftHotValue);
+		shifter.setShifterHotSolenoid(shiftHighSpeedValue);
 		System.out.println("Shift executed");
-		shifter.setShifterDangerousSolenoid(shiftDangerousValue);
+		shifter.setShifterDangerousSolenoid(shiftHighGearValue);
 	}
 
 	/**

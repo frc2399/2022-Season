@@ -8,15 +8,15 @@ import frc.robot.Constants.DriveConstants;
 
 public class Shifter extends SubsystemBase {
 
-	private Solenoid shifterHotSolenoid;
-	private Solenoid shifterDangerousSolenoid;
+	private Solenoid shifterHighSpeedSolenoid;
+	private Solenoid shifterHighGearSolenoid;
 
 	public Shifter() {
 		/**
 		 * Assigns Solenoids to correct PCM address and port
 		 */
-		shifterHotSolenoid = new Solenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFTER_HOT_SOLENOID_PORT);
-		shifterDangerousSolenoid = new Solenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFTER_DANGEROUS_SOLENOID_PORT);
+		shifterHighSpeedSolenoid = new Solenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFT_HIGH_SPEED_SOLENOID_PORT);
+		shifterHighGearSolenoid = new Solenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFT_HIGH_GEAR_PORT);
 	}
 
 	/**
@@ -24,11 +24,11 @@ public class Shifter extends SubsystemBase {
 	 * @param setShifter
 	 */
 	public void setShifterHotSolenoid(boolean setShifterHot) {
-		shifterHotSolenoid.set(setShifterHot);
+		shifterHighSpeedSolenoid.set(setShifterHot);
 	}
 	
 	public void setShifterDangerousSolenoid(boolean setShifterDangerous) {
-		shifterDangerousSolenoid.set(setShifterDangerous);
+		shifterHighGearSolenoid.set(setShifterDangerous);
 	}
 
 	/**
@@ -36,11 +36,11 @@ public class Shifter extends SubsystemBase {
 	 * @return
 	 */
 	public boolean getShifterHotSolenoid() {
-		return shifterHotSolenoid.get();
+		return shifterHighSpeedSolenoid.get();
 	}
 	
 	public boolean getShifterDangerousSolenoid() {
-		return shifterDangerousSolenoid.get();
+		return shifterHighGearSolenoid.get();
 	}
 
 	/**
