@@ -45,9 +45,11 @@ public class Shift extends CommandBase {
 	 */
 	@Override
 	public void execute() {
-		shifter.setShifterHotSolenoid(shiftHotValue);
+		// shifter.setShifterHotSolenoid(shiftHotValue);
+		shifter.setShifterHot();
 		System.out.println("Shift executed");
-		shifter.setShifterDangerousSolenoid(shiftDangerousValue);
+		// shifter.setShifterDangerousSolenoid(shiftDangerousValue);
+		// shifter.setShifterDangerous();
 	}
 
 	/**

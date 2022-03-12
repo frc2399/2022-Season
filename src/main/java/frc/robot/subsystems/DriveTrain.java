@@ -73,7 +73,7 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 public class DriveTrain extends SubsystemBase {
 
     private static CANSparkMax leftFrontMotorController;
-    private static CANSparkMax rightFrontMotorController;
+    public static CANSparkMax rightFrontMotorController;
     private CANSparkMax leftMiddleMotorController;
     private CANSparkMax rightMiddleMotorController;
     private CANSparkMax leftBackMotorController;

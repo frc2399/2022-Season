@@ -116,12 +116,12 @@ public class Constants {
         public static final int LIMIT_SWITCH_ID = 0;
     }
 
-    public static final class PrototypeDriveConstants {
-        public static final int LEFT_FRONT_MOTOR_ID = 8;
-        public static final int LEFT_MIDDLE_MOTOR_ID = 7;
-        public static final int LEFT_BACK_MOTOR_ID = 6;
+    // public static final class PrototypeDriveConstants {
+    //     public static final int LEFT_FRONT_MOTOR_ID = 8;
+    //     public static final int LEFT_MIDDLE_MOTOR_ID = 7;
+    //     public static final int LEFT_BACK_MOTOR_ID = 6;
 
-    }
+    // }
   
     public static final class ClimberConstants {
         public static final int LEFT_CLIMBER_MOTOR_ID = 12;

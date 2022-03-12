@@ -84,8 +84,16 @@ public class RobotContainer {
   public static Joystick XBOX = new Joystick(XboxConstants.XBOX_PORT);
 
   //Shift
-  private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
-  private static Shift shiftToHot = new Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+  // private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+  // private static Shift shiftToHot = new Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+
+
+  private static InstantCommand shiftToDangerous = new InstantCommand(() -> m_shifter.setShifterDangerous(), m_shifter);
+  private static InstantCommand shiftToHot = new InstantCommand(() -> m_shifter.setShifterHot(), m_shifter);
+
+
+  // private static InstantCommand new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
+
 
   //Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
@@ -197,6 +205,8 @@ public class RobotContainer {
     m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
     m_climber.setDefaultCommand(new StopClimber(m_climber));
 
+    m_shifter.setShifterDangerous();
+
     // Configure default commands
 
 
@@ -225,9 +235,9 @@ public class RobotContainer {
       System.out.println (JOYSTICK);
       System.out.println ("************************************");
       new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
-      .whenPressed(shiftToHot);
+                .whenPressed(shiftToHot);
       new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR)
-      .whenPressed(shiftToDangerous);
+                .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
 
