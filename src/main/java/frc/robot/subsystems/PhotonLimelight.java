@@ -54,8 +54,8 @@ public class PhotonLimelight extends SubsystemBase {
         ArrayList<Double> coordinates = getTargetLocation(target, countTargets);
         x_distances.add(coordinates.get(1));
         y_distances.add(coordinates.get(0));
-        String smartdashx = "X" + countTargets;
-        String smartdashy = "Y" + countTargets;
+        // String smartdashx = "X" + countTargets;
+        // String smartdashy = "Y" + countTargets;
         // SmartDashboard.putNumber(smartdashx, coordinates.get(1));
         // SmartDashboard.putNumber(smartdashy, coordinates.get(0));
 
