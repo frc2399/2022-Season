@@ -114,6 +114,8 @@ public class Robot extends TimedRobot {
     a_pidController = a_motor.getPIDController();
     b_pidController = b_motor.getPIDController();
 
+    b_motor.setInverted(true);
+
     // encoder object created to display position values
     a_encoder = a_motor.getEncoder();
     b_encoder = b_motor.getEncoder();
@@ -228,7 +230,7 @@ public class Robot extends TimedRobot {
 
     double shooterBStickValue, shooterBRPM;
     shooterBStickValue = (shooter_stick_b.getRawAxis(2) + 1) / 2; //Gets Slider Value (Axis 3) from secondary joystick
-    shooterBRPM = -1 * shooterBStickValue * maxRPM; // NEGATIVE
+    shooterBRPM = shooterBStickValue * maxRPM; // NEGATIVE
     // bottomShooterStickValue = ((shooterBStickValue + 1)/2);
     b_pidController.setReference(shooterBRPM, CANSparkMax.ControlType.kVelocity);
     // Robot.b_motor.set(shooterBRPM, CANSparkMax.ControlType.kVelocity);
