@@ -56,8 +56,8 @@ public class PhotonLimelight extends SubsystemBase {
         y_distances.add(coordinates.get(0));
         String smartdashx = "X" + countTargets;
         String smartdashy = "Y" + countTargets;
-        SmartDashboard.putNumber(smartdashx, coordinates.get(1));
-        SmartDashboard.putNumber(smartdashy, coordinates.get(0));
+        // SmartDashboard.putNumber(smartdashx, coordinates.get(1));
+        // SmartDashboard.putNumber(smartdashy, coordinates.get(0));
 
         countTargets++;
       }
@@ -76,8 +76,8 @@ public class PhotonLimelight extends SubsystemBase {
         var circle = circle_from_p1p2r(x1, y1, x2, y2, PhotonLimelightConstants.HUB_RADIUS_FEET);
         if(circle != null)
         {
-          SmartDashboard.putNumber(smartdashxi, circle.get(0));
-          SmartDashboard.putNumber(smartdashyi, circle.get(1));
+          // SmartDashboard.putNumber(smartdashxi, circle.get(0));
+          // SmartDashboard.putNumber(smartdashyi, circle.get(1));
           totalCenterX += circle.get(0);
           totalCenterY += circle.get(1);
 
@@ -92,9 +92,9 @@ public class PhotonLimelight extends SubsystemBase {
       double averageCenterX = totalCenterX/targets.size();
       double averageCenterY = totalCenterY/targets.size();
       
-      SmartDashboard.putNumber("averageCenterX", averageCenterX);
-      SmartDashboard.putNumber("averageCenterY", averageCenterY);
-      SmartDashboard.putNumber("NUMBER OF TARGETS", targets.size());
+      // SmartDashboard.putNumber("averageCenterX", averageCenterX);
+      // SmartDashboard.putNumber("averageCenterY", averageCenterY);
+      // SmartDashboard.putNumber("NUMBER OF TARGETS", targets.size());
     }
 
 
@@ -126,8 +126,8 @@ public class PhotonLimelight extends SubsystemBase {
     double x_distance = y_distance * Math.sin(x_angle_radians);
     coordinates.add(x_distance);
 
-    SmartDashboard.putNumber(smartdashx, x_angle);
-    SmartDashboard.putNumber(smartdashy, y_angle);
+    // SmartDashboard.putNumber(smartdashx, x_angle);
+    // SmartDashboard.putNumber(smartdashy, y_angle);
 
     return coordinates;
   }

@@ -75,8 +75,8 @@ public class Climber extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Left Climber Extended", this.isLeftExtended());
-    SmartDashboard.putBoolean("Right Climber Extended", this.isRightExtended());
+    // SmartDashboard.putBoolean("Left Climber Extended", this.isLeftExtended());
+    // SmartDashboard.putBoolean("Right Climber Extended", this.isRightExtended());
 
   }
 
@@ -88,7 +88,7 @@ public class Climber extends SubsystemBase {
   public void setRightSpeed(double speed)
   {
     rightMotorController.set(speed);
-    SmartDashboard.putNumber("Climber speed ", speed);
+    // SmartDashboard.putNumber("Climber speed ", speed);
   }
 
   public boolean isLeftExtended()

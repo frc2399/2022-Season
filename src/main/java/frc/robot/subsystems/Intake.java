@@ -65,7 +65,7 @@ SlewRateLimiter filter;
     public void setMotor(double intakeSpeed) {
         intakeSpeed = filter.calculate(intakeSpeed);
         intakeMotorController.set(intakeSpeed);
-        SmartDashboard.putNumber("Intake Speed", intakeSpeed);
+        // SmartDashboard.putNumber("Intake Speed", intakeSpeed);
     }
 
 
