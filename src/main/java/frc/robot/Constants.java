@@ -23,12 +23,11 @@ public class Constants {
     public static final class DriveConstants {
         // motor ids
         public static final int LEFT_FRONT_MOTOR_ID = 6;
-        public static final int RIGHT_FRONT_MOTOR_ID = 3;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
-        public static final int RIGHT_MIDDLE_MOTOR_ID = 4;
-        // TODO: change name 
         public static final int LEFT_BACK_MOTOR_ID = 8;
-        public static final int RIGHT_BACK_MOTOR_ID = 5;
+        public static final int RIGHT_FRONT_MOTOR_ID = 13;
+        public static final int RIGHT_MIDDLE_MOTOR_ID = 14;
+        public static final int RIGHT_BACK_MOTOR_ID = 15;
 
         //solenoids
         public static final int SHIFTER_HOT_SOLENOID_PORT = 0;
