@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants.PhotonLimelightConstants;
+import frc.robot.util.Coords;
 
 //import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,9 +14,10 @@ import java.util.List;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 public class PhotonLimelight extends SubsystemBase {
 
-  PhotonCamera camera;
+  static PhotonCamera camera;
 
   public PhotonLimelight() {
     camera = new PhotonCamera("gloworm");
@@ -52,8 +54,8 @@ public class PhotonLimelight extends SubsystemBase {
       int countTargets = 0;
       for (PhotonTrackedTarget target : targets) {
         ArrayList<Double> coordinates = getTargetLocation(target, countTargets);
-        x_distances.add(coordinates.get(1));
-        y_distances.add(coordinates.get(0));
+        x_distances.add(coordinates.get(0));
+        y_distances.add(coordinates.get(1));
         String smartdashx = "X" + countTargets;
         String smartdashy = "Y" + countTargets;
         SmartDashboard.putNumber(smartdashx, coordinates.get(1));
@@ -109,7 +111,7 @@ public class PhotonLimelight extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  public ArrayList<Double> getTargetLocation(PhotonTrackedTarget target, int countTargets) {
+  public static ArrayList<Double> getTargetLocation(PhotonTrackedTarget target, int countTargets) {
     ArrayList<Double> coordinates = new ArrayList<>();
 
     String smartdashx = "Xangle" + countTargets;
@@ -119,12 +121,12 @@ public class PhotonLimelight extends SubsystemBase {
     double y_angle_radians = Math.toRadians(y_angle);
     double heightDifference = PhotonLimelightConstants.TARGET_HEIGHT_FEET - PhotonLimelightConstants.CAMERA_HEIGHT_FEET;
     double y_distance = heightDifference / (Math.tan(y_angle_radians));
-    coordinates.add(y_distance);
 
     double x_angle = target.getYaw();
     double x_angle_radians = Math.toRadians(x_angle);
     double x_distance = y_distance * Math.sin(x_angle_radians);
     coordinates.add(x_distance);
+    coordinates.add(y_distance);
 
     SmartDashboard.putNumber(smartdashx, x_angle);
     SmartDashboard.putNumber(smartdashy, y_angle);
@@ -132,7 +134,7 @@ public class PhotonLimelight extends SubsystemBase {
     return coordinates;
   }
 
-  public ArrayList<Double> circle_from_p1p2r(double x1, double y1, double x2, double y2, double r) {
+  public static ArrayList<Double> circle_from_p1p2r(double x1, double y1, double x2, double y2, double r) {
     // Following explanation at http://mathforum.org/library/drmath/view/53027.html
     ArrayList<Double> center = new ArrayList<Double>();
     if (r == 0.0) {
@@ -172,5 +174,63 @@ public class PhotonLimelight extends SubsystemBase {
     center.add(c2y);
     return (center);
   }
+  public static double angleToHub() {
+    // Find the angle from the hub.
+    // Get x and y values from all target centers, find the center of the circle from that
+    // Then find the angle between where the robot is facing and the center of circle
+   var target_centers = get_target_centers();
+   var circle_center = get_hub_center_from_target_centers(target_centers);
 
+   double angle = Math.atan2(circle_center.y, circle_center.x);
+   return angle;
+  }
+
+  private static Coords get_hub_center_from_target_centers(ArrayList<Coords> target_centers) {
+    double totalCenterX = 0;
+    double totalCenterY = 0;
+    SmartDashboard.putNumber("Targets found: ", target_centers.size());
+    var amount_target_centers = 0;
+
+    for (int i = 0; i < target_centers.size() - 1; i++) {
+      Coords target_center_1 = target_centers.get(i);
+      Coords target_center_2 = target_centers.get(i + 1);
+
+      var circle = circle_from_p1p2r(target_center_1.x, target_center_1.y, target_center_2.x, target_center_2.y,
+          PhotonLimelightConstants.HUB_RADIUS_FEET);
+      if (circle != null) {
+        totalCenterX += circle.get(0);
+        totalCenterY += circle.get(1);
+        amount_target_centers++;
+      } else {
+        // SmartDashboard.putString(smartdashxi, "null");
+        // SmartDashboard.putString(smartdashyi, "null");
+      }
+
+    }
+    double averageCenterX = totalCenterX / amount_target_centers;
+    double averageCenterY = totalCenterY / amount_target_centers;
+    Coords coordinate;
+    coordinate = new Coords(averageCenterX, averageCenterY);
+    return coordinate;
+  }
+
+  public static ArrayList<Coords> get_target_centers () {
+    ArrayList<Coords> centers = new ArrayList<Coords>();
+
+    var result = camera.getLatestResult();
+    SmartDashboard.putBoolean("Photon Limelight hasTargets: ", result.hasTargets());
+    if (result.hasTargets()) {
+      // System.out.println("Photon Limelight has targets!");
+      List<PhotonTrackedTarget> targets = result.getTargets();
+      int countTargets = 0;
+      for (PhotonTrackedTarget target : targets) {
+        ArrayList<Double> coordinates = getTargetLocation(target, countTargets);
+        Coords c;
+        c = new Coords(coordinates.get(0),coordinates.get(1));
+        centers.add(c);
+        countTargets++;
+      }
+    }
+    return centers;
+  }
 }
