@@ -12,6 +12,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 //import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.commands.*;
@@ -30,7 +31,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 //import edu.wpi.first.wpilibj.XboxController.Button;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -132,10 +135,15 @@ public class RobotContainer {
   private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
 
+  public static NetworkTableEntry a_value = Shuffleboard.getTab("Params").addPersistent("a value", 1.0).getEntry();
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+  PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
+
+
+  // ALWAYS put this last!!!!
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   /**
@@ -189,6 +197,8 @@ public class RobotContainer {
     SmartDashboard.putNumber("a value", XboxConstants.JOYSTICK_SENSITIVITY);
 
 
+
+
     // Configure the button bindings
     configureButtonBindings();
     
@@ -196,8 +206,7 @@ public class RobotContainer {
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
     () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
-    // TODO WHY IS 0.25 HERE
-    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)//
+    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS))//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));

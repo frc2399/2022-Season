@@ -13,6 +13,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveTrain;
@@ -41,6 +43,9 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry ty = table.getEntry("ty");
     public static NetworkTableEntry ta = table.getEntry("ta");
     
+    final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
+    final NetworkTableEntry pdp0Amps = tab.add("PDP 0 amps", 0).getEntry();
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -80,7 +85,9 @@ public class Robot extends TimedRobot {
         // SmartDashboard.putNumber("LimelightX", x);
         // SmartDashboard.putNumber("LimelightY", y);
         // SmartDashboard.putNumber("LimelightArea", area);
-            }
+
+        pdp0Amps.setDefaultDouble(m_robotContainer.pdp.getCurrent(0));
+    }
     
 
 

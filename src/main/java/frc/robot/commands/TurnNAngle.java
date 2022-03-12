@@ -29,7 +29,6 @@ public class TurnNAngle extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("TurnNAngle initialized, turnAngle: " + turnAngle);
-    SmartDashboard.putNumber("turn angle", turnAngle);
 
     if (RobotBase.isSimulation())
     {
@@ -44,7 +43,7 @@ public class TurnNAngle extends CommandBase {
     
     newAngle = modAngle(currentAngle + turnAngle);
 
-    SmartDashboard.putNumber("new Angle", newAngle);
+    // SmartDashboard.putNumber("new Angle", newAngle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -66,7 +65,7 @@ public class TurnNAngle extends CommandBase {
     System.out.println("error angle " +  error);
 
     error = modAngle(error);
-    SmartDashboard.putNumber("error", error);
+    // SmartDashboard.putNumber("error", error);
 
     double outputSpeed;
     if (RobotBase.isSimulation()) 

@@ -49,12 +49,15 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 // import edu.wpi.first.math.MathUtil;
 // import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.util.NavX;
@@ -111,6 +114,22 @@ public class DriveTrain extends SubsystemBase {
     private DifferentialDrivetrainSim driveSim;
     private Field2d field;
 
+    final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
+    final NetworkTableEntry leftFrontTemp = tab.add("LF temp", 0).getEntry();
+    final NetworkTableEntry leftMiddleTemp = tab.add("LM temp", 0).getEntry();
+    final NetworkTableEntry leftBackTemp = tab.add("LB temp", 0).getEntry();
+    final NetworkTableEntry rightFrontTemp = tab.add("RF temp", 0).getEntry();
+    final NetworkTableEntry rightMiddleTemp = tab.add("RM temp", 0).getEntry();
+    final NetworkTableEntry rightBackTemp = tab.add("RB temp", 0).getEntry();
+
+    final NetworkTableEntry leftFrontAmps = tab.add("LF amps", 0).getEntry();
+    final NetworkTableEntry leftMiddleAmps = tab.add("LM amps", 0).getEntry();
+    final NetworkTableEntry leftBackAmps = tab.add("LB amps", 0).getEntry();
+    final NetworkTableEntry rightFrontAmps = tab.add("RF amps", 0).getEntry();
+    final NetworkTableEntry rightMiddleAmps = tab.add("RM amps", 0).getEntry();
+    final NetworkTableEntry rightBackAmps = tab.add("RB amps", 0).getEntry();
+
+
     public DriveTrain() {
 
         leftFrontMotorController = new CANSparkMax(DriveConstants.LEFT_FRONT_MOTOR_ID, MotorType.kBrushless);
@@ -129,8 +148,8 @@ public class DriveTrain extends SubsystemBase {
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         // Make wheels go in same direction
-        leftFrontMotorController.setInverted(false);
-        rightFrontMotorController.setInverted(true);
+        leftFrontMotorController.setInverted(true);
+        rightFrontMotorController.setInverted(false);
 
         //sets motor controllers following leaders
         leftMiddleMotorController.follow(leftFrontMotorController);
@@ -177,8 +196,8 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
             );
 
-            field = new Field2d();
-            SmartDashboard.putData("Field", field);
+            // field = new Field2d();
+            // SmartDashboard.putData("Field", field);
 
             //field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
         }
@@ -198,6 +217,29 @@ public class DriveTrain extends SubsystemBase {
 
         // outputSpeed = kP * error;
         SmartDashboard.putNumber("Angle", ahrs.getAngle());
+// 
+        // System.out.println("drive train periodic");
+
+        SmartDashboard.putNumber("LF temp", leftFrontMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("LM temp", leftMiddleMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("LB temp", leftBackMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("RF temp", rightFrontMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("RM temp", rightMiddleMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("RB temp", rightBackMotorController.getMotorTemperature());
+
+        leftFrontTemp.setDouble(leftFrontMotorController.getMotorTemperature());
+        leftMiddleTemp.setDouble(leftMiddleMotorController.getMotorTemperature());
+        leftBackTemp.setDouble(leftBackMotorController.getMotorTemperature());
+
+        rightFrontTemp.setDouble(rightFrontMotorController.getMotorTemperature());
+        rightMiddleTemp.setDouble(rightMiddleMotorController.getMotorTemperature());
+        rightBackTemp.setDouble(rightBackMotorController.getMotorTemperature());
+     
+
+        leftFrontAmps.setDouble(leftFrontMotorController.getOutputCurrent());
+        leftMiddleAmps.setDouble(leftMiddleMotorController.getOutputCurrent());
+        leftBackAmps.setDouble(leftBackMotorController.getOutputCurrent());
+
         //SmartDashboard.putNumber("target angle", RobotContainer.m_turnToNAngle.targetAngle);
 
         // outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
@@ -210,6 +252,8 @@ public class DriveTrain extends SubsystemBase {
         // finds the position and angle of the robot given gyro and encoders
 
     }
+
+
 
     @Override
     public void simulationPeriodic() {
@@ -256,7 +300,7 @@ public class DriveTrain extends SubsystemBase {
         leftFrontMotorController.set(leftSpeed);
         rightFrontMotorController.set(rightSpeed);
 
-        SmartDashboard.putNumber("outputSpeed", leftSpeed);
+        // SmartDashboard.putNumber("outputSpeed", leftSpeed);
     }
 
     public double getLeftEncoderPosition()

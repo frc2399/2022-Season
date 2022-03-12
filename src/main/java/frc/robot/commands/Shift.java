@@ -34,9 +34,9 @@ public class Shift extends CommandBase {
 	@Override
 	public void initialize() {
 		//withTimeout(DriveConstants.SHIFT_TIMER);
-		SmartDashboard.putBoolean("   ", shiftHotValue);
+		// SmartDashboard.putBoolean("   ", shiftHotValue);
 		System.out.println("Shift initialized");
-		SmartDashboard.putBoolean("    ", shiftDangerousValue);
+		// SmartDashboard.putBoolean("    ", shiftDangerousValue);
 	}
 
 	/**

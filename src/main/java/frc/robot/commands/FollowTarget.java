@@ -27,17 +27,17 @@ public class FollowTarget extends CommandBase {
         double x_angle = Robot.tx.getDouble(1);
         if (x_angle > 0){
             this.driveSubsystem.setMotors(DriveConstants.TARGET_FOLLOWING_SPEED, -DriveConstants.TARGET_FOLLOWING_SPEED);
-            SmartDashboard.putString("Turning", "Turning Right");
+            // SmartDashboard.putString("Turning", "Turning Right");
 
         }
         else if (x_angle < 0){
             this.driveSubsystem.setMotors(-DriveConstants.TARGET_FOLLOWING_SPEED, DriveConstants.TARGET_FOLLOWING_SPEED);
-            SmartDashboard.putString("Turning", "Turning Left");
+            // SmartDashboard.putString("Turning", "Turning Left");
 
         }
         else{
             this.driveSubsystem.setMotors(0, 0);
-            SmartDashboard.putString("Turning", "Not Turning");
+            // SmartDashboard.putString("Turning", "Not Turning");
 
         }
     }
