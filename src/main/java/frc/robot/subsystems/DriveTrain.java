@@ -129,8 +129,8 @@ public class DriveTrain extends SubsystemBase {
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
         // Make wheels go in same direction
-        leftFrontMotorController.setInverted(false);
-        rightFrontMotorController.setInverted(true);
+        leftFrontMotorController.setInverted(true);
+        rightFrontMotorController.setInverted(false);
 
         //sets motor controllers following leaders
         leftMiddleMotorController.follow(leftFrontMotorController);
@@ -177,8 +177,8 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
             );
 
-            field = new Field2d();
-            SmartDashboard.putData("Field", field);
+            // field = new Field2d();
+            // SmartDashboard.putData("Field", field);
 
             //field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
         }
@@ -198,6 +198,16 @@ public class DriveTrain extends SubsystemBase {
 
         // outputSpeed = kP * error;
         SmartDashboard.putNumber("Angle", ahrs.getAngle());
+// 
+        // System.out.println("drive train periodic");
+
+        SmartDashboard.putNumber("LF temp", leftFrontMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("LM temp", leftMiddleMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("LB temp", leftBackMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("RF temp", rightFrontMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("RM temp", rightMiddleMotorController.getMotorTemperature());
+        SmartDashboard.putNumber("RB temp", rightBackMotorController.getMotorTemperature());
+        
         //SmartDashboard.putNumber("target angle", RobotContainer.m_turnToNAngle.targetAngle);
 
         // outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
@@ -256,7 +266,7 @@ public class DriveTrain extends SubsystemBase {
         leftFrontMotorController.set(leftSpeed);
         rightFrontMotorController.set(rightSpeed);
 
-        SmartDashboard.putNumber("outputSpeed", leftSpeed);
+        // SmartDashboard.putNumber("outputSpeed", leftSpeed);
     }
 
     public double getLeftEncoderPosition()
