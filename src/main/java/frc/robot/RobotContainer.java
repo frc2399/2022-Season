@@ -196,8 +196,7 @@ public class RobotContainer {
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
     () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
-    // TODO WHY IS 0.25 HERE
-    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)//
+    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS))//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
