@@ -74,30 +74,6 @@ public class Robot extends TimedRobot {
     intake.setNeutralMode(NeutralMode.Coast);
     intake.configVoltageCompSaturation(11);
     intake.enableVoltageCompensation(true);
- 
-    /* // current limit drive falcons
-     * // TODO: fix for Spark Max
-     * // factory default
-     * shoottop.configFactoryDefault();
-     * shootbottom.configFactoryDefault();
-     * 
-     * SupplyCurrentLimitConfiguration falconlimit = new SupplyCurrentLimitConfiguration();
-     * falconlimit.enable = true;
-     * falconlimit.currentLimit =  10;
-     * falconlimit.triggerThresholdCurrent = 10;
-     * falconlimit.triggerThresholdTime = 0.1;
-     * 
-     * shoottop.configSupplyCurrentLimit(falconlimit);
-     * shootbottom.configSupplyCurrentLimit(falconlimit);
-     * 
-     * shoottop.setNeutralMode(NeutralMode.Coast);
-     * shootbottom.setNeutralMode(NeutralMode.Coast);
-     * 
-     * shoottop.configVoltageCompSaturation(11);
-     * shootbottom.configVoltageCompSaturation(11);
-     * 
-     * shoottop.enableVoltageCompensation(true);
-     * shootbottom.enableVoltageCompensation(true); */
     
     // Begin Spark Max Code
     // https://github.com/REVrobotics/SPARK-MAX-Examples/tree/master/Java/Velocity%20Closed%20Loop%20Control
@@ -246,40 +222,6 @@ public class Robot extends TimedRobot {
       { Robot.intake.set(ControlMode.PercentOutput, 1);}
     else 
       { Robot.intake.set(ControlMode.PercentOutput, 0);}
-
-
-    // Joystick Slider Control -- TALONS
-    // Robot.a_motor.set(ControlMode.PercentOutput, shooterAStickValue);
-    // Robot.b_motor.set(ControlMode.PercentOutput, -shooterBStickValue);
-
-    /* // Winch Control System
-     * double shooterStickY;
-     * shooterStickY = shooter_stick.getY();
-     *
-     * Robot.winch.set(ControlMode.PercentOutput, shooterStickY);
-     *
-     * //Intake Control System
-     * double intakeStick;
-     * intakeStick = shooter_stick.getRawAxis(3);    //Gets Slider Value (Axis 3)
-     * intakeStick = ((intakeStick + 1)/2)*0.4;
-     * Robot.intake_1.set(ControlMode.PercentOutput, intakeStick);
-     * Robot.intake_2.set(ControlMode.PercentOutput, intakeStick);
-     */
-  
-
-//Previous Code
-/*
-    if (Robot.pilot_stick.getRawButton(2) == true)
-    {
-      Robot.shoottop.set(ControlMode.PercentOutput, 0.7);
-      Robot.shootbottom.set(ControlMode.PercentOutput, -0.5);
-    }
-    else
-    {
-      Robot.shoottop.set(ControlMode.PercentOutput, 0);
-      Robot.shootbottom.set(ControlMode.PercentOutput, 0);
-    }*/
-
   }
 
   @Override
