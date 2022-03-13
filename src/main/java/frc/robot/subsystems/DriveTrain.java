@@ -140,12 +140,23 @@ public class DriveTrain extends SubsystemBase {
         rightBackMotorController = new CANSparkMax(DriveConstants.RIGHT_BACK_MOTOR_ID, MotorType.kBrushless);
 
         // Set motors to brake mode 
+        /** 
         leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        */
+
+        // Set motors to coast mode
+        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
 
         // Make wheels go in same direction
         leftFrontMotorController.setInverted(true);
