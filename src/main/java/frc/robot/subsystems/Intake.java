@@ -36,6 +36,10 @@ SlewRateLimiter filter;
 
         //Define all Motor Controllers
         intakeMotorController = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushed);
+        intakeMotorController.restoreFactoryDefaults();
+
+
+
         SmartDashboard.putNumber("Intake Slew Rate", SmartDashboard.getNumber ("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
         filter = new SlewRateLimiter(SmartDashboard.getNumber("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
         System.out.println ("SlewRateLimiter " + SmartDashboard.getNumber("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
@@ -50,7 +54,7 @@ SlewRateLimiter filter;
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-
+        SmartDashboard.putNumber("INTAKE ID", intakeMotorController.getDeviceId());
     }
 
     @Override
@@ -65,7 +69,7 @@ SlewRateLimiter filter;
     public void setMotor(double intakeSpeed) {
         intakeSpeed = filter.calculate(intakeSpeed);
         intakeMotorController.set(intakeSpeed);
-        // SmartDashboard.putNumber("Intake Speed", intakeSpeed);
+        SmartDashboard.putNumber("Intake Speed", intakeSpeed);
     }
 
 

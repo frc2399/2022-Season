@@ -95,6 +95,11 @@ public class RobotContainer {
   private static InstantCommand shiftToHot = new InstantCommand(() -> m_shifter.setShifterHot(), m_shifter);
 
 
+
+  private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
+  private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
+
+
   // private static InstantCommand new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
 
 
@@ -216,6 +221,8 @@ public class RobotContainer {
 
     m_shifter.setShifterDangerous();
 
+    m_intake.retractArm();
+
     // Configure default commands
 
 
@@ -270,6 +277,10 @@ public class RobotContainer {
       new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
       new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
       new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
+
+      new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
+      new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
+
 
     }
 
