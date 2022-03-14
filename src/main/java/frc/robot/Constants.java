@@ -16,7 +16,7 @@ public class Constants {
         public static final int RIGHT_FRONT_MOTOR_ID = 13;
         public static final int RIGHT_MIDDLE_MOTOR_ID = 14;
         public static final int RIGHT_BACK_MOTOR_ID = 15;
-        public static final int LEFT_FRONT_MOTOR_ID = 6;
+        public static final int LEFT_FRONT_MOTOR_ID = 16;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int LEFT_BACK_MOTOR_ID = 8;
 
@@ -44,16 +44,18 @@ public class Constants {
         public static final int SHIFT_HIGH_GEAR = 6; 
 
         public static final int INTAKE = 2; 
+        public static final int INTAKE_ARM_RETRACT = 11; 
+        public static final int INTAKE_ARM_EXTEND = 12; 
 
         public static final int SHOOTER_BTN = 3; 
 
-        public static final int INDEXER_FWD = 5;
-        public static final int INDEXER_BACK = 3;
+        public static final int INDEXER_FWD = 7;
+        public static final int INDEXER_BACK = 8;
 
-        public static final int TURN_TO_N = 12;
+        public static final int TURN_TO_N = 99;
 
-        public static final int CLIMBER_UP = 6;
-        public static final int CLIMBER_DOWN = 4;
+        public static final int CLIMBER_UP = 9;
+        public static final int CLIMBER_DOWN = 10;
 
     }  
 
@@ -75,8 +77,8 @@ public class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR_ID = 1;
-        public static final double INTAKESPEED = 0.6;
+        public static final int INTAKE_MOTOR_ID = 21;
+        public static final double INTAKESPEED = 0.5;
         public static final double INTAKE_SLEW = 5;
 
         //intake arm
