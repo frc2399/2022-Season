@@ -52,7 +52,7 @@ public class Constants {
         public static final int INDEXER_FWD = 7;
         public static final int INDEXER_BACK = 8;
 
-        public static final int TURN_TO_N = 99;
+        public static final int TURN_TO_N = 99; // TODO need to make buttons for turn to 90 left, 90 right, 180
 
         public static final int CLIMBER_UP = 9;
         public static final int CLIMBER_DOWN = 10;
