@@ -91,8 +91,8 @@ public class PhotonLimelight extends SubsystemBase {
         }
         
       }
-      double averageCenterX = totalCenterX/targets.size();
-      double averageCenterY = totalCenterY/targets.size();
+      // double averageCenterX = totalCenterX/targets.size();
+      // double averageCenterY = totalCenterY/targets.size();
       
       // SmartDashboard.putNumber("averageCenterX", averageCenterX);
       // SmartDashboard.putNumber("averageCenterY", averageCenterY);

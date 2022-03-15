@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ButterySmoothFollowTarget extends CommandBase {
 

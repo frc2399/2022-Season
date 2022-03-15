@@ -17,10 +17,8 @@ public class Shifter extends SubsystemBase {
 		 * Assigns Solenoids to correct PCM address and port
 		 */
 		System.out.println("Shifter subsystem starting");	
-		shifter = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFTER_HOT_SOLENOID_PORT, 
-																							   DriveConstants.SHIFTER_DANGEROUS_SOLENOID_PORT);
-
-	
+		shifter = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFT_HIGH_SPEED_SOLENOID_PORT, 
+																							   DriveConstants.SHIFT_HIGH_GEAR_PORT);
 	}
 
 	/**
