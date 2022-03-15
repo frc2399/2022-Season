@@ -57,22 +57,42 @@ public class Constants {
         public static final int CLIMBER_UP = 9;
         public static final int CLIMBER_DOWN = 10;
 
-    }  
+    } 
+
+    public static final class XboxMappingToJoystick{
+        public static final int LEFT_STICK_X = 0;
+        public static final int LEFT_STICK_Y = 1;
+        public static final int RIGHT_STICK_X = 4;
+        public static final int RIGHT_STICK_Y = 5;
+
+        public static final int LEFT_TRIGGER = 2;
+        public static final int RIGHT_TRIGGER = 3;
+
+        public static final int LEFT_BUMPER = 5;
+        public static final int RIGHT_BUMPER = 6;
+        public static final int A_BUTTON = 1;
+        public static final int B_BUTTON = 2;
+        public static final int X_BUTTON = 3;
+        public static final int Y_BUTTON = 4;
+        public static final int START_BUTTON = 8;
+        public static final int BACK_BUTTON = 7;
+    }
 
     public static final class XboxConstants {
         public static final int XBOX_PORT = 0;
 
-        public static final int ARCADE_DRIVE_SPEED_AXIS = 1;
-        public static final int ARCADE_DRIVE_TURN_AXIS = 4; 
+        public static final int ARCADE_DRIVE_SPEED_AXIS = XboxMappingToJoystick.LEFT_STICK_Y;
+        public static final int ARCADE_DRIVE_TURN_AXIS = XboxMappingToJoystick.RIGHT_STICK_X; 
+
+        public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
+        public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
+        public static final int TURN_180 = XboxMappingToJoystick.A_BUTTON;
 
         public static final double FORWARD_DEADBAND = 0.05;
         public static final double TURN_DEADBAND = 0.05;
 
         public static final double JOYSTICK_SENSITIVITY = 0.5;
 
-        public static final int TURN_RIGHT = 2;
-        public static final int TURN_LEFT = 3;
-        public static final int TURN_180 = 1;
 
     }
 

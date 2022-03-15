@@ -55,8 +55,6 @@ public class ArcadeDriveCmd extends CommandBase {
 
         double a = RobotContainer.a_value.getDouble(0.0);
 
-
-
         // altering driving joystick sensitivity
         realTimeSpeed = ((1 - a) * realTimeSpeed) + (a * Math.pow(realTimeSpeed, 3));
 
