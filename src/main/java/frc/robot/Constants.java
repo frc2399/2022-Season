@@ -11,20 +11,19 @@ package frc.robot;
 public class Constants {
     public static final class DriveConstants {
         // motor ids
-        public static final int LEFT_FRONT_MOTOR_ID = 6;
-        public static final int RIGHT_FRONT_MOTOR_ID = 3;
+        public static final int RIGHT_FRONT_MOTOR_ID = 13;
+        public static final int RIGHT_MIDDLE_MOTOR_ID = 14;
+        public static final int RIGHT_BACK_MOTOR_ID = 15;
+        public static final int LEFT_FRONT_MOTOR_ID = 16;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
-        public static final int RIGHT_MIDDLE_MOTOR_ID = 4;
-        // TODO: change name 
-        public static final int BACK_LEFT_MOTOR_ID = 8;
-        public static final int BACK_RIGHT_MOTOR_ID = 5;
+        public static final int LEFT_BACK_MOTOR_ID = 8;
 
         //solenoids
         public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 0;
 	    public static final int SHIFT_HIGH_GEAR_PORT= 1;
-        public static final int PCM_ADDRESS = 3;
         public static final boolean SHIFT_HIGH_SPEED_SOLENOID = true;
 	    public static final boolean SHIFT_HIGH_GEAR_SOLENOID= true;
+        public static final int PCM_ADDRESS = 13;
         public static final double SHIFT_TIMER = 0.5;
 
         //follow vision target cmd speeds
@@ -39,20 +38,25 @@ public class Constants {
         public static final int FORWARD_JOYSTICK_INVERT = 1;
         public static final int TURN_JOYSTICK_INVERT = 1;
 
+        // TODO: switch buttons to x box bumpers
         public static final int SHIFT_HIGH_SPEED = 5; 
         public static final int SHIFT_HIGH_GEAR = 6; 
 
         public static final int INTAKE = 2; 
+        public static final int INTAKE_ARM_RETRACT = 11; 
+        public static final int INTAKE_ARM_EXTEND = 12; 
 
         public static final int SHOOTER_BTN = 3; 
 
         public static final int INDEXER = 9;
-        public static final int TURN_TO_N = 12;
-        public static final int INDEXER_FWD = 5;
-        public static final int INDEXER_BACK = 3;
 
-        public static final int CLIMBER_UP = 6;
+        public static final int INDEXER_FWD = 7;
+        public static final int INDEXER_BACK = 8;
 
+        public static final int TURN_TO_N = 99; // TODO need to make buttons for turn to 90 left, 90 right, 180
+
+        public static final int CLIMBER_UP = 9;
+        public static final int CLIMBER_DOWN = 10;
     }  
 
     public static final class XboxConstants {
@@ -68,13 +72,13 @@ public class Constants {
 
         public static final int TURN_RIGHT = 2;
         public static final int TURN_LEFT = 3;
-        public static final int TURN_180 = 1;
+        public static final int TURN_180 = 4;
 
     }
 
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR_ID = 1;
-        public static final double INTAKESPEED = 0.6;
+        public static final int INTAKE_MOTOR_ID = 21;
+        public static final double INTAKESPEED = 0.5;
         public static final double INTAKE_SLEW = 5;
 
         //intake arm
@@ -104,12 +108,12 @@ public class Constants {
         public static final int LIMIT_SWITCH_ID = 0;
     }
 
-    public static final class PrototypeDriveConstants {
-        public static final int LEFT_FRONT_MOTOR_ID = 8;
-        public static final int LEFT_MIDDLE_MOTOR_ID = 7;
-        public static final int BACK_LEFT_MOTOR_ID = 6;
+    // public static final class PrototypeDriveConstants {
+    //     public static final int LEFT_FRONT_MOTOR_ID = 8;
+    //     public static final int LEFT_MIDDLE_MOTOR_ID = 7;
+    //     public static final int LEFT_BACK_MOTOR_ID = 6;
 
-    }
+    // }
   
     public static final class ClimberConstants {
         public static final int LEFT_CLIMBER_MOTOR_ID = 12;

@@ -4,7 +4,6 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Shifter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Shift to dangerous (high) speed or hot (low) speed with pneums
@@ -34,9 +33,9 @@ public class Shift extends CommandBase {
 	@Override
 	public void initialize() {
 		//withTimeout(DriveConstants.SHIFT_TIMER);
-		SmartDashboard.putBoolean("   ", shiftHighSpeedValue);
+		// SmartDashboard.putBoolean("   ", shiftHighSpeedValue);
 		System.out.println("Shift initialized");
-		SmartDashboard.putBoolean("    ", shiftHighGearValue);
+		// SmartDashboard.putBoolean("    ", shiftHighGearValue);
 	}
 
 	/**
@@ -45,9 +44,11 @@ public class Shift extends CommandBase {
 	 */
 	@Override
 	public void execute() {
-		shifter.setShifterHotSolenoid(shiftHighSpeedValue);
+		// shifter.setShifterHotSolenoid(shiftHotValue);
+		shifter.setShifterHot();
 		System.out.println("Shift executed");
-		shifter.setShifterDangerousSolenoid(shiftHighGearValue);
+		// shifter.setShifterDangerousSolenoid(shiftDangerousValue);
+		// shifter.setShifterDangerous();
 	}
 
 	/**

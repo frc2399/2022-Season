@@ -1,9 +1,8 @@
 package frc.robot;
 
-import edu.wpi.first.hal.FRCNetComm.tInstances;
-import edu.wpi.first.hal.FRCNetComm.tResourceType;
-import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,6 +30,9 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry ty = table.getEntry("ty");
     public static NetworkTableEntry ta = table.getEntry("ta");
     
+    final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
+    final NetworkTableEntry pdp0Amps = tab.add("PDP 0 amps", 0).getEntry();
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -41,7 +43,7 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = RobotContainer.getInstance();
-        HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+        // HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         SmartDashboard.putNumber("Error Tolerance", 3);
 
     }
@@ -62,15 +64,17 @@ public class Robot extends TimedRobot {
 
     
         //read values periodically
-        double x = tx.getDouble(5);
-        double y = ty.getDouble(0.0);
-        double area = ta.getDouble(0.0);
+        // double x = tx.getDouble(5);
+        // double y = ty.getDouble(0.0);
+        // double area = ta.getDouble(0.0);
 
         //post to smart dashboard periodically
         // SmartDashboard.putNumber("LimelightX", x);
         // SmartDashboard.putNumber("LimelightY", y);
         // SmartDashboard.putNumber("LimelightArea", area);
-            }
+
+        pdp0Amps.setDefaultDouble(m_robotContainer.pdp.getCurrent(0));
+    }
     
 
 
@@ -123,6 +127,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+
+       // System.out.println("DriveTrain.rightFrontMotorController");
+
+        //DriveTrain.rightFrontMotorController.set(0.3);
     }
 
     @Override

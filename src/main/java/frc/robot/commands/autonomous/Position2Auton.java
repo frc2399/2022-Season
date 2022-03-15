@@ -1,15 +1,16 @@
 package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.*;
 import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
 import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
 import frc.robot.commands.intake.IntakeCmdForGivenTime;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
-import frc.robot.commands.shooter.SetShootSpeedCmd;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -45,7 +46,7 @@ public class Position2Auton extends SequentialCommandGroup {
 
         new ParallelCommandGroup(
             new TurnNAngle(-45.6, m_driveTrain),
-            new SetShootSpeedCmd(m_shooter, Constants.ShooterConstants.TOP_SETPOINT, Constants.ShooterConstants.BOTTOM_SETPOINT)
+            new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
         ),
     
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),

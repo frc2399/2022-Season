@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.IntakeConstants;
 //import frc.robot.commands.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,12 +25,16 @@ SlewRateLimiter filter;
 
         //Define all Motor Controllers
         intakeMotorController = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushed);
+        intakeMotorController.restoreFactoryDefaults();
+
+
+
         SmartDashboard.putNumber("Intake Slew Rate", SmartDashboard.getNumber ("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
         filter = new SlewRateLimiter(SmartDashboard.getNumber("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
         System.out.println ("SlewRateLimiter " + SmartDashboard.getNumber("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));
 
         //Define Double Solenoid
-        intakeArm = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.EXTEND_INTAKE_ARM, IntakeConstants.RETRACT_INTAKE_ARM);
+        intakeArm = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, IntakeConstants.EXTEND_INTAKE_ARM, IntakeConstants.RETRACT_INTAKE_ARM);
 
         this.retractArm();
 
@@ -38,7 +43,7 @@ SlewRateLimiter filter;
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-
+        SmartDashboard.putNumber("INTAKE ID", intakeMotorController.getDeviceId());
     }
 
     @Override

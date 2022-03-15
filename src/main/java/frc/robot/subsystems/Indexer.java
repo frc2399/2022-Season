@@ -22,14 +22,14 @@ public class Indexer extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Is Ball Indexed?", this.isBallIndexed());
+    // SmartDashboard.putBoolean("Is Ball Indexed?", this.isBallIndexed());
 
   }
 
   public void setSpeed(double indexerSpeed)
   {
     indexerMotorController.set(indexerSpeed);
-    SmartDashboard.putNumber("Indexer speed ", indexerSpeed);
+    // SmartDashboard.putNumber("Indexer speed ", indexerSpeed);
   }
 
   public boolean isBallIndexed()

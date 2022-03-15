@@ -1,6 +1,5 @@
 package frc.robot.commands.indexer;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 
@@ -23,7 +22,7 @@ public class IndexerCmd extends CommandBase {
     @Override
     public void execute() {
         this.indexerSubsystem.setSpeed(speed);
-        SmartDashboard.putNumber("Indexer speed ", speed);
+        // SmartDashboard.putNumber("Indexer speed ", speed);
     }
 
     @Override
