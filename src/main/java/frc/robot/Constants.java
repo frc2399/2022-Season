@@ -40,6 +40,7 @@ public class Constants {
         public static final int FORWARD_JOYSTICK_INVERT = 1;
         public static final int TURN_JOYSTICK_INVERT = 1;
 
+        // TODO: switch buttons to x box bumpers
         public static final int SHIFT_HIGH_SPEED = 5; 
         public static final int SHIFT_HIGH_GEAR = 6; 
 
@@ -56,7 +57,6 @@ public class Constants {
 
         public static final int CLIMBER_UP = 9;
         public static final int CLIMBER_DOWN = 10;
-
     }  
 
     public static final class XboxConstants {
@@ -72,7 +72,7 @@ public class Constants {
 
         public static final int TURN_RIGHT = 2;
         public static final int TURN_LEFT = 3;
-        public static final int TURN_180 = 1;
+        public static final int TURN_180 = 4;
 
     }
 
