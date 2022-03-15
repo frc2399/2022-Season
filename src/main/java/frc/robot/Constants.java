@@ -1,5 +1,3 @@
-
-
 package frc.robot;
 
 /**
@@ -21,11 +19,11 @@ public class Constants {
         public static final int LEFT_BACK_MOTOR_ID = 8;
 
         //solenoids
-        public static final int SHIFTER_HOT_SOLENOID_PORT = 0;
-	    public static final int SHIFTER_DANGEROUS_SOLENOID_PORT= 1;
+        public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 0;
+	    public static final int SHIFT_HIGH_GEAR_PORT= 1;
+        public static final boolean SHIFT_HIGH_SPEED_SOLENOID = true;
+	    public static final boolean SHIFT_HIGH_GEAR_SOLENOID= true;
         public static final int PCM_ADDRESS = 13;
-        public static final boolean SHIFTER_SOLENOID_DANGEROUS= true;
-	    public static final boolean SHIFTER_SOLENOID_HOT= true;
         public static final double SHIFT_TIMER = 0.5;
 
         //follow vision target cmd speeds
@@ -49,6 +47,8 @@ public class Constants {
         public static final int INTAKE_ARM_EXTEND = 12; 
 
         public static final int SHOOTER_BTN = 3; 
+
+        public static final int INDEXER = 9;
 
         public static final int INDEXER_FWD = 7;
         public static final int INDEXER_BACK = 8;
