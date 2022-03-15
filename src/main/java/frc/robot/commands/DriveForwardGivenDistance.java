@@ -10,12 +10,8 @@ package frc.robot.commands;
 
 // import edu.wpi.first.wpilibj.interfaces.*;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -61,11 +57,9 @@ public class DriveForwardGivenDistance extends CommandBase {
         // Get the average position between leftEncoder and rightEncoder
         currentPosition = (m_driveTrain.getLeftEncoderPosition() + m_driveTrain.getRightEncoderPosition()) / 2;
 
-        SmartDashboard.putNumber("current position", currentPosition);
 
         double error = newTargetDistance - currentPosition;
 
-        SmartDashboard.putNumber("error distance", error);
 
         double outputSpeed = m_driveTrain.kP * error;
         outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);

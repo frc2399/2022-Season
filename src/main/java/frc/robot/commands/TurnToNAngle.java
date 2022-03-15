@@ -27,7 +27,7 @@ public class TurnToNAngle extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("TurnToNAngle initialized, targetAngle: " + targetAngle);
-    SmartDashboard.putNumber("target angle", targetAngle);
+    // SmartDashboard.putNumber("target angle", targetAngle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +39,7 @@ public class TurnToNAngle extends CommandBase {
 
     double error = targetAngle - currentAngle;
     error = modAngle(error);
-    SmartDashboard.putNumber("error", error);
+    // SmartDashboard.putNumber("error", error);
 
     double outputSpeed = m_driveTrain.kP * error;
     outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);

@@ -12,8 +12,7 @@
 
 package frc.robot;
 
-import java.util.Map;
-
+import edu.wpi.first.networktables.NetworkTableEntry;
 //import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.commands.*;
@@ -30,14 +29,14 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 //import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -47,9 +46,9 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
 //import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 //import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 // import frc.robot.Constants.DriveConstants;
 // import frc.robot.Constants.IntakeConstants;
@@ -80,14 +79,29 @@ public class RobotContainer {
     public final static Shooter m_shooter = new Shooter();
     public final static Indexer m_indexer = new Indexer();
     public static final Climber m_climber = new Climber();
+    public final static Limelight m_limelight = new Limelight();
+    public final static PhotonLimelight m_photonLimelight = new PhotonLimelight();
 
 // Joysticks
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
   public static Joystick XBOX = new Joystick(XboxConstants.XBOX_PORT);
 
   //Shift
-  private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
-  private static Shift shiftToHot = new Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+  // private static Shift shiftToDangerous = new Shift(!DriveConstants.SHIFTER_SOLENOID_HOT, DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+  // private static Shift shiftToHot = new Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
+
+
+  private static InstantCommand shiftToDangerous = new InstantCommand(() -> m_shifter.setShifterDangerous(), m_shifter);
+  private static InstantCommand shiftToHot = new InstantCommand(() -> m_shifter.setShifterHot(), m_shifter);
+
+
+
+  private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
+  private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
+
+
+  // private static InstantCommand new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
+
 
   //Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
@@ -121,15 +135,20 @@ public class RobotContainer {
   private static Command m_driveStraightAuto = new DriveForwardGivenTime(0.3, 1, m_driveTrain);
   private static Command m_bread = new IntakeBallShootBothP1(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_PB = new Position2Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
-  private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter, m_indexer);
+  private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter);
   private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
 
+  public static NetworkTableEntry a_value = Shuffleboard.getTab("Params").addPersistent("a value", 1.0).getEntry();
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
+  PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
+
+
+  // ALWAYS put this last!!!!
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   /**
@@ -137,10 +156,10 @@ public class RobotContainer {
   */
   private RobotContainer() {
     // Smartdashboard Subsystems
-    SmartDashboard.putData(m_driveTrain);
-    SmartDashboard.putData(m_intake);
-    SmartDashboard.putData(m_shooter);
-    SmartDashboard.putData(m_indexer);
+    // SmartDashboard.putData(m_driveTrain);
+    // SmartDashboard.putData(m_intake);
+    // SmartDashboard.putData(m_shooter);
+    // SmartDashboard.putData(m_indexer);
 
     //CameraServer.startAutomaticCapture();
 
@@ -183,6 +202,8 @@ public class RobotContainer {
     SmartDashboard.putNumber("a value", XboxConstants.JOYSTICK_SENSITIVITY);
 
 
+
+
     // Configure the button bindings
     configureButtonBindings();
     
@@ -190,14 +211,17 @@ public class RobotContainer {
 
     m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain, //
     () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
-    // TODO WHY IS 0.25 HERE
-    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)//
+    () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS))//
 );
 
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
     m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
     m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
     m_climber.setDefaultCommand(new StopClimber(m_climber));
+
+    m_shifter.setShifterDangerous();
+
+    m_intake.retractArm();
 
     // Configure default commands
 
@@ -227,9 +251,9 @@ public class RobotContainer {
       System.out.println (JOYSTICK);
       System.out.println ("************************************");
       new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
-      .whenPressed(shiftToHot);
+                .whenPressed(shiftToHot);
       new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR)
-      .whenPressed(shiftToDangerous);
+                .whenPressed(shiftToDangerous);
 
       new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
 
@@ -253,6 +277,10 @@ public class RobotContainer {
       new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
       new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
       new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
+
+      new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
+      new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
+
 
     }
 
