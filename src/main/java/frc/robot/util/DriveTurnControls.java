@@ -3,6 +3,7 @@ package frc.robot.util;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.XboxConstants;
 
 public class DriveTurnControls {
@@ -28,7 +29,11 @@ public class DriveTurnControls {
         val = val * XboxConstants.FORWARD_JOYSTICK_INVERT;
 
         driveLimiter.calculate(val);
-        // val = Math.pow(val, 3);
+
+        // altering driving joystick sensitivity
+        double a = RobotContainer.a_value.getDouble(0.0);
+        val = ((1 - a) * val) + (a * Math.pow(val, 3));
+
         return val;
     }
 
