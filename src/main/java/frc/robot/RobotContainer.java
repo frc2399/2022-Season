@@ -216,54 +216,39 @@ public class RobotContainer {
    */
 
   private void configureButtonBindings() {
-    // Create some buttons
-    new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR)
-        .whenPressed(shiftHighGear);
-    new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED)
-        .whenPressed(shiftHighSpeed);
-
-    new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
-
-    new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
-
-    // Indexer runs for 2 seconds when the shooter gets to the correct speed
-    // Shooter stays at the correct speed
-    new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
-        new SequentialCommandGroup(
-            new InstantCommand(
-                () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT),
-                m_shooter),
-            new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-            new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
-
-    new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
-    new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
-
+    // Drive train
+    new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR).whenPressed(shiftHighGear);
+    new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
     new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
-
-    new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
-
-    new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
-
-    // Indexer runs for 2 seconds when the shooter gets to the correct speed
-    // Shooter stays at the correct speed
-    new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
-        new SequentialCommandGroup(
-            new InstantCommand(
-                () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT),
-                m_shooter),
-            new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-            new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
-
-    new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
-    new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
-    new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
-
     new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
     new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
     new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
+
+    // Intake
+    new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
     new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
     new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
+
+    // Indexer
+    new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
+    new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
+
+    // Shooter
+
+    // Indexer runs for 2 seconds when the shooter gets to the correct speed
+    // Shooter stays at the correct speed
+    new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
+        new SequentialCommandGroup(
+            new InstantCommand(
+                () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT),
+                m_shooter),
+            new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+            new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
+
+
+    // Climber
+    new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
+    new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
 
   }
 
