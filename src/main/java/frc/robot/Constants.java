@@ -35,9 +35,6 @@ public class Constants {
         // joystick ports
         public static final int JOYSTICK_PORT = 1;
 
-        public static final int FORWARD_JOYSTICK_INVERT = 1;
-        public static final int TURN_JOYSTICK_INVERT = 1;
-
         // TODO: switch buttons to x box bumpers
         public static final int SHIFT_HIGH_SPEED = 5; 
         public static final int SHIFT_HIGH_GEAR = 6; 
@@ -85,14 +82,21 @@ public class Constants {
         public static final int ARCADE_DRIVE_SPEED_AXIS = XboxMappingToJoystick.LEFT_STICK_Y;
         public static final int ARCADE_DRIVE_TURN_AXIS = XboxMappingToJoystick.RIGHT_STICK_X; 
 
-        public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
-        public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
-        public static final int TURN_180 = XboxMappingToJoystick.A_BUTTON;
+        public static final int FORWARD_JOYSTICK_INVERT = 1;
+        public static final int TURN_JOYSTICK_INVERT = 1;
 
         public static final double FORWARD_DEADBAND = 0.05;
         public static final double TURN_DEADBAND = 0.05;
 
+        public static final double DRIVE_SLEW_RATE = 5.0;
+        public static final double TURN_SLEW_RATE = 5.0;
+
         public static final double JOYSTICK_SENSITIVITY = 0.5;
+
+        public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
+        public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
+        public static final int TURN_180 = XboxMappingToJoystick.A_BUTTON;
+
     }
 
     public static final class IntakeConstants {
