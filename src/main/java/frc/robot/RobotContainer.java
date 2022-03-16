@@ -154,7 +154,6 @@ public class RobotContainer {
     // .getEntry();
 
     // SmartDashboard.putNumber("Joystick Sensitivity", XboxConstants.JOYSTICK_SENSITIVITY);
-    Shuffleboard.getTab("Param").addPersistent("Joystick Sensitivity", XboxConstants.JOYSTICK_SENSITIVITY);
 
     // Configure the button bindings
     configureButtonBindings();

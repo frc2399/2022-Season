@@ -49,7 +49,6 @@ public class ArcadeDriveCmd extends CommandBase {
             realTimeTurn = turnFunction.get() * JoystickConstants.TURN_JOYSTICK_INVERT;
         }
 
-        // double a = SmartDashboard.getNumber("a value", 0);
 
         double a = RobotContainer.a_value.getDouble(0.0);
 
