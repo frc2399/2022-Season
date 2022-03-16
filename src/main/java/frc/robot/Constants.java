@@ -20,9 +20,9 @@ public class Constants {
 
         //solenoids
         public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 0;
-	    public static final int SHIFT_HIGH_GEAR_PORT= 1;
+	    public static final int SHIFT_HIGH_TORQUE_PORT= 1;
         public static final boolean SHIFT_HIGH_SPEED_SOLENOID = true;
-	    public static final boolean SHIFT_HIGH_GEAR_SOLENOID= true;
+	    public static final boolean SHIFT_HIGH_TORQUE_SOLENOID= true;
         public static final int PCM_ADDRESS = 13;
         public static final double SHIFT_TIMER = 0.5;
 
@@ -39,10 +39,8 @@ public class Constants {
         public static final int TURN_JOYSTICK_INVERT = 1;
 
         // TODO: switch buttons to x box bumpers
-        public static final int SHIFT_HIGH_SPEED = 5; 
-        public static final int SHIFT_HIGH_GEAR = 6; 
+      
 
-        public static final int INTAKE = 2; 
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
 
@@ -87,12 +85,28 @@ public class Constants {
 
         public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
-        public static final int TURN_180 = XboxMappingToJoystick.A_BUTTON;
+        public static final int TURN_180 = XboxMappingToJoystick.Y_BUTTON;
+        public static final int SHIFT_HIGH_SPEED = XboxMappingToJoystick.RIGHT_BUMPER; 
+        public static final int SHIFT_HIGH_TORQUE = XboxMappingToJoystick.LEFT_BUMPER ; 
+        public static final int INTAKE = XboxMappingToJoystick.LEFT_TRIGGER; 
+        public static final int INDEX_AND_SHOOT = XboxMappingToJoystick.RIGHT_TRIGGER;
+        public static final int LIMELIGHT_SHOOT = XboxMappingToJoystick.A_BUTTON;
+        public static final int TURN_RIGHT_90_CCW = XboxMappingToJoystick.B_BUTTON;
+        public static final int TURN_RIGHT_90_CW = XboxMappingToJoystick.X_BUTTON;
 
         public static final double FORWARD_DEADBAND = 0.05;
         public static final double TURN_DEADBAND = 0.05;
 
         public static final double JOYSTICK_SENSITIVITY = 0.5;
+
+        
+
+
+
+
+        
+
+
     }
 
     public static final class IntakeConstants {

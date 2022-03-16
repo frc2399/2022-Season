@@ -217,21 +217,29 @@ public class RobotContainer {
 
   private void configureButtonBindings() {
     // Drive train
-    new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_GEAR).whenPressed(shiftHighGear);
-    new JoystickButton(JOYSTICK, JoystickConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
+    new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighGear);
+    new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
     new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
     new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
     new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
     new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
     // Intake
-    new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whileHeld(intakeCmd);
+    new JoystickButton(XBOX, XboxConstants.INTAKE).whileHeld(intakeCmd);
     new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
     new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
 
     // Indexer
     new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
     new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
+    //TODO: Make these commands
+    //new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
+    //new JoystickButton(XBOX, XboxConstants.LIMELIGHT_SHOOT).whileHeld();
+    //new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CCW).whileHeld();
+    //new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CW).whileHeld();
+    //new JoystickButton(XBOX, XboxConstants.TURN_180).whileHeld();
+
+
 
     // Shooter
 

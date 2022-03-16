@@ -18,7 +18,7 @@ public class Shifter extends SubsystemBase {
 		 */
 		System.out.println("Shifter subsystem starting");	
 		shifter = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, DriveConstants.SHIFT_HIGH_SPEED_SOLENOID_PORT, 
-																							   DriveConstants.SHIFT_HIGH_GEAR_PORT);
+																							   DriveConstants.SHIFT_HIGH_TORQUE_PORT);
 	}
 
 	/**
