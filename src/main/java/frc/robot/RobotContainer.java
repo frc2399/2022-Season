@@ -32,6 +32,8 @@ import frc.robot.commands.indexer.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
+import com.revrobotics.CANSparkMax;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -269,6 +271,13 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
+    DriveTrain.leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    DriveTrain.rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    DriveTrain.leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    DriveTrain.rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    DriveTrain.leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    DriveTrain.rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+
     System.out.println("Autonomous command!" + m_chooser.getSelected());
     return m_chooser.getSelected();
   }

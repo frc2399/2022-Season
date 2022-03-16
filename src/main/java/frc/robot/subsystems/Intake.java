@@ -27,6 +27,9 @@ SlewRateLimiter filter;
         intakeMotorController = new CANSparkMax(IntakeConstants.INTAKE_MOTOR_ID, MotorType.kBrushed);
         intakeMotorController.restoreFactoryDefaults();
 
+        //set intake motor to coast mode
+        intakeMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
 
 
         SmartDashboard.putNumber("Intake Slew Rate", SmartDashboard.getNumber ("Intake Slew Rate", IntakeConstants.INTAKE_SLEW));

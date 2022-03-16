@@ -57,12 +57,12 @@ import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
  */
 public class DriveTrain extends SubsystemBase {
 
-    private static CANSparkMax leftFrontMotorController;
+    public static CANSparkMax leftFrontMotorController;
     public static CANSparkMax rightFrontMotorController;
-    private CANSparkMax leftMiddleMotorController;
-    private CANSparkMax rightMiddleMotorController;
-    private CANSparkMax leftBackMotorController;
-    private CANSparkMax rightBackMotorController;
+    public static CANSparkMax leftMiddleMotorController;
+    public static CANSparkMax rightMiddleMotorController;
+    public static CANSparkMax leftBackMotorController;
+    public static CANSparkMax rightBackMotorController;
 
     public RelativeEncoder leftEncoder, rightEncoder;
 
@@ -121,15 +121,6 @@ public class DriveTrain extends SubsystemBase {
         leftBackMotorController = new CANSparkMax(DriveConstants.LEFT_BACK_MOTOR_ID, MotorType.kBrushless);
         rightBackMotorController = new CANSparkMax(DriveConstants.RIGHT_BACK_MOTOR_ID, MotorType.kBrushless);
 
-        // Set motors to brake mode 
-        /** 
-        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        */
 
         // Set motors to coast mode
         leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);

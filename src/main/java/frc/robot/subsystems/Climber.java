@@ -7,7 +7,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import frc.robot.Constants.ClimberConstants;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
   
@@ -31,6 +30,10 @@ public class Climber extends SubsystemBase {
     //initialize motor controllers
     leftMotorController = new CANSparkMax(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
     rightMotorController = new CANSparkMax(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, MotorType.kBrushless);
+
+    //set climber motors to coast mode
+    leftMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    rightMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
     //restore factory settings to reset to a known state
     leftMotorController.restoreFactoryDefaults();

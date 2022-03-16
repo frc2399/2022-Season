@@ -47,6 +47,10 @@ public class Shooter extends SubsystemBase {
     bottomMotorController = new CANSparkMax(ShooterConstants.BOTTOM_MOTOR_ID, MotorType.kBrushless);
     topMotorController = new CANSparkMax(ShooterConstants.TOP_MOTOR_ID, MotorType.kBrushless);
 
+    //set shooter motors to coast mode
+    bottomMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    topMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
     //restore factory settings to reset to a known state
     bottomMotorController.restoreFactoryDefaults();
     topMotorController.restoreFactoryDefaults();

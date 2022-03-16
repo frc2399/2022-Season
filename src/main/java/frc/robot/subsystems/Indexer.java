@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.IndexerConstants;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Indexer extends SubsystemBase {
   
@@ -16,6 +15,9 @@ public class Indexer extends SubsystemBase {
   public Indexer() {
     indexerMotorController = new CANSparkMax(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
     limitSwitch = new DigitalInput(IndexerConstants.LIMIT_SWITCH_ID);
+
+    //set indexer motor to coast mode
+    indexerMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
   }
 
