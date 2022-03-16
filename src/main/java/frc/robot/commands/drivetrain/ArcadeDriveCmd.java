@@ -12,6 +12,9 @@ import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
 
+    public static final NetworkTableEntry leftSpeed = Shuffleboard.getTab("Driver").add("Left Speed", 0).getEntry();
+    public static final NetworkTableEntry rightSpeed = Shuffleboard.getTab("Driver").add("Right Speed", 0).getEntry();
+
     private final DriveTrain driveSubsystem;
     private final Supplier<Double> speedFunction, turnFunction;
 
@@ -57,9 +60,7 @@ public class ArcadeDriveCmd extends CommandBase {
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
-        final NetworkTableEntry leftSpeed = Shuffleboard.getTab("Driver").add("Left Speed", left).getEntry();
-        final NetworkTableEntry rightSpeed = Shuffleboard.getTab("Driver").add("Right Speed", right).getEntry();
-
+       
         leftSpeed.setNumber(left);
         rightSpeed.setNumber(right);
        // SmartDashboard.putNumber("left speed", left);

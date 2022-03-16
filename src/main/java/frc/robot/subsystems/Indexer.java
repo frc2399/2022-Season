@@ -4,10 +4,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.IndexerConstants;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class Indexer extends SubsystemBase {
-  
+
+  public static final NetworkTableEntry indexSpeed = Shuffleboard.getTab("Params").add("Indexer Speed", 0).getEntry();
+
   private CANSparkMax indexerMotorController;
   private DigitalInput limitSwitch;
 

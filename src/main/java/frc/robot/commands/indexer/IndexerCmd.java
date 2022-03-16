@@ -21,6 +21,7 @@ public class IndexerCmd extends CommandBase {
 
     @Override
     public void execute() {
+        double speed = Indexer.indexSpeed.getDouble(0);
         this.indexerSubsystem.setSpeed(speed);
         // SmartDashboard.putNumber("Indexer speed ", speed);
     }
