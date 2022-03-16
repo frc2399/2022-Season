@@ -9,17 +9,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-//import edu.wpi.first.wpilibj.XboxController.Button;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-//import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-//import edu.wpi.first.wpilibj2.command.WaitCommand;
-//import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 import frc.robot.Constants.ShooterConstants;
@@ -60,22 +54,12 @@ public class RobotContainer {
   public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
   public static Joystick XBOX = new Joystick(XboxConstants.XBOX_PORT);
 
-  // Shift
-  // private static Shift shiftToDangerous = new
-  // Shift(!DriveConstants.SHIFTER_SOLENOID_HOT,
-  // DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
-  // private static Shift shiftToHot = new
-  // Shift(DriveConstants.SHIFTER_SOLENOID_HOT,!DriveConstants.SHIFTER_SOLENOID_DANGEROUS);
-
+  // Defining commands
   private static InstantCommand shiftHighGear = new InstantCommand(() -> m_shifter.setShifterDangerous(), m_shifter);
   private static InstantCommand shiftHighSpeed = new InstantCommand(() -> m_shifter.setShifterHot(), m_shifter);
 
   private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
   private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
-
-  // private static InstantCommand new InstantCommand(() ->
-  // m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,
-  // ShooterConstants.BOTTOM_SETPOINT), m_shooter);
 
   // Intake
   private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
@@ -120,12 +104,7 @@ public class RobotContainer {
   private static RobotContainer m_robotContainer = new RobotContainer();
 
   private RobotContainer() {
-    // Smartdashboard Subsystems
-    // SmartDashboard.putData(m_driveTrain);
-    // SmartDashboard.putData(m_intake);
-    // SmartDashboard.putData(m_shooter);
-    // SmartDashboard.putData(m_indexer);
-
+   
     // CameraServer.startAutomaticCapture();
 
     // Add commands to the autonomous command chooser
@@ -140,17 +119,16 @@ public class RobotContainer {
 
     // Put the chooser on the dashboard
     SmartDashboard.putData(m_chooser);
+    // Smart Dashboard
+    // Smartdashboard Subsystems
+    // SmartDashboard.putData(m_driveTrain);
+    // SmartDashboard.putData(m_intake);
+    // SmartDashboard.putData(m_shooter);
+    // SmartDashboard.putData(m_indexer);
 
-    // SmartDashboard Buttons
-    // Drive Train
-    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time",
-        new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
-    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenDistance",
-        new DriveForwardGivenDistance(0.3, 40, m_driveTrain));
-    Shuffleboard.getTab("DriveTrain").add("TurnNAngle", new TurnNAngle(90, m_driveTrain));
-    Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
+    Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
 
-    // Robot
     Shuffleboard.getTab("Robot").add("Index and Shoot", new SequentialCommandGroup(
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT),
@@ -158,9 +136,13 @@ public class RobotContainer {
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
 
-    // Smart Dashboard
-    Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
-    Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time",
+        new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenDistance",
+        new DriveForwardGivenDistance(0.3, 40, m_driveTrain));
+
+    Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("DriveTrain").add("TurnNAngle", new TurnNAngle(90, m_driveTrain));
 
     // Changing the "a" value on shuffleboard to alter joystick drive sensitivity
     // Shuffleboard.getTab("Drive")
@@ -180,11 +162,6 @@ public class RobotContainer {
             () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
             () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS)));
 
-    //
-    // m_driveTrain.setDefaultCommand(new ArcadeDriveCmd(m_driveTrain,
-    // () -> -XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_SPEED_AXIS),
-    // () -> XBOX.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS) * 0.25)
-    // );
     m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
     m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
     m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
@@ -193,13 +170,6 @@ public class RobotContainer {
     m_shifter.setShifterDangerous();
 
     m_intake.retractArm();
-
-    // Configure default commands
-
-    // Configure autonomous sendable chooser
-
-    // m_chooser.setDefaultOption("Autonomous Command", new AutonomousCommand());
-
   }
 
   public static RobotContainer getInstance() {
@@ -232,14 +202,12 @@ public class RobotContainer {
     // Indexer
     new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
     new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
-    //TODO: Make these commands
-    //new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
-    //new JoystickButton(XBOX, XboxConstants.LIMELIGHT_SHOOT).whileHeld();
-    //new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CCW).whileHeld();
-    //new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CW).whileHeld();
-    //new JoystickButton(XBOX, XboxConstants.TURN_180).whileHeld();
-
-
+    // TODO: Make these commands
+    // new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
+    // new JoystickButton(XBOX, XboxConstants.LIMELIGHT_SHOOT).whileHeld();
+    // new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CCW).whileHeld();
+    // new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CW).whileHeld();
+    // new JoystickButton(XBOX, XboxConstants.TURN_180).whileHeld();
 
     // Shooter
 
@@ -252,7 +220,6 @@ public class RobotContainer {
                 m_shooter),
             new WaitUntilCommand(() -> m_shooter.correctSpeed()),
             new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
-
 
     // Climber
     new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
