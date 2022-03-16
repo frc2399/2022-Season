@@ -5,9 +5,9 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -39,6 +39,7 @@ import frc.robot.subsystems.*;
  */
 
 public class RobotContainer {
+
 
   // The robot's subsystems
   public final static DriveTrain m_driveTrain = new DriveTrain();
@@ -93,10 +94,11 @@ public class RobotContainer {
   private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
   private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
 
-  public static NetworkTableEntry a_value = Shuffleboard.getTab("Params").addPersistent("a value", 1.0).getEntry();
+  public static NetworkTableEntry a_value = Shuffleboard.getTab("Params").addPersistent("Joystick Sensitivity", 1.0).getEntry();
 
   // A chooser for autonomous commands
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  static SendableChooser<Command> m_chooser = new SendableChooser<>();
+  public final static ComplexWidget autonChooser = Shuffleboard.getTab("Driver").add("Choose Auton", m_chooser);
 
   PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
@@ -118,7 +120,7 @@ public class RobotContainer {
     m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
 
     // Put the chooser on the dashboard
-    SmartDashboard.putData(m_chooser);
+    
     // Smart Dashboard
     // Smartdashboard Subsystems
     // SmartDashboard.putData(m_driveTrain);
@@ -126,23 +128,23 @@ public class RobotContainer {
     // SmartDashboard.putData(m_shooter);
     // SmartDashboard.putData(m_indexer);
 
-    Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
-    Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
+    //Shuffleboard.getTab("SmartDashboard").add("Follow Target", new FollowTarget(m_driveTrain));
+    //Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new ButterySmoothFollowTarget(m_driveTrain));
 
-    Shuffleboard.getTab("Robot").add("Index and Shoot", new SequentialCommandGroup(
-        new InstantCommand(
-            () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT),
-            m_shooter),
-        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
+    // //Shuffleboard.getTab("Robot").add("Index and Shoot", new SequentialCommandGroup(
+    //     new InstantCommand(
+    //         () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT),
+    //         m_shooter),
+    //     new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+    //     new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
 
-    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenTime: time",
+    Shuffleboard.getTab("Testing").add("DriveForwardGivenTime: time",
         new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
-    Shuffleboard.getTab("DriveTrain").add("DriveForwardGivenDistance",
+    Shuffleboard.getTab("Testing").add("DriveForwardGivenDistance",
         new DriveForwardGivenDistance(0.3, 40, m_driveTrain));
 
-    Shuffleboard.getTab("DriveTrain").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
-    Shuffleboard.getTab("DriveTrain").add("TurnNAngle", new TurnNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("Testing").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
+    Shuffleboard.getTab("Testing").add("TurnNAngle", new TurnNAngle(90, m_driveTrain));
 
     // Changing the "a" value on shuffleboard to alter joystick drive sensitivity
     // Shuffleboard.getTab("Drive")
@@ -151,7 +153,8 @@ public class RobotContainer {
     // .withProperties(Map.of("min", 0, "max", 1))
     // .getEntry();
 
-    SmartDashboard.putNumber("a value", XboxConstants.JOYSTICK_SENSITIVITY);
+    // SmartDashboard.putNumber("Joystick Sensitivity", XboxConstants.JOYSTICK_SENSITIVITY);
+    Shuffleboard.getTab("Param").addPersistent("Joystick Sensitivity", XboxConstants.JOYSTICK_SENSITIVITY);
 
     // Configure the button bindings
     configureButtonBindings();

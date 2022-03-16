@@ -41,7 +41,6 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.util.NavX;
 // import edu.wpi.first.wpilibj.simulation.EncoderSim;
 // import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
@@ -96,20 +95,11 @@ public class DriveTrain extends SubsystemBase {
     private DifferentialDrivetrainSim driveSim;
     private Field2d field;
 
-    final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
-    final NetworkTableEntry leftFrontTemp = tab.add("LF temp", 0).getEntry();
-    final NetworkTableEntry leftMiddleTemp = tab.add("LM temp", 0).getEntry();
-    final NetworkTableEntry leftBackTemp = tab.add("LB temp", 0).getEntry();
-    final NetworkTableEntry rightFrontTemp = tab.add("RF temp", 0).getEntry();
-    final NetworkTableEntry rightMiddleTemp = tab.add("RM temp", 0).getEntry();
-    final NetworkTableEntry rightBackTemp = tab.add("RB temp", 0).getEntry();
 
-    final NetworkTableEntry leftFrontAmps = tab.add("LF amps", 0).getEntry();
-    final NetworkTableEntry leftMiddleAmps = tab.add("LM amps", 0).getEntry();
-    final NetworkTableEntry leftBackAmps = tab.add("LB amps", 0).getEntry();
-    final NetworkTableEntry rightFrontAmps = tab.add("RF amps", 0).getEntry();
-    final NetworkTableEntry rightMiddleAmps = tab.add("RM amps", 0).getEntry();
-    final NetworkTableEntry rightBackAmps = tab.add("RB amps", 0).getEntry();
+    final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
+    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").add("Angle Error Tolerance", 5).getEntry();
+    public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").add("Distance Error Tolerance", 5).getEntry();
+    public static final NetworkTableEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
 
 
     public DriveTrain() {
@@ -189,10 +179,10 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
             );
 
-            // field = new Field2d();
-            // SmartDashboard.putData("Field", field);
+            field = new Field2d();
+            //SmartDashboard.putData("Field", field);
 
-            //field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
+            field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
         }
 
     
@@ -209,29 +199,11 @@ public class DriveTrain extends SubsystemBase {
         // double error = targetAngle - currentAngle;
 
         // outputSpeed = kP * error;
-        SmartDashboard.putNumber("Angle", ahrs.getAngle());
+
+        robotAngle.setDouble(ahrs.getAngle());
+        // SmartDashboard.putNumber("Angle", ahrs.getAngle());
 // 
         // System.out.println("drive train periodic");
-
-        SmartDashboard.putNumber("LF temp", leftFrontMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("LM temp", leftMiddleMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("LB temp", leftBackMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("RF temp", rightFrontMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("RM temp", rightMiddleMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("RB temp", rightBackMotorController.getMotorTemperature());
-
-        leftFrontTemp.setDouble(leftFrontMotorController.getMotorTemperature());
-        leftMiddleTemp.setDouble(leftMiddleMotorController.getMotorTemperature());
-        leftBackTemp.setDouble(leftBackMotorController.getMotorTemperature());
-
-        rightFrontTemp.setDouble(rightFrontMotorController.getMotorTemperature());
-        rightMiddleTemp.setDouble(rightMiddleMotorController.getMotorTemperature());
-        rightBackTemp.setDouble(rightBackMotorController.getMotorTemperature());
-     
-
-        leftFrontAmps.setDouble(leftFrontMotorController.getOutputCurrent());
-        leftMiddleAmps.setDouble(leftMiddleMotorController.getOutputCurrent());
-        leftBackAmps.setDouble(leftBackMotorController.getOutputCurrent());
 
         //SmartDashboard.putNumber("target angle", RobotContainer.m_turnToNAngle.targetAngle);
 

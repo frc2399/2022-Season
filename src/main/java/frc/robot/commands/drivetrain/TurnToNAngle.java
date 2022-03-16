@@ -3,7 +3,6 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnToNAngle extends CommandBase {
   /** Creates a new TurnToNAngle. */
@@ -54,7 +53,7 @@ public class TurnToNAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 3);
+    double errorTolerance = DriveTrain.angleErrorTolerance.getDouble(3);
     if (Math.abs(modAngle(targetAngle - currentAngle)) <= errorTolerance) {
       return true;
     }

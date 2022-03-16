@@ -20,7 +20,7 @@ public class SimEncoder {
    //and then had to update it bc the original createDouble was "deprecated" (outdated)
    //the only difference was direction instead of the boolean readonly
    //we chose kOutput bc distance is an output 😻
-   //TODO: check if kOutput should be kBidir or kInput 
+   //TODO: check if kOutput should be kBidir or kInput 👾
   public SimEncoder(String name) {
     SimDevice device = SimDevice.create("Encoder[" + name + "]");
     distance = device.createDouble("Distance", Direction.kOutput, 0);

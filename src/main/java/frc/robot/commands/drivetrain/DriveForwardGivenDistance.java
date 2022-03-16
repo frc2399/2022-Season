@@ -4,7 +4,7 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 
 public class DriveForwardGivenDistance extends CommandBase {
@@ -62,9 +62,10 @@ public class DriveForwardGivenDistance extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        double butteryErrorTolerance = SmartDashboard.getNumber("Error Tolerance Distance", 0.5);
-        SmartDashboard.putNumber("distance bt td and cp", Math.abs(targetDistance - currentPosition));
-        //System.out.println("distance bt td and cp " +  Math.abs(td - cp));
+        double butteryErrorTolerance = DriveTrain.angleErrorTolerance.getDouble(0.5);
+        // SmartDashboard.getNumber("Error Tolerance Distance", 0.5);
+        // SmartDashboard.putNumber("distance bt td and cp", Math.abs(targetDistance - currentPosition));
+        // System.out.println("distance bt td and cp " +  Math.abs(td - cp));
 
         if (Math.abs(newTargetDistance - currentPosition) <= butteryErrorTolerance)
         {
