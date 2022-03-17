@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.IndexerConstants;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -12,11 +13,16 @@ public class Indexer extends SubsystemBase {
   private CANSparkMax indexerMotorController;
   private DigitalInput limitSwitch;
 
+  SlewRateLimiter filter;
+
   /** Creates a new Indexer. */
   public Indexer() {
     indexerMotorController = new CANSparkMax(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
     limitSwitch = new DigitalInput(IndexerConstants.LIMIT_SWITCH_ID);
 
+    SmartDashboard.putNumber("Indexer Slew Rate", SmartDashboard.getNumber ("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
+    filter = new SlewRateLimiter(SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
+    System.out.println ("Indexer SlewRateLimiter " + SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
   }
 
   @Override
@@ -28,6 +34,7 @@ public class Indexer extends SubsystemBase {
 
   public void setSpeed(double indexerSpeed)
   {
+    indexerSpeed = filter.calculate(indexerSpeed);
     indexerMotorController.set(indexerSpeed);
     // SmartDashboard.putNumber("Indexer speed ", indexerSpeed);
   }

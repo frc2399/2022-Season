@@ -99,14 +99,6 @@ public class Constants {
 
         public static final double JOYSTICK_SENSITIVITY = 0.5;
 
-        
-
-
-
-
-        
-
-
     }
 
     public static final class IntakeConstants {
@@ -139,6 +131,8 @@ public class Constants {
         public static final int INDEXER_MOTOR_ID = 2;
         public static final int INDEXERSPEED = 1;
         public static final int LIMIT_SWITCH_ID = 0;
+        
+        public static final int INDEXER_SLEW = 5;
     }
 
     // public static final class PrototypeDriveConstants {
@@ -154,6 +148,8 @@ public class Constants {
         public static final double CLIMBER_SPEED = 0.5;
         public static final double MAX_HEIGHT = 0.9;
         public static final double MIN_HEIGHT = 0;
+
+        public static final int CLIMBER_SLEW = 5;
 
     }
 
