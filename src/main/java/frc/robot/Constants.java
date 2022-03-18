@@ -35,9 +35,6 @@ public class Constants {
         // joystick ports
         public static final int JOYSTICK_PORT = 1;
 
-        // TODO: switch buttons to x box bumpers
-      
-
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
 
@@ -48,7 +45,7 @@ public class Constants {
         public static final int INDEXER_FWD = 7;
         public static final int INDEXER_BACK = 8;
 
-        public static final int TURN_TO_N = 99; // TODO need to make buttons for turn to 90 left, 90 right, 180
+        // public static final int TURN_TO_N = 12; // get rid of this eventually
 
         public static final int CLIMBER_UP = 9;
         public static final int CLIMBER_DOWN = 10;

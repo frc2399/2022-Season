@@ -7,6 +7,7 @@ import frc.robot.util.Coords;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import java.util.ArrayList;
@@ -44,9 +45,11 @@ public class PhotonLimelight extends SubsystemBase {
      * SmartDashboard.putNumber("x_distance", x_distance);
      */
     // System.out.println("Testing for photon limelight targets");
-    var result = camera.getLatestResult();
-    SmartDashboard.putBoolean("Photon Limelight hasTargets: ", result.hasTargets());
-    if (result.hasTargets()) {
+    PhotonPipelineResult result = null;
+    result = camera.getLatestResult();
+    Boolean has_targets = result.hasTargets() ;
+    SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
+    if (has_targets) {
       // System.out.println("Photon Limelight has targets!");
       List<PhotonTrackedTarget> targets = result.getTargets();
       ArrayList<Double> x_distances = new ArrayList<>();
@@ -114,8 +117,8 @@ public class PhotonLimelight extends SubsystemBase {
   public static ArrayList<Double> getTargetLocation(PhotonTrackedTarget target, int countTargets) {
     ArrayList<Double> coordinates = new ArrayList<>();
 
-    String smartdashx = "Xangle" + countTargets;
-    String smartdashy = "Yangle" + countTargets;
+    // String smartdashx = "Xangle" + countTargets;
+    // String smartdashy = "Yangle" + countTargets;
 
     double y_angle = target.getPitch() + PhotonLimelightConstants.TILT_DEGREES;
     double y_angle_radians = Math.toRadians(y_angle);
