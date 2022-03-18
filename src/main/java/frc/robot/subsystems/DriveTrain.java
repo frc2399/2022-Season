@@ -93,7 +93,7 @@ public class DriveTrain extends SubsystemBase {
     public SimEncoder rightEncoderSim;
     public SimGyro gyroSim;
     private DifferentialDrivetrainSim driveSim;
-    private Field2d field;
+    private Field2d field = new Field2d();
 
 
     final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");

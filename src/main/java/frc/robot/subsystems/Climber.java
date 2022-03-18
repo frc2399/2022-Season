@@ -7,6 +7,8 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import frc.robot.Constants.ClimberConstants;
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
   
@@ -14,6 +16,8 @@ public class Climber extends SubsystemBase {
   private CANSparkMax rightMotorController;
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPIDController, rightPIDController;
+
+  SlewRateLimiter filter;
 
   //private double climberSetpoint;
 
@@ -65,6 +69,10 @@ public class Climber extends SubsystemBase {
     leftEncoder.setPosition(0);
     rightEncoder.setPosition(0);
 
+    SmartDashboard.putNumber("Climber Slew Rate", SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+    filter = new SlewRateLimiter(SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+    System.out.println ("Climber SlewRateLimiter " + SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+
   }
 
   @Override
@@ -77,11 +85,13 @@ public class Climber extends SubsystemBase {
 
   public void setLeftSpeed(double speed)
   {
+    speed = filter.calculate(speed);
     leftMotorController.set(speed);
   }
 
   public void setRightSpeed(double speed)
   {
+    speed = filter.calculate(speed);
     rightMotorController.set(speed);
     // SmartDashboard.putNumber("Climber speed ", speed);
   }
