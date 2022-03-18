@@ -189,7 +189,7 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
             );
 
-            // field = new Field2d();
+            field = new Field2d();
             // SmartDashboard.putData("Field", field);
 
             //field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
