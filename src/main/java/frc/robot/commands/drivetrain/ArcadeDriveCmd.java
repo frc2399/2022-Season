@@ -5,9 +5,9 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.JoystickConstants;
-import frc.robot.Constants.XboxConstants;
+// import frc.robot.RobotContainer;
+// import frc.robot.Constants.JoystickConstants;
+// import frc.robot.Constants.XboxConstants;
 import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
@@ -33,28 +33,31 @@ public class ArcadeDriveCmd extends CommandBase {
         double realTimeSpeed;
         double realTimeTurn;
 
-        // have deadband to prevent joystick drifting
-        if (Math.abs(speedFunction.get()) <= XboxConstants.FORWARD_DEADBAND) {
-            realTimeSpeed = 0;
-        } 
-        else {
-            realTimeSpeed = speedFunction.get() * JoystickConstants.FORWARD_JOYSTICK_INVERT;
-        }
+        // // have deadband to prevent joystick drifting
+        // if (Math.abs(speedFunction.get()) <= XboxConstants.FORWARD_DEADBAND) {
+        //     realTimeSpeed = 0;
+        // } 
+        // else {
+        //     realTimeSpeed = speedFunction.get() * JoystickConstants.FORWARD_JOYSTICK_INVERT;
+        // }
 
-        // have deadband to prevent joystick drifting
-        if (Math.abs(turnFunction.get()) <= XboxConstants.TURN_DEADBAND) {
-            realTimeTurn = 0;
-        } 
-        else {
-            realTimeTurn = turnFunction.get() * JoystickConstants.TURN_JOYSTICK_INVERT;
-        }
+        // // have deadband to prevent joystick drifting
+        // if (Math.abs(turnFunction.get()) <= XboxConstants.TURN_DEADBAND) {
+        //     realTimeTurn = 0;
+        // } 
+        // else {
+        //     realTimeTurn = turnFunction.get() * JoystickConstants.TURN_JOYSTICK_INVERT;
+        // }
 
-        // double a = SmartDashboard.getNumber("a value", 0);
+        // // double a = SmartDashboard.getNumber("a value", 0);
 
-        double a = RobotContainer.a_value.getDouble(0.0);
+        // double a = RobotContainer.a_value.getDouble(0.0);
 
-        // altering driving joystick sensitivity
-        realTimeSpeed = ((1 - a) * realTimeSpeed) + (a * Math.pow(realTimeSpeed, 3));
+        // // altering driving joystick sensitivity
+        // realTimeSpeed = ((1 - a) * realTimeSpeed) + (a * Math.pow(realTimeSpeed, 3));
+
+        realTimeSpeed = speedFunction.get();
+        realTimeTurn = turnFunction.get();
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
