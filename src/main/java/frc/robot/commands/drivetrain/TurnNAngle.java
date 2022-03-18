@@ -12,10 +12,12 @@ public class TurnNAngle extends CommandBase {
   private final DriveTrain m_driveTrain;
   private double currentAngle;
   double newAngle;
+  double speed;
 
-  public TurnNAngle(double turnAngle, DriveTrain subsystem) {
+  public TurnNAngle(double speed, double turnAngle, DriveTrain subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.turnAngle = turnAngle;
+    this.speed = speed;
     m_driveTrain = subsystem;
     addRequirements(m_driveTrain);
 
@@ -63,18 +65,17 @@ public class TurnNAngle extends CommandBase {
     error = modAngle(error);
     // SmartDashboard.putNumber("error", error);
 
-    double outputSpeed;
     if (RobotBase.isSimulation()) 
     {
-      outputSpeed = m_driveTrain.kPSim * error;
+      speed = m_driveTrain.kPSim * error;
     }
     else
     {
-      outputSpeed = m_driveTrain.kP * error;
+      speed = m_driveTrain.kP * error;
     }
-    outputSpeed = MathUtil.clamp(outputSpeed, -0.2, 0.2);
+    speed = MathUtil.clamp(speed, -0.2, 0.2);
 
-    m_driveTrain.setMotors(outputSpeed, -outputSpeed);
+    m_driveTrain.setMotors(speed, -speed);
 
   }
 
