@@ -29,7 +29,7 @@ public class Indexer extends SubsystemBase {
 
     ShuffleboardLayout indexerParamsLayout = Shuffleboard.getTab("Params")
       .getLayout("Indexer", BuiltInLayouts.kList)
-      .withSize(1, 1)
+      .withSize(1, 2)
       .withPosition(1, 1)
     ;
     // .withProperties(Map.of("Label position", "HIDDEN")); // hide labels for commands
