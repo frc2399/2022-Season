@@ -13,12 +13,19 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class PhotonLimelight extends SubsystemBase {
 
+  public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
   static PhotonCamera camera;
+
+  Boolean photonNotFoundMessagePrinted = false ;
 
   public PhotonLimelight() {
     camera = new PhotonCamera("gloworm");
@@ -46,7 +53,22 @@ public class PhotonLimelight extends SubsystemBase {
      */
     // System.out.println("Testing for photon limelight targets");
     PhotonPipelineResult result = null;
-    result = camera.getLatestResult();
+
+    Boolean photonExists = NetworkTableInstance.getDefault().getTable("photonvision").getEntry("gloworm").exists();
+
+    if (photonExists)
+    {
+      result = camera.getLatestResult();
+    }
+    else
+    {
+      if (!photonNotFoundMessagePrinted)
+      {
+        System.out.println("****** Photon Limelight not found *******");
+        photonNotFoundMessagePrinted = true ;
+      }
+      return;
+    }
     Boolean has_targets = result.hasTargets() ;
     SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
     if (has_targets) {
@@ -66,6 +88,8 @@ public class PhotonLimelight extends SubsystemBase {
 
         countTargets++;
       }
+      amountTargets.setNumber(countTargets);
+
       double totalCenterX = 0;
       double totalCenterY = 0;
       for (int i = 0; i< targets.size() - 1; i++)
@@ -89,8 +113,8 @@ public class PhotonLimelight extends SubsystemBase {
         }
         else
         {
-          SmartDashboard.putString(smartdashxi, "null");
-          SmartDashboard.putString(smartdashyi, "null");
+         // SmartDashboard.putString(smartdashxi, "null");
+         // SmartDashboard.putString(smartdashyi, "null");
         }
         
       }
@@ -191,7 +215,6 @@ public class PhotonLimelight extends SubsystemBase {
   private static Coords get_hub_center_from_target_centers(ArrayList<Coords> target_centers) {
     double totalCenterX = 0;
     double totalCenterY = 0;
-    SmartDashboard.putNumber("Targets found: ", target_centers.size());
     var amount_target_centers = 0;
 
     for (int i = 0; i < target_centers.size() - 1; i++) {
@@ -221,7 +244,6 @@ public class PhotonLimelight extends SubsystemBase {
     ArrayList<Coords> centers = new ArrayList<Coords>();
 
     var result = camera.getLatestResult();
-    SmartDashboard.putBoolean("Photon Limelight hasTargets: ", result.hasTargets());
     if (result.hasTargets()) {
       // System.out.println("Photon Limelight has targets!");
       List<PhotonTrackedTarget> targets = result.getTargets();

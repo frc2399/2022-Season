@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TurnNAngle extends CommandBase {
   /** Creates a new TurnToNAngle. */
@@ -90,7 +89,7 @@ public class TurnNAngle extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 5);
+    double errorTolerance = DriveTrain.angleErrorTolerance.getDouble(3);
     //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
     if (Math.abs(modAngle(newAngle - currentAngle)) <= errorTolerance) {
       return true;

@@ -35,6 +35,10 @@ public class Constants {
         // joystick ports
         public static final int JOYSTICK_PORT = 1;
 
+        public static final int FORWARD_JOYSTICK_INVERT = 1;
+        public static final int TURN_JOYSTICK_INVERT = 1;
+      
+
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
 
@@ -126,6 +130,16 @@ public class Constants {
 
         public static final double TOP_SETPOINT = 700;
         public static final double BOTTOM_SETPOINT = 800;
+
+        public static final double SHOOTER_KP = 0;//1.875;
+        public static final double SHOOTER_KI = 0;//0.006;
+        public static final double SHOOTER_KD = 0;//52.5;
+        public static final double SHOOTER_KF = 0.000086; //0.15;
+        public static final double SHOOTER_KIZ = 0;
+        public static final double SHOOTER_K_MAX_OUTPUT = 1;
+        public static final double SHOOTER_K_MIN_OUTPUT = 0;
+        public static final double SHOOTER_MAX_RPM = 5700;
+    
     }
 
     public static final class IndexerConstants {

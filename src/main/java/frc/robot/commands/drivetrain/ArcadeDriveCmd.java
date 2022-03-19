@@ -2,8 +2,8 @@ package frc.robot.commands.drivetrain;
 
 import java.util.function.Supplier;
 
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 // import frc.robot.RobotContainer;
 // import frc.robot.Constants.JoystickConstants;
@@ -11,6 +11,9 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
+
+    public static final NetworkTableEntry leftSpeed = Shuffleboard.getTab("Motor Diag").add("Left Speed", 0).getEntry();
+    public static final NetworkTableEntry rightSpeed = Shuffleboard.getTab("Motor Diag").add("Right Speed", 0).getEntry();
 
     private final DriveTrain driveSubsystem;
     private final Supplier<Double> speedFunction, turnFunction;
@@ -49,7 +52,6 @@ public class ArcadeDriveCmd extends CommandBase {
         //     realTimeTurn = turnFunction.get() * JoystickConstants.TURN_JOYSTICK_INVERT;
         // }
 
-        // // double a = SmartDashboard.getNumber("a value", 0);
 
         // double a = RobotContainer.a_value.getDouble(0.0);
 
@@ -61,9 +63,11 @@ public class ArcadeDriveCmd extends CommandBase {
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
-
-        SmartDashboard.putNumber("left speed", left);
-        SmartDashboard.putNumber("right speed", right);
+       
+        leftSpeed.setNumber(left);
+        rightSpeed.setNumber(right);
+       // SmartDashboard.putNumber("left speed", left);
+       // SmartDashboard.putNumber("right speed", right);
 
         this.driveSubsystem.setMotors(left, right);
     }

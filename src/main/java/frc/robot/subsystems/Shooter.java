@@ -2,7 +2,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -12,12 +13,14 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
 /**
  * Drivetrain subsystem.
  */
 public class Shooter extends SubsystemBase {
   
+  public static final NetworkTableEntry topVelocity = Shuffleboard.getTab("Driver").add("Top Velocity", 0).getEntry();
+  public static final NetworkTableEntry bottomVelocity = Shuffleboard.getTab("Driver").add("Bottom Velocity", 0).getEntry();
+
   //instantiate motor controllers
   private CANSparkMax bottomMotorController;
   private CANSparkMax topMotorController;
@@ -30,16 +33,7 @@ public class Shooter extends SubsystemBase {
   private static final double RANGE = 50;
 
   //PID constants 
-  //TODO: MOVE TO CONSTANTS FILE!
-  public static final double SHOOTER_KP = 0;//1.875;
-	public static final double SHOOTER_KI = 0;//0.006;
-	public static final double SHOOTER_KD = 0;//52.5;
-  public static final double SHOOTER_KF = 0.000086; //0.15;
-  public static final double SHOOTER_KIZ = 0;
-  public static final double SHOOTER_K_MAX_OUTPUT = 1;
-  public static final double SHOOTER_K_MIN_OUTPUT = 0;
-  public static final double SHOOTER_MAX_RPM = 5700;
-
+ 
   //constructor
   public Shooter() {
       
@@ -60,19 +54,19 @@ public class Shooter extends SubsystemBase {
     topPIDController = topMotorController.getPIDController();
 
     //assigns values to PID controllers
-    bottomPIDController.setP(SHOOTER_KP);
-    bottomPIDController.setI(SHOOTER_KI);
-    bottomPIDController.setD(SHOOTER_KD);
-    bottomPIDController.setIZone(SHOOTER_KIZ);
-    bottomPIDController.setFF(SHOOTER_KF);
-    bottomPIDController.setOutputRange(SHOOTER_K_MIN_OUTPUT, SHOOTER_K_MAX_OUTPUT);
+    bottomPIDController.setP(ShooterConstants.SHOOTER_KP);
+    bottomPIDController.setI(ShooterConstants.SHOOTER_KI);
+    bottomPIDController.setD(ShooterConstants.SHOOTER_KD);
+    bottomPIDController.setIZone(ShooterConstants.SHOOTER_KIZ);
+    bottomPIDController.setFF(ShooterConstants.SHOOTER_KF);
+    bottomPIDController.setOutputRange(ShooterConstants.SHOOTER_K_MIN_OUTPUT, ShooterConstants.SHOOTER_K_MAX_OUTPUT);
 
-    topPIDController.setP(SHOOTER_KP);
-    topPIDController.setI(SHOOTER_KI);
-    topPIDController.setD(SHOOTER_KD);
-    topPIDController.setIZone(SHOOTER_KIZ);
-    topPIDController.setFF(SHOOTER_KF);
-    topPIDController.setOutputRange(SHOOTER_K_MIN_OUTPUT, SHOOTER_K_MAX_OUTPUT);
+    topPIDController.setP(ShooterConstants.SHOOTER_KP);
+    topPIDController.setI(ShooterConstants.SHOOTER_KI);
+    topPIDController.setD(ShooterConstants.SHOOTER_KD);
+    topPIDController.setIZone(ShooterConstants.SHOOTER_KIZ);
+    topPIDController.setFF(ShooterConstants.SHOOTER_KF);
+    topPIDController.setOutputRange(ShooterConstants.SHOOTER_K_MIN_OUTPUT, ShooterConstants.SHOOTER_K_MAX_OUTPUT);
     
     //invert the bottom motor controller so shooter wheels spin in the right directions
     bottomMotorController.setInverted(true);
@@ -99,8 +93,8 @@ public class Shooter extends SubsystemBase {
   @Override 
   public void periodic()
   {
-    SmartDashboard.putNumber("Top velocity", topEncoder.getVelocity());
-    SmartDashboard.putNumber("Bottom velocity", bottomEncoder.getVelocity());
+    topVelocity.setNumber(topEncoder.getVelocity());
+    bottomVelocity.setNumber(bottomEncoder.getVelocity());
     //SmartDashboard.putBoolean("Top Speed in Range", checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
     //SmartDashboard.putBoolean("Bottom Speed in Range", checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
 
