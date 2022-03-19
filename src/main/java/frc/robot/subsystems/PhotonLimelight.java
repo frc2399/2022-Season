@@ -13,7 +13,9 @@ import org.photonvision.targeting.PhotonTrackedTarget;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -22,6 +24,8 @@ public class PhotonLimelight extends SubsystemBase {
 
   public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
   static PhotonCamera camera;
+
+  Boolean photonNotFoundMessagePrinted = false ;
 
   public PhotonLimelight() {
     camera = new PhotonCamera("gloworm");
@@ -49,7 +53,22 @@ public class PhotonLimelight extends SubsystemBase {
      */
     // System.out.println("Testing for photon limelight targets");
     PhotonPipelineResult result = null;
-    result = camera.getLatestResult();
+
+    Boolean photonExists = NetworkTableInstance.getDefault().getTable("photonvision").getEntry("gloworm").exists();
+
+    if (photonExists)
+    {
+      result = camera.getLatestResult();
+    }
+    else
+    {
+      if (!photonNotFoundMessagePrinted)
+      {
+        System.out.println("****** Photon Limelight not found *******");
+        photonNotFoundMessagePrinted = true ;
+      }
+      return;
+    }
     Boolean has_targets = result.hasTargets() ;
     SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
     if (has_targets) {
