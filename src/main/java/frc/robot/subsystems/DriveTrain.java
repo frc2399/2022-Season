@@ -97,8 +97,8 @@ public class DriveTrain extends SubsystemBase {
 
 
     final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
-    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").add("Angle Error Tolerance", 5).getEntry();
-    public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").add("Distance Error Tolerance", 5).getEntry();
+    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Angle Err Tol", 5).getEntry();
+    public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Distance Err Tol", 5).getEntry();
     public static final NetworkTableEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
 
 

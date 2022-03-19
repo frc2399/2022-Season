@@ -12,8 +12,8 @@ import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
 
-    public static final NetworkTableEntry leftSpeed = Shuffleboard.getTab("Driver").add("Left Speed", 0).getEntry();
-    public static final NetworkTableEntry rightSpeed = Shuffleboard.getTab("Driver").add("Right Speed", 0).getEntry();
+    public static final NetworkTableEntry leftSpeed = Shuffleboard.getTab("Motor Diag").add("Left Speed", 0).getEntry();
+    public static final NetworkTableEntry rightSpeed = Shuffleboard.getTab("Motor Diag").add("Right Speed", 0).getEntry();
 
     private final DriveTrain driveSubsystem;
     private final Supplier<Double> speedFunction, turnFunction;

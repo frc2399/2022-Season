@@ -8,6 +8,8 @@ import com.revrobotics.SparkMaxPIDController;
 
 import frc.robot.Constants.ClimberConstants;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
@@ -16,6 +18,9 @@ public class Climber extends SubsystemBase {
   private CANSparkMax rightMotorController;
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPIDController, rightPIDController;
+
+  public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
+
 
   SlewRateLimiter filter;
 

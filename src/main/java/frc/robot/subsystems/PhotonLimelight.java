@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PhotonLimelight extends SubsystemBase {
 
-  public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Amount Targets", 0).getEntry();
+  public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
   static PhotonCamera camera;
 
   public PhotonLimelight() {

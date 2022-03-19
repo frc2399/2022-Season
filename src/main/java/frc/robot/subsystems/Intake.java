@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 public class Intake extends SubsystemBase {
 
-    public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").add("Slew Rate Limiter", 0).getEntry();
+public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Intake Slew Rate", 5.0).getEntry();
 
 private CANSparkMax intakeMotorController;
 private DoubleSolenoid intakeArm;

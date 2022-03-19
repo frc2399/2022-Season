@@ -100,7 +100,7 @@ public class RobotContainer {
         private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
 
         public static NetworkTableEntry a_value = Shuffleboard.getTab("Params")
-                        .addPersistent("Joystick Sensitivity", 1.0).getEntry();
+                        .addPersistent("Stick Sensitivity", 0.0).getEntry();
 
 
         // A chooser for autonomous commands
@@ -149,9 +149,9 @@ public class RobotContainer {
                 // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
                 // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
 
-                Shuffleboard.getTab("Testing").add("DriveForwardGivenTime: time",
+                Shuffleboard.getTab("Testing").add("DriveGivenTime",
                                 new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
-                Shuffleboard.getTab("Testing").add("DriveForwardGivenDistance",
+                Shuffleboard.getTab("Testing").add("DriveGivenDistance",
                                 new DriveForwardGivenDistance(0.3, 40, m_driveTrain));
 
                 Shuffleboard.getTab("Testing").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));

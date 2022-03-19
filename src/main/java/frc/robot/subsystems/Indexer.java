@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Indexer extends SubsystemBase {
 
-  public static final NetworkTableEntry indexSpeed = Shuffleboard.getTab("Params").add("Indexer Speed", 0).getEntry();
+  public static final NetworkTableEntry indexSpeed = Shuffleboard.getTab("Params").addPersistent("Indexer Speed", 0.3).getEntry();
+  public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Indexer Slew Rate", 5.0).getEntry();
 
   private CANSparkMax indexerMotorController;
   private DigitalInput limitSwitch;
@@ -24,8 +25,12 @@ public class Indexer extends SubsystemBase {
     indexerMotorController = new CANSparkMax(IndexerConstants.INDEXER_MOTOR_ID, MotorType.kBrushless);
     limitSwitch = new DigitalInput(IndexerConstants.LIMIT_SWITCH_ID);
 
-    SmartDashboard.putNumber("Indexer Slew Rate", SmartDashboard.getNumber ("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
-    filter = new SlewRateLimiter(SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
+    // SmartDashboard.putNumber("Indexer Slew Rate", SmartDashboard.getNumber ("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
+
+    filter = new SlewRateLimiter(slewRate.getDouble(0));
+
+
+    // filter = new SlewRateLimiter(SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
     System.out.println ("Indexer SlewRateLimiter " + SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
   }
 
@@ -40,7 +45,6 @@ public class Indexer extends SubsystemBase {
   {
     indexerSpeed = filter.calculate(indexerSpeed);
     indexerMotorController.set(indexerSpeed);
-    // SmartDashboard.putNumber("Indexer speed ", indexerSpeed);
   }
 
   public boolean isBallIndexed()
