@@ -21,7 +21,7 @@ public class IndexerCmd extends CommandBase {
 
     @Override
     public void execute() {
-        double speed = Indexer.indexSpeed.getDouble(0.3);
+        double speed = Indexer.indexSpeedEntry.getDouble(0.3);
         this.indexerSubsystem.setSpeed(speed);
     }
 
