@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -30,6 +32,10 @@ public class Shooter extends SubsystemBase {
   public static final NetworkTableEntry ff = Shuffleboard.getTab("Shooter").add("Feed Forward", 0).getEntry();
   public static final NetworkTableEntry max = Shuffleboard.getTab("Shooter").add("Max Output", 0).getEntry();
   public static final NetworkTableEntry min = Shuffleboard.getTab("Shooter").add("Min OUtput", 0).getEntry();
+  public static final NetworkTableEntry topSpeedInRange = Shuffleboard.getTab("Shooter").add("Top Speed in Range", false).getEntry();
+  public static final NetworkTableEntry bottomSpeedInRange = Shuffleboard.getTab("Shooter").add("Bottom Speed in Range", false).getEntry();
+  public static final NetworkTableEntry topSetpointEntry = Shuffleboard.getTab("Shooter").add("Top Setpoint", 0).getEntry();
+  public static final NetworkTableEntry bottomSetpointEntry = Shuffleboard.getTab("Shooter").add("Bottom Setpoint", 0).getEntry();
 
   double kP;
   double kI;
@@ -54,6 +60,9 @@ public class Shooter extends SubsystemBase {
 
   // constructor
   public Shooter() {
+
+   
+   // Shuffleboard.getTab("Shooter").add("Stop Shooter", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
 
     // initialize motor controllers
     bottomMotorController = new CANSparkMax(ShooterConstants.BOTTOM_MOTOR_ID, MotorType.kBrushless);
@@ -88,7 +97,7 @@ public class Shooter extends SubsystemBase {
 
     // invert the bottom motor controller so shooter wheels spin in the right
     // directions
-    bottomMotorController.setInverted(true);
+    bottomMotorController.setInverted(false);
     topMotorController.setInverted(false);
 
     // bottomMotorController.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative,
@@ -116,19 +125,10 @@ public class Shooter extends SubsystemBase {
     updatePIDGains();
     topVelocity.setNumber(topEncoder.getVelocity());
     bottomVelocity.setNumber(bottomEncoder.getVelocity());
-    // SmartDashboard.putBoolean("Top Speed in Range", checkWithinRange(topSetpoint,
-    // topEncoder.getVelocity(), RANGE));
-    // SmartDashboard.putBoolean("Bottom Speed in Range",
-    // checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
-
-    // SmartDashboard.putNumber("P Gain", SHOOTER_KP);
-    // SmartDashboard.putNumber("I Gain", SHOOTER_KI);
-    // SmartDashboard.putNumber("D Gain", SHOOTER_KD);
-    // SmartDashboard.putNumber("I Zone", SHOOTER_KIZ);
-    // SmartDashboard.putNumber("Feed Forward", SHOOTER_KF);
-    // SmartDashboard.putNumber("Max Output", SHOOTER_K_MAX_OUTPUT);
-    // SmartDashboard.putNumber("Min Output", SHOOTER_K_MIN_OUTPUT);
-
+    topSpeedInRange.setBoolean(checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
+    bottomSpeedInRange.setBoolean(checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+    topSetpointEntry.setDouble(topSetpoint);
+    bottomSetpointEntry.setDouble(bottomSetpoint);
   }
 
   public void runShooter() {

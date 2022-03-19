@@ -119,22 +119,18 @@ public class Constants {
     public static final class ShooterConstants {
         public static final int PID_IDX = 0;
         public static final int CAN_TIMEOUT = 10;
-        public static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
-        public static final double GEAR_RATIO = 84.0 / 54.0;
-        public static final double TALON_100MS_IN_1S = 10.0;
         public static final int TOP_MOTOR_ID = 10; 
         public static final int BOTTOM_MOTOR_ID = 9;
-        public static final double SHOOTER_SPEED_INCREMENT = 0;
 
         public static final double SHOOTER_SPEED = 0.06;
 
         public static final double TOP_SETPOINT = 700;
-        public static final double BOTTOM_SETPOINT = 800;
+        public static final double BOTTOM_SETPOINT = 1000;
 
-        public static final double SHOOTER_KP = 0;//1.875;
+        public static final double SHOOTER_KP = .0003;//1.875;
         public static final double SHOOTER_KI = 0;//0.006;
         public static final double SHOOTER_KD = 0;//52.5;
-        public static final double SHOOTER_KF = 0.000086; //0.15;
+        public static final double SHOOTER_KF = 0.00023; //0.15;
         public static final double SHOOTER_KIZ = 0;
         public static final double SHOOTER_K_MAX_OUTPUT = 1;
         public static final double SHOOTER_K_MIN_OUTPUT = 0;

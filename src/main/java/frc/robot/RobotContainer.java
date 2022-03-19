@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -148,6 +149,15 @@ public class RobotContainer {
         // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
 
+        Shuffleboard.getTab("Shooter").add(
+            "Start Shooter", 
+            new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter).perpetually()
+            );
+        Shuffleboard.getTab("Shooter").add(
+            "Stop Shooter", 
+            new SetShootPowerCmd(m_shooter, 0, 0)
+        );
+
         Shuffleboard.getTab("Testing").add("DriveGivenTime",
             new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
         Shuffleboard.getTab("Testing").add("DriveGivenDistance",
@@ -223,9 +233,11 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
         // new JoystickButton(JOYSTICK,
         // JoystickConstants.TURN_TO_N).whenPressed(m_turnToNAngle);
-        new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
-        new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
-        new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
+        // 
+        // WE DISABLED FOR SAFETY WHEN TESTING
+        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
+        // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
+        // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
         // Intake
 
