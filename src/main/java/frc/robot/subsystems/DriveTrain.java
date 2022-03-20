@@ -102,6 +102,9 @@ public class DriveTrain extends SubsystemBase {
     public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Distance Err Tol", 5).getEntry();
     public static final NetworkTableEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
     public static final NetworkTableEntry angleErrorPValue = Shuffleboard.getTab("Params").add("angle err p", 0.01).getEntry();
+    public static final NetworkTableEntry encoderTickLeft = Shuffleboard.getTab("Testing").add("tick left", 0).getEntry();
+    public static final NetworkTableEntry encoderTickRight = Shuffleboard.getTab("Testing").add("tick right", 0).getEntry();
+
 
 
 
@@ -207,6 +210,9 @@ public class DriveTrain extends SubsystemBase {
         // in the previous article while in simulation, but will use
         // real values on the robot itself.
         // finds the position and angle of the robot given gyro and encoders
+
+        encoderTickLeft.setDouble(leftEncoder.getPosition());
+        encoderTickRight.setDouble(rightEncoder.getPosition());
 
     }
 
