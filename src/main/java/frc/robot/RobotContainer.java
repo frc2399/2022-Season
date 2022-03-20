@@ -26,6 +26,7 @@ import frc.robot.commands.climber.*;
 import frc.robot.commands.drivetrain.*;
 import frc.robot.commands.indexer.*;
 import frc.robot.commands.intake.*;
+// import frc.robot.commands.robot.PointAndShoot;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.DriveTurnControls;
@@ -101,6 +102,8 @@ public class RobotContainer {
     private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+
+    // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
     public static NetworkTableEntry a_value = Shuffleboard.getTab("Params")
         .addPersistent("Stick Sensitivity", 0.0).getEntry();
@@ -256,7 +259,7 @@ public class RobotContainer {
         new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
         // TODO: Need to create these commands
         // new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
-        // new JoystickButton(XBOX, XboxConstants.LIMELIGHT_SHOOT).whileHeld();
+        // new JoystickButton(XBOX, XboxConstants.POINT_AND_SHOOT).whenPressed(m_pointAndShoot);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CCW).whileHeld();
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CW).whileHeld();
         // new JoystickButton(XBOX, XboxConstants.TURN_180).whileHeld();
