@@ -14,6 +14,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // Import Statements for Spark Max Controllers and Neo 550 Motors
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -117,6 +125,16 @@ public class Shooter extends SubsystemBase {
 
     // bottomMotorController.setSensorPhase(false);
     // topMotorController.setSensorPhase(true);
+
+    System.out.println("Working Directory = " + System.getProperty("user.dir"));
+
+    List<List<Double>> shooterTable;
+    try {
+      shooterTable = readData("src/main/deploy/ShooterTable.csv");
+    }
+    catch (IOException e) {
+      System.out.println("Can't read shooter table");
+    }
   }
 
   // Put methods for controlling this subsystem
@@ -178,4 +196,61 @@ public class Shooter extends SubsystemBase {
       kMinOutput = min.getDouble(0); kMaxOutput = max.getDouble(0); 
   }
 }
+
+// List<List<Double>> table = readData("ShootingTable.csv");
+//     for(List<Double> row : table ) {
+//         for(Double cell : row)
+//         {
+//             System.out.println(cell);
+//         }
+//     }
+//     double[] speedsBottomTop = shootingInterpolation(30.0, table);
+//     System.out.println("Bottom Motor Speed: " + speedsBottomTop[0]);
+//     System.out.println("Top Motor Speed: " + speedsBottomTop[1]);
+
+public static List<List<Double>> readData(String file) throws IOException { 
+  List<List<Double>> content = new ArrayList<>();
+  try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+      String line = "";
+      while ((line = br.readLine()) != null) {
+          List<Double> cells = new ArrayList<>();
+          for(String cell : line.split(",")) {
+              Double d = Double.parseDouble(cell);
+              cells.add(d.doubleValue());
+          }
+          content.add(cells);
+      }
+  } catch (FileNotFoundException e) {
+    //Some error logging
+  }
+  return content;
 }
+
+
+public static double[] shootingInterpolation(Double distance, List<List<Double>> values) {
+  double[] speedsBottomTop = new double[2];
+  for (int i = 0; i < (values.size()/3); i++) {
+      if(distance > values.get(i).get(0) && distance < values.get(i+1).get(0)) {
+          double d0, d1, sb0, sb1, st0, st1;
+          d0 = values.get(i).get(0);
+          d1 = values.get(i+1).get(0);
+          sb0 = values.get(i).get(1);
+          sb1 = values.get(i+1).get(1);
+          st0 = values.get(i).get(2);
+          st1 = values.get(i+1).get(2);
+          
+          double sbm = (sb1-sb0)/(d1-d0);
+          double stm = (st1-st0)/(d1-d0);
+          double sb = sbm * (distance - d0) + sb0;
+          double st = stm * (distance - d0) + st0;
+          speedsBottomTop[0] = sb;
+          speedsBottomTop[1] = st;
+          break;
+      }
+  }
+
+  return speedsBottomTop;
+}
+}
+
+
