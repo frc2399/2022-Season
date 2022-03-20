@@ -131,10 +131,14 @@ public class Shooter extends SubsystemBase {
     List<List<Double>> shooterTable;
     try {
       shooterTable = readData("src/main/deploy/ShooterTable.csv");
+      double[] speedsBottomTop = shootingInterpolation(5.2, shooterTable);
+      System.out.println("Bottom Motor Speed: " + speedsBottomTop[0]);
+      System.out.println("Top Motor Speed: " + speedsBottomTop[1]);
     }
     catch (IOException e) {
       System.out.println("Can't read shooter table");
     }
+
   }
 
   // Put methods for controlling this subsystem
@@ -229,7 +233,7 @@ public static List<List<Double>> readData(String file) throws IOException {
 
 public static double[] shootingInterpolation(Double distance, List<List<Double>> values) {
   double[] speedsBottomTop = new double[2];
-  for (int i = 0; i < (values.size()/3); i++) {
+  for (int i = 0; i < (values.size()); i++) {
       if(distance > values.get(i).get(0) && distance < values.get(i+1).get(0)) {
           double d0, d1, sb0, sb1, st0, st1;
           d0 = values.get(i).get(0);
