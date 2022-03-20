@@ -265,8 +265,8 @@ public class RobotContainer {
         // new JoystickButton(XBOX, XboxConstants.TURN_180).whileHeld();
 
         // Climber
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(retractClimberCmd);
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whenPressed(extendClimberCmd);
+        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whenPressed(retractClimberCmd);
+        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
 
         // Shooter
         new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(
