@@ -60,9 +60,9 @@ public class RobotContainer {
     private DriveTurnControls driveTurnControls = new DriveTurnControls(XBOX);
 
     // Defining commands
-    private static InstantCommand shiftHighGear = new InstantCommand(() -> m_shifter.setShifterDangerous(),
+    private static InstantCommand shiftHighGear = new InstantCommand(() -> m_shifter.setShifterHighTorque(),
         m_shifter);
-    private static InstantCommand shiftHighSpeed = new InstantCommand(() -> m_shifter.setShifterHot(), m_shifter);
+    private static InstantCommand shiftHighSpeed = new InstantCommand(() -> m_shifter.setShifterHighSpeed(), m_shifter);
 
     private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
     private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
@@ -201,7 +201,7 @@ public class RobotContainer {
         m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
         m_climber.setDefaultCommand(new StopClimber(m_climber));
 
-        m_shifter.setShifterDangerous();
+        m_shifter.setShifterHighTorque();
 
         m_intake.retractArm();
 
