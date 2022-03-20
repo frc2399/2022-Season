@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
+import frc.robot.Constants;
 //import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.util.SimEncoder;
@@ -133,6 +134,9 @@ public class DriveTrain extends SubsystemBase {
 
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
+
+        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.TICK_TO_INCH_CONVERSION);
+        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.TICK_TO_INCH_CONVERSION);
 
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
@@ -260,7 +264,8 @@ public class DriveTrain extends SubsystemBase {
         }
         else
         {
-            return Units.metersToInches(leftEncoder.getPosition());
+            //gets position in inches
+            return leftEncoder.getPosition();
         }
     }
 
@@ -272,7 +277,8 @@ public class DriveTrain extends SubsystemBase {
         }
         else
         {
-            return Units.metersToInches(rightEncoder.getPosition());
+            //gets position in inches
+            return rightEncoder.getPosition();
         }
     }
 
