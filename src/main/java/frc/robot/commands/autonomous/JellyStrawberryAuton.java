@@ -40,15 +40,15 @@ public class JellyStrawberryAuton extends SequentialCommandGroup {
         new DriveForwardGivenDistance(0.5, -65, m_driveTrain),
 
         new ParallelCommandGroup(
-            new TurnNAngle(-22.5, m_driveTrain),
+            new TurnNAngle(0.5, -22.5, m_driveTrain),
             new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
         ),
 
-        new TurnNAngle(-57.4, m_driveTrain),
+        new TurnNAngle(0.5, -57.4, m_driveTrain),
         new DriveForwardGivenDistance(0.5, 85.2, m_driveTrain),
         new IntakeCmdForGivenTime(m_intake, 0.5, 2),
         new DriveForwardGivenDistance(0.5, -85.2, m_driveTrain),
-        new TurnNAngle(54.7, m_driveTrain),
+        new TurnNAngle(0.5, 54.7, m_driveTrain),
         // edit shoot speed and time?
         new ShootForNSeconds(m_shooter, Constants.ShooterConstants.SHOOTER_SPEED, Constants.ShooterConstants.SHOOTER_SPEED, 0.5)
      

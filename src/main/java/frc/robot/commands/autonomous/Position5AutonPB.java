@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.*;
 import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
 import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
@@ -39,21 +38,21 @@ public class Position5AutonPB extends SequentialCommandGroup {
         new DriveForwardGivenDistance(0.5, 67.5, m_driveTrain),
         new IntakeCmdForGivenTime(m_intake, 0.5, 2)
       ),
-      new TurnNAngle(-90, m_driveTrain),
+      new TurnNAngle(0.5, -90, m_driveTrain),
       new DriveForwardGivenDistance(0.5, 34, m_driveTrain),
-      new TurnNAngle(90, m_driveTrain),
+      new TurnNAngle(0.5, 90, m_driveTrain),
       new DriveForwardGivenDistance(0.5, -91.127, m_driveTrain),
       new ParallelCommandGroup (
-        new TurnNAngle(22.5, m_driveTrain),
+        new TurnNAngle(0.5, 22.5, m_driveTrain),
         new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)        //run shooter to setpoint
       ),
-      new TurnNAngle(-24.28, m_driveTrain),
+      new TurnNAngle(0.5, -24.28, m_driveTrain),
       new ParallelCommandGroup (
         new DriveForwardGivenDistance(0.5, 55.1, m_driveTrain),
         new IntakeCmdForGivenTime(m_intake, 0.5, 2)
       ),
       new DriveForwardGivenDistance(0.5, -55.1, m_driveTrain),
-      new TurnNAngle(24.28, m_driveTrain),
+      new TurnNAngle(0.5, 24.28, m_driveTrain),
 
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       new IndexerCmdForGivenTime(m_indexer, 0.5, 2)

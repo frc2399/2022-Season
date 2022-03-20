@@ -7,6 +7,9 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import frc.robot.Constants.ClimberConstants;
+import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Climber extends SubsystemBase {
@@ -15,6 +18,11 @@ public class Climber extends SubsystemBase {
   private CANSparkMax rightMotorController;
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPIDController, rightPIDController;
+
+  public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
+
+
+  SlewRateLimiter filter;
 
   //private double climberSetpoint;
 
@@ -35,6 +43,10 @@ public class Climber extends SubsystemBase {
     //restore factory settings to reset to a known state
     leftMotorController.restoreFactoryDefaults();
     rightMotorController.restoreFactoryDefaults();
+
+    //set climber motors to coast mode
+    leftMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    rightMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
     //initialize motor encoder
     leftEncoder = leftMotorController.getEncoder();
@@ -66,6 +78,10 @@ public class Climber extends SubsystemBase {
     leftEncoder.setPosition(0);
     rightEncoder.setPosition(0);
 
+    SmartDashboard.putNumber("Climber Slew Rate", SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+    filter = new SlewRateLimiter(SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+    System.out.println ("Climber SlewRateLimiter " + SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+
   }
 
   @Override
@@ -78,11 +94,13 @@ public class Climber extends SubsystemBase {
 
   public void setLeftSpeed(double speed)
   {
+    speed = filter.calculate(speed);
     leftMotorController.set(speed);
   }
 
   public void setRightSpeed(double speed)
   {
+    speed = filter.calculate(speed);
     rightMotorController.set(speed);
     // SmartDashboard.putNumber("Climber speed ", speed);
   }

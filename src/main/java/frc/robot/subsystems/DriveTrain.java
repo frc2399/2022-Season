@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 
+import frc.robot.Constants;
 //import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.util.SimEncoder;
@@ -41,7 +42,6 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.util.NavX;
 // import edu.wpi.first.wpilibj.simulation.EncoderSim;
 // import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
@@ -59,10 +59,10 @@ public class DriveTrain extends SubsystemBase {
 
     private static CANSparkMax leftFrontMotorController;
     public static CANSparkMax rightFrontMotorController;
-    private CANSparkMax leftMiddleMotorController;
-    private CANSparkMax rightMiddleMotorController;
-    private CANSparkMax leftBackMotorController;
-    private CANSparkMax rightBackMotorController;
+    private static CANSparkMax leftMiddleMotorController;
+    private static CANSparkMax rightMiddleMotorController;
+    private static CANSparkMax leftBackMotorController;
+    private static CANSparkMax rightBackMotorController;
 
     public RelativeEncoder leftEncoder, rightEncoder;
 
@@ -94,22 +94,13 @@ public class DriveTrain extends SubsystemBase {
     public SimEncoder rightEncoderSim;
     public SimGyro gyroSim;
     private DifferentialDrivetrainSim driveSim;
-    private Field2d field;
+    private Field2d field = new Field2d();
+
 
     final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
-    final NetworkTableEntry leftFrontTemp = tab.add("LF temp", 0).getEntry();
-    final NetworkTableEntry leftMiddleTemp = tab.add("LM temp", 0).getEntry();
-    final NetworkTableEntry leftBackTemp = tab.add("LB temp", 0).getEntry();
-    final NetworkTableEntry rightFrontTemp = tab.add("RF temp", 0).getEntry();
-    final NetworkTableEntry rightMiddleTemp = tab.add("RM temp", 0).getEntry();
-    final NetworkTableEntry rightBackTemp = tab.add("RB temp", 0).getEntry();
-
-    final NetworkTableEntry leftFrontAmps = tab.add("LF amps", 0).getEntry();
-    final NetworkTableEntry leftMiddleAmps = tab.add("LM amps", 0).getEntry();
-    final NetworkTableEntry leftBackAmps = tab.add("LB amps", 0).getEntry();
-    final NetworkTableEntry rightFrontAmps = tab.add("RF amps", 0).getEntry();
-    final NetworkTableEntry rightMiddleAmps = tab.add("RM amps", 0).getEntry();
-    final NetworkTableEntry rightBackAmps = tab.add("RB amps", 0).getEntry();
+    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Angle Err Tol", 5).getEntry();
+    public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Distance Err Tol", 5).getEntry();
+    public static final NetworkTableEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
 
 
     public DriveTrain() {
@@ -120,24 +111,6 @@ public class DriveTrain extends SubsystemBase {
         rightMiddleMotorController = new CANSparkMax(DriveConstants.RIGHT_MIDDLE_MOTOR_ID, MotorType.kBrushless);
         leftBackMotorController = new CANSparkMax(DriveConstants.LEFT_BACK_MOTOR_ID, MotorType.kBrushless);
         rightBackMotorController = new CANSparkMax(DriveConstants.RIGHT_BACK_MOTOR_ID, MotorType.kBrushless);
-
-        // Set motors to brake mode 
-        /** 
-        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        */
-
-        // Set motors to coast mode
-        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 
         // Make wheels go in same direction
@@ -161,6 +134,9 @@ public class DriveTrain extends SubsystemBase {
 
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
+
+        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.TICK_TO_INCH_CONVERSION);
+        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.TICK_TO_INCH_CONVERSION);
 
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
@@ -189,10 +165,12 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
             );
 
-            // field = new Field2d();
+            field = new Field2d();
+
+            // Ethan is suspicious and thinks we need to re-enable this but it doesn't matter
             // SmartDashboard.putData("Field", field);
 
-            //field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
+            field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
         }
 
     
@@ -209,29 +187,11 @@ public class DriveTrain extends SubsystemBase {
         // double error = targetAngle - currentAngle;
 
         // outputSpeed = kP * error;
-        SmartDashboard.putNumber("Angle", ahrs.getAngle());
+
+        robotAngle.setDouble(ahrs.getAngle());
+        // SmartDashboard.putNumber("Angle", ahrs.getAngle());
 // 
         // System.out.println("drive train periodic");
-
-        SmartDashboard.putNumber("LF temp", leftFrontMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("LM temp", leftMiddleMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("LB temp", leftBackMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("RF temp", rightFrontMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("RM temp", rightMiddleMotorController.getMotorTemperature());
-        SmartDashboard.putNumber("RB temp", rightBackMotorController.getMotorTemperature());
-
-        leftFrontTemp.setDouble(leftFrontMotorController.getMotorTemperature());
-        leftMiddleTemp.setDouble(leftMiddleMotorController.getMotorTemperature());
-        leftBackTemp.setDouble(leftBackMotorController.getMotorTemperature());
-
-        rightFrontTemp.setDouble(rightFrontMotorController.getMotorTemperature());
-        rightMiddleTemp.setDouble(rightMiddleMotorController.getMotorTemperature());
-        rightBackTemp.setDouble(rightBackMotorController.getMotorTemperature());
-     
-
-        leftFrontAmps.setDouble(leftFrontMotorController.getOutputCurrent());
-        leftMiddleAmps.setDouble(leftMiddleMotorController.getOutputCurrent());
-        leftBackAmps.setDouble(leftBackMotorController.getOutputCurrent());
 
         //SmartDashboard.putNumber("target angle", RobotContainer.m_turnToNAngle.targetAngle);
 
@@ -304,7 +264,8 @@ public class DriveTrain extends SubsystemBase {
         }
         else
         {
-            return Units.metersToInches(leftEncoder.getPosition());
+            //gets position in inches
+            return leftEncoder.getPosition();
         }
     }
 
@@ -316,7 +277,8 @@ public class DriveTrain extends SubsystemBase {
         }
         else
         {
-            return Units.metersToInches(rightEncoder.getPosition());
+            //gets position in inches
+            return rightEncoder.getPosition();
         }
     }
 
@@ -324,6 +286,27 @@ public class DriveTrain extends SubsystemBase {
     { 
         return ahrs.getAngle();
     }
+
+    public static void teleopInit()
+    {
+        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+
+    public static void autonomousInit()
+    {
+        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
+
 
 }
 

@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.subsystems.PhotonLimelight;
 
 public class TurnToHub extends CommandBase {
@@ -54,7 +54,8 @@ public class TurnToHub extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 5);
+   double errorTolerance = DriveTrain.angleErrorTolerance.getDouble(5);
+    // SmartDashboard.getNumber("Error Tolerance", 5);
     //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
     double error = PhotonLimelight.angleToHub();
     if (Math.abs(modAngle(error)) <= errorTolerance) {

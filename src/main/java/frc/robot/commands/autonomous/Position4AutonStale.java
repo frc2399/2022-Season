@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.*;
 import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
 import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
@@ -41,14 +40,14 @@ public class Position4AutonStale extends SequentialCommandGroup {
       new IntakeCmdForGivenTime(m_intake, 0.5, 2),
       new DriveForwardGivenDistance(0.5, -60, m_driveTrain),
       new ParallelCommandGroup (
-        new TurnNAngle(22.5, m_driveTrain),
+        new TurnNAngle(0.5, 22.5, m_driveTrain),
         new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
       ),
-      new TurnNAngle(57.4, m_driveTrain),
+      new TurnNAngle(0.5, 57.4, m_driveTrain),
       new DriveForwardGivenDistance(0.5, 87, m_driveTrain),
       new IntakeCmdForGivenTime(m_intake, 0.5, 2),
       new DriveForwardGivenDistance(0.5, -87, m_driveTrain),
-      new TurnNAngle(-57.4, m_driveTrain),
+      new TurnNAngle(0.5, -57.4, m_driveTrain),
 
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       new IndexerCmdForGivenTime(m_indexer, 0.5, 2)

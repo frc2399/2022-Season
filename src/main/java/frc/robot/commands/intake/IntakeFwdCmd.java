@@ -3,14 +3,12 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class IntakeCmd extends CommandBase {
+public class IntakeFwdCmd extends CommandBase {
 
     private final Intake intakeSubsystem;
-    private final double speed;
 
-    public IntakeCmd(Intake intakeSubsystem, double speed) {
+    public IntakeFwdCmd(Intake intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
-        this.speed = speed;
         addRequirements(intakeSubsystem);
     }
 
@@ -21,7 +19,9 @@ public class IntakeCmd extends CommandBase {
 
     @Override
     public void execute() {
-        this.intakeSubsystem.setMotor(speed);
+        double speedFromDashboard = Intake.intakeSpeedEntry.getDouble(0.5);
+        // this.intakeSubsystem.setMotor(speed);
+        this.intakeSubsystem.setMotor(speedFromDashboard);
         //SmartDashboard.putNumber("Intake speed ", speed);
     }
 

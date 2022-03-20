@@ -11,10 +11,10 @@ package frc.robot;
 public class Constants {
     public static final class DriveConstants {
         // motor ids
-        public static final int RIGHT_FRONT_MOTOR_ID = 13;
-        public static final int RIGHT_MIDDLE_MOTOR_ID = 14;
-        public static final int RIGHT_BACK_MOTOR_ID = 15;
-        public static final int LEFT_FRONT_MOTOR_ID = 16;
+        public static final int RIGHT_FRONT_MOTOR_ID = 3;
+        public static final int RIGHT_MIDDLE_MOTOR_ID = 4;
+        public static final int RIGHT_BACK_MOTOR_ID = 5;
+        public static final int LEFT_FRONT_MOTOR_ID = 6;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int LEFT_BACK_MOTOR_ID = 8;
 
@@ -29,6 +29,9 @@ public class Constants {
         //follow vision target cmd speeds
         public static final double TARGET_FOLLOWING_SPEED = 0.5;
         public static final double BUTTERY_FOLLOWING_SPEED = 0.035;
+
+        // encoder 
+        public static final double TICK_TO_INCH_CONVERSION = 1;
     }
 
     public static final class JoystickConstants {
@@ -37,8 +40,6 @@ public class Constants {
 
         public static final int FORWARD_JOYSTICK_INVERT = 1;
         public static final int TURN_JOYSTICK_INVERT = 1;
-
-        // TODO: switch buttons to x box bumpers
       
 
         public static final int INTAKE_ARM_RETRACT = 11; 
@@ -51,7 +52,7 @@ public class Constants {
         public static final int INDEXER_FWD = 7;
         public static final int INDEXER_BACK = 8;
 
-        public static final int TURN_TO_N = 99; // TODO need to make buttons for turn to 90 left, 90 right, 180
+        // public static final int TURN_TO_N = 12; // get rid of this eventually
 
         public static final int CLIMBER_UP = 9;
         public static final int CLIMBER_DOWN = 10;
@@ -83,6 +84,10 @@ public class Constants {
         public static final int ARCADE_DRIVE_SPEED_AXIS = XboxMappingToJoystick.LEFT_STICK_Y;
         public static final int ARCADE_DRIVE_TURN_AXIS = XboxMappingToJoystick.RIGHT_STICK_X; 
 
+
+        public static final int FORWARD_JOYSTICK_INVERT = 1;
+        public static final int TURN_JOYSTICK_INVERT = 1;
+
         public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
         public static final int TURN_180 = XboxMappingToJoystick.Y_BUTTON;
@@ -94,23 +99,18 @@ public class Constants {
         public static final int TURN_RIGHT_90_CCW = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_RIGHT_90_CW = XboxMappingToJoystick.X_BUTTON;
 
+
         public static final double FORWARD_DEADBAND = 0.05;
-        public static final double TURN_DEADBAND = 0.05;
+        public static final double TURN_DEADBAND = 0.1;
+
+        public static final double DRIVE_SLEW_RATE = 5.0;
+        public static final double TURN_SLEW_RATE = 5.0;
 
         public static final double JOYSTICK_SENSITIVITY = 0.5;
-
-        
-
-
-
-
-        
-
-
     }
 
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR_ID = 21;
+        public static final int INTAKE_MOTOR_ID = 1;
         public static final double INTAKESPEED = 0.5;
         public static final double INTAKE_SLEW = 5;
 
@@ -122,23 +122,32 @@ public class Constants {
     public static final class ShooterConstants {
         public static final int PID_IDX = 0;
         public static final int CAN_TIMEOUT = 10;
-        public static final int ENCODER_TICKS_PER_REVOLUTION = 4096;
-        public static final double GEAR_RATIO = 84.0 / 54.0;
-        public static final double TALON_100MS_IN_1S = 10.0;
         public static final int TOP_MOTOR_ID = 10; 
         public static final int BOTTOM_MOTOR_ID = 9;
-        public static final double SHOOTER_SPEED_INCREMENT = 0;
 
         public static final double SHOOTER_SPEED = 0.06;
 
         public static final double TOP_SETPOINT = 700;
-        public static final double BOTTOM_SETPOINT = 800;
+        public static final double BOTTOM_SETPOINT = 1000;
+
+        public static final double SHOOTER_KP = .0003;//1.875;
+        public static final double SHOOTER_KI = 0;//0.006;
+        public static final double SHOOTER_KD = 0.0003;//52.5;
+        public static final double SHOOTER_KF = 0.00023; //0.15;
+        public static final double SHOOTER_KIZ = 0;
+        public static final double SHOOTER_K_MAX_OUTPUT = 1;
+        public static final double SHOOTER_K_MIN_OUTPUT = 0;
+        public static final double SHOOTER_MAX_RPM = 5700;
+    
+        public static final double SHOOTER_MAX_ACCEL = 0;
     }
 
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 2;
-        public static final int INDEXERSPEED = 1;
+        public static final double INDEXERSPEED = 0.5;
         public static final int LIMIT_SWITCH_ID = 0;
+        
+        public static final int INDEXER_SLEW = 5;
     }
 
     // public static final class PrototypeDriveConstants {
@@ -154,6 +163,8 @@ public class Constants {
         public static final double CLIMBER_SPEED = 0.5;
         public static final double MAX_HEIGHT = 0.9;
         public static final double MIN_HEIGHT = 0;
+
+        public static final int CLIMBER_SLEW = 5;
 
     }
 
