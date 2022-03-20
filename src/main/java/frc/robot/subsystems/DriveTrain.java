@@ -112,6 +112,8 @@ public class DriveTrain extends SubsystemBase {
         leftBackMotorController = new CANSparkMax(DriveConstants.LEFT_BACK_MOTOR_ID, MotorType.kBrushless);
         rightBackMotorController = new CANSparkMax(DriveConstants.RIGHT_BACK_MOTOR_ID, MotorType.kBrushless);
 
+        // Set motors to coast mode
+        teleopInit();
 
         // Make wheels go in same direction
         leftFrontMotorController.setInverted(true);
@@ -123,7 +125,7 @@ public class DriveTrain extends SubsystemBase {
         leftBackMotorController.follow(leftFrontMotorController);
         rightBackMotorController.follow(rightFrontMotorController);
 
-        //myRobot = new DifferentialDrive(leftFrontMotorController, rightFrontMotorController);
+        //myRobot = new DifferentialDrive(leftFrontMotorController, rightFrontMotorControllefr);
 
         turnController = new PIDController(kP, kI, kD);
         turnController.enableContinuousInput(-180.0f, 180.0f);
