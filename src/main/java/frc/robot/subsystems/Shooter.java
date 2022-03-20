@@ -36,6 +36,7 @@ public class Shooter extends SubsystemBase {
   public static final NetworkTableEntry bottomSpeedInRange = Shuffleboard.getTab("Shooter").add("Bottom Speed in Range", false).getEntry();
   public static final NetworkTableEntry topSetpointEntry = Shuffleboard.getTab("Shooter").add("Top Setpoint", 0).getEntry();
   public static final NetworkTableEntry bottomSetpointEntry = Shuffleboard.getTab("Shooter").add("Bottom Setpoint", 0).getEntry();
+  public static final NetworkTableEntry maxAccel = Shuffleboard.getTab("Shooter").add("Maximum Acceleration", 0).getEntry();
 
   double kP;
   double kI;
@@ -44,6 +45,7 @@ public class Shooter extends SubsystemBase {
   double kFF;
   double kMaxOutput;
   double kMinOutput;
+  double kMaxAccel;
 
   // instantiate motor controllers
   private CANSparkMax bottomMotorController;
@@ -87,6 +89,7 @@ public class Shooter extends SubsystemBase {
     bottomPIDController.setIZone(ShooterConstants.SHOOTER_KIZ);
     bottomPIDController.setFF(ShooterConstants.SHOOTER_KF);
     bottomPIDController.setOutputRange(ShooterConstants.SHOOTER_K_MIN_OUTPUT, ShooterConstants.SHOOTER_K_MAX_OUTPUT);
+    bottomPIDController.setSmartMotionMaxAccel(ShooterConstants.SHOOTER_MAX_ACCEL, 0);
 
     topPIDController.setP(ShooterConstants.SHOOTER_KP);
     topPIDController.setI(ShooterConstants.SHOOTER_KI);
@@ -94,6 +97,7 @@ public class Shooter extends SubsystemBase {
     topPIDController.setIZone(ShooterConstants.SHOOTER_KIZ);
     topPIDController.setFF(ShooterConstants.SHOOTER_KF);
     topPIDController.setOutputRange(ShooterConstants.SHOOTER_K_MIN_OUTPUT, ShooterConstants.SHOOTER_K_MAX_OUTPUT);
+    topPIDController.setSmartMotionMaxAccel(ShooterConstants.SHOOTER_MAX_ACCEL, 0);
 
     // invert the bottom motor controller so shooter wheels spin in the right
     // directions
@@ -163,12 +167,11 @@ public class Shooter extends SubsystemBase {
     if((d.getDouble(0) != kD)) { bottomPIDController.setD(d.getDouble(0)); topPIDController.setD(d.getDouble(0)); kD = d.getDouble(0); }
     if((iz.getDouble(0) != kIz)) { bottomPIDController.setIZone(iz.getDouble(0)); topPIDController.setIZone(iz.getDouble(0)); kIz = iz.getDouble(0); }
     if((ff.getDouble(0) != kFF)) { bottomPIDController.setFF(ff.getDouble(0)); topPIDController.setFF(ff.getDouble(0)); kFF = ff.getDouble(0); }
+    if((maxAccel.getDouble(0) != kMaxAccel)) { bottomPIDController.setSmartMotionMaxAccel(maxAccel.getDouble(0), 0); topPIDController.setSmartMotionMaxAccel(maxAccel.getDouble(0), 0); kMaxAccel = maxAccel.getDouble(0); }
     if((max.getDouble(0) != kMaxOutput) || (min.getDouble(0) != kMinOutput)) { 
       bottomPIDController.setOutputRange(min.getDouble(0), max.getDouble(0)); 
       topPIDController.setOutputRange(min.getDouble(0), max.getDouble(0)); 
       kMinOutput = min.getDouble(0); kMaxOutput = max.getDouble(0); 
   }
-
-
 }
 }

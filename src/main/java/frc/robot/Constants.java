@@ -11,10 +11,10 @@ package frc.robot;
 public class Constants {
     public static final class DriveConstants {
         // motor ids
-        public static final int RIGHT_FRONT_MOTOR_ID = 13;
-        public static final int RIGHT_MIDDLE_MOTOR_ID = 14;
-        public static final int RIGHT_BACK_MOTOR_ID = 15;
-        public static final int LEFT_FRONT_MOTOR_ID = 16;
+        public static final int RIGHT_FRONT_MOTOR_ID = 3;
+        public static final int RIGHT_MIDDLE_MOTOR_ID = 4;
+        public static final int RIGHT_BACK_MOTOR_ID = 5;
+        public static final int LEFT_FRONT_MOTOR_ID = 6;
         public static final int LEFT_MIDDLE_MOTOR_ID = 7;
         public static final int LEFT_BACK_MOTOR_ID = 8;
 
@@ -29,6 +29,9 @@ public class Constants {
         //follow vision target cmd speeds
         public static final double TARGET_FOLLOWING_SPEED = 0.5;
         public static final double BUTTERY_FOLLOWING_SPEED = 0.035;
+
+        // encoder 
+        public static final double TICK_TO_INCH_CONVERSION = 1;
     }
 
     public static final class JoystickConstants {
@@ -98,7 +101,7 @@ public class Constants {
 
 
         public static final double FORWARD_DEADBAND = 0.05;
-        public static final double TURN_DEADBAND = 0.05;
+        public static final double TURN_DEADBAND = 0.1;
 
         public static final double DRIVE_SLEW_RATE = 5.0;
         public static final double TURN_SLEW_RATE = 5.0;
@@ -107,7 +110,7 @@ public class Constants {
     }
 
     public static final class IntakeConstants {
-        public static final int INTAKE_MOTOR_ID = 21;
+        public static final int INTAKE_MOTOR_ID = 1;
         public static final double INTAKESPEED = 0.5;
         public static final double INTAKE_SLEW = 5;
 
@@ -129,18 +132,19 @@ public class Constants {
 
         public static final double SHOOTER_KP = .0003;//1.875;
         public static final double SHOOTER_KI = 0;//0.006;
-        public static final double SHOOTER_KD = 0;//52.5;
+        public static final double SHOOTER_KD = 0.0003;//52.5;
         public static final double SHOOTER_KF = 0.00023; //0.15;
         public static final double SHOOTER_KIZ = 0;
         public static final double SHOOTER_K_MAX_OUTPUT = 1;
         public static final double SHOOTER_K_MIN_OUTPUT = 0;
         public static final double SHOOTER_MAX_RPM = 5700;
     
+        public static final double SHOOTER_MAX_ACCEL = 0;
     }
 
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 2;
-        public static final int INDEXERSPEED = 1;
+        public static final double INDEXERSPEED = 0.5;
         public static final int LIMIT_SWITCH_ID = 0;
         
         public static final int INDEXER_SLEW = 5;

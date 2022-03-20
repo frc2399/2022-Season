@@ -68,11 +68,13 @@ public class RobotContainer {
     private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
 
     // Intake
-    private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
+    // private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
+    private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
+    private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
 
     // Indexer
-    private static IndexerCmd indexerFwdCmd = new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED);
-    private static IndexerCmd indexerBackCmd = new IndexerCmd(m_indexer, -IndexerConstants.INDEXERSPEED);
+    private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
+    private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer, -IndexerConstants.INDEXERSPEED);
 
     // Climber
     private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 0.5);
@@ -196,7 +198,7 @@ public class RobotContainer {
 
         m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
         m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
-        m_indexer.setDefaultCommand(new IndexerCmd(m_indexer, 0));
+        m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
         m_climber.setDefaultCommand(new StopClimber(m_climber));
 
         m_shifter.setShifterDangerous();
@@ -242,8 +244,10 @@ public class RobotContainer {
         // Intake
 
         // Sets the intake command to the left trigger
+        // Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
+        // intakeTrigger.whileActiveContinuous(intakeCmd);
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
-        intakeTrigger.whileActiveContinuous(intakeCmd);
+        intakeTrigger.whileActiveContinuous(intakeFwdCmd);
         new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
         new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
 

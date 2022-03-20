@@ -50,6 +50,8 @@ public class Indexer extends SubsystemBase {
 
     filter = new SlewRateLimiter(slewRateEntry.getDouble(0));
 
+    System.out.println("Index slew " + slewRateEntry.getDouble(999.0));
+
 
     // filter = new SlewRateLimiter(SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
     // System.out.println ("Indexer SlewRateLimiter " + SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));

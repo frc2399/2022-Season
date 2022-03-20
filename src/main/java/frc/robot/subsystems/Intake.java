@@ -12,13 +12,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Intake extends SubsystemBase {
 
 public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Intake Slew Rate", 5.0).getEntry();
-
+public static final NetworkTableEntry intakeSpeedEntry = Shuffleboard.getTab("Params").addPersistent("Intake Speed", 1.0).getEntry();
 private CANSparkMax intakeMotorController;
 private DoubleSolenoid intakeArm;
 

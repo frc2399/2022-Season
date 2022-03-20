@@ -39,12 +39,14 @@ public class DriveTurnControls {
 
     public double getTurn() {
         double val = xbox.getRawAxis(XboxConstants.ARCADE_DRIVE_TURN_AXIS);
-        if (Math.abs(val) <= XboxConstants.FORWARD_DEADBAND) {
+        SmartDashboard.putNumber("value", val);
+        if (Math.abs(val) <= XboxConstants.TURN_DEADBAND) {
             val = 0.0;
         }
         val = val * XboxConstants.TURN_JOYSTICK_INVERT;
         driveLimiter.calculate(val);
         // val = Math.pow(val, 3);
+        SmartDashboard.putNumber("new value", val);
         return val;
     }
 
