@@ -38,13 +38,13 @@ public class Position2Auton extends SequentialCommandGroup {
         new IntakeCmdForGivenTime(m_intake, 0.5, 2)
       ),
 
-        new TurnNAngle(-90, m_driveTrain),
+        new TurnNAngle(0.5, -90, m_driveTrain),
         new DriveForwardGivenDistance(0.5, 34, m_driveTrain),
-        new TurnNAngle(90, m_driveTrain),
+        new TurnNAngle(0.5, 90, m_driveTrain),
         new DriveForwardGivenDistance(0.5, -91.127, m_driveTrain),
 
         new ParallelCommandGroup(
-            new TurnNAngle(-45.6, m_driveTrain),
+            new TurnNAngle(0.5, -45.6, m_driveTrain),
             new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
         ),
     

@@ -82,9 +82,9 @@ public class RobotContainer {
 
     // Drive Train
     public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
-    public static TurnNAngle m_turnRight = new TurnNAngle(90, m_driveTrain);
-    public static TurnNAngle m_turnLeft = new TurnNAngle(-90, m_driveTrain);
-    public static TurnNAngle m_turn180 = new TurnNAngle(180, m_driveTrain);
+    public static TurnNAngle m_turnRight = new TurnNAngle(.5, 90, m_driveTrain);
+    public static TurnNAngle m_turnLeft = new TurnNAngle(.5, -90, m_driveTrain);
+    public static TurnNAngle m_turn180 = new TurnNAngle(.5, 180, m_driveTrain);
     private static Command m_driveStraightAuto = new DriveForwardGivenTime(0.3, 1, m_driveTrain);
 
     // Autonomous
@@ -166,7 +166,7 @@ public class RobotContainer {
             new DriveForwardGivenDistance(0.3, 40, m_driveTrain));
 
         Shuffleboard.getTab("Testing").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
-        Shuffleboard.getTab("Testing").add("TurnNAngle", new TurnNAngle(90, m_driveTrain));
+        Shuffleboard.getTab("Testing").add("TurnNAngle", new TurnNAngle(.5, 90, m_driveTrain));
 
         SmartDashboard.putNumber("drive slew", XboxConstants.DRIVE_SLEW_RATE);
         SmartDashboard.putNumber("turn slew", XboxConstants.TURN_SLEW_RATE);
