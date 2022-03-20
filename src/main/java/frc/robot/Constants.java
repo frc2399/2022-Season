@@ -21,9 +21,7 @@ public class Constants {
         //solenoids
         public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 0;
 	    public static final int SHIFT_HIGH_TORQUE_PORT= 1;
-        public static final boolean SHIFT_HIGH_SPEED_SOLENOID = true;
-	    public static final boolean SHIFT_HIGH_TORQUE_SOLENOID= true;
-        public static final int PCM_ADDRESS = 13;
+        public static final int PCM_ADDRESS = 3;
         public static final double SHIFT_TIMER = 0.5;
 
         //follow vision target cmd speeds
@@ -95,7 +93,7 @@ public class Constants {
         public static final int SHIFT_HIGH_TORQUE = XboxMappingToJoystick.LEFT_BUMPER ; 
         public static final int INTAKE = XboxMappingToJoystick.LEFT_TRIGGER; 
         public static final int INDEX_AND_SHOOT = XboxMappingToJoystick.RIGHT_TRIGGER;
-        public static final int LIMELIGHT_SHOOT = XboxMappingToJoystick.A_BUTTON;
+        public static final int POINT_AND_SHOOT = XboxMappingToJoystick.A_BUTTON;
         public static final int TURN_RIGHT_90_CCW = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_RIGHT_90_CW = XboxMappingToJoystick.X_BUTTON;
 

@@ -66,6 +66,11 @@ public class Shooter extends SubsystemBase {
   private double bottomSetpoint;
   private static final double RANGE = 50;
 
+  static double calculatedOptimalTopSpeed;
+  static double calculatedOptimalBottomSpeed;
+
+  static List<List<Double>> shooterTable;
+
   // PID constants
 
   // constructor
@@ -128,7 +133,6 @@ public class Shooter extends SubsystemBase {
 
     System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
-    List<List<Double>> shooterTable;
     try {
       shooterTable = readData("src/main/deploy/ShooterTable.csv");
       double[] speedsBottomTop = shootingInterpolation(5.2, shooterTable);
@@ -254,6 +258,20 @@ public static double[] shootingInterpolation(Double distance, List<List<Double>>
   }
 
   return speedsBottomTop;
+}
+
+public static void calculateSpeedGivenDistance()
+{
+  double[] optimalSpeeds = shootingInterpolation(PhotonLimelight.distanceToHub, shooterTable);
+  calculatedOptimalBottomSpeed = optimalSpeeds[0];
+  calculatedOptimalTopSpeed = optimalSpeeds[1];
+}
+
+public void setOptimalSpeedWithPID() {
+  bottomPIDController.setReference(calculatedOptimalBottomSpeed, CANSparkMax.ControlType.kVelocity);
+  topPIDController.setReference(calculatedOptimalTopSpeed, CANSparkMax.ControlType.kVelocity);
+  topSetpoint = calculatedOptimalTopSpeed;
+  bottomSetpoint = calculatedOptimalBottomSpeed;
 }
 }
 

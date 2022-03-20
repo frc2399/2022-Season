@@ -34,7 +34,9 @@ public class PointAndShoot extends SequentialCommandGroup {
     addCommands(
       new TurnToHub(m_driveTrain),
   
-      new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter), //TODO:fix constatns
+      new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
+      new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
+      new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 
     
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       new IndexerCmdForGivenTime(m_indexer, 0.5, 2)

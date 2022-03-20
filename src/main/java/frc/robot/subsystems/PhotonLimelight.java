@@ -24,6 +24,7 @@ public class PhotonLimelight extends SubsystemBase {
 
   public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
   static PhotonCamera camera;
+  public static double distanceToHub;
 
   Boolean photonNotFoundMessagePrinted = false ;
 
@@ -52,6 +53,7 @@ public class PhotonLimelight extends SubsystemBase {
      * SmartDashboard.putNumber("x_distance", x_distance);
      */
     // System.out.println("Testing for photon limelight targets");
+
     PhotonPipelineResult result = null;
 
     Boolean photonExists = NetworkTableInstance.getDefault().getTable("photonvision").getEntry("gloworm").exists();
@@ -210,6 +212,16 @@ public class PhotonLimelight extends SubsystemBase {
 
    double angle = Math.atan2(circle_center.y, circle_center.x);
    return angle;
+  }
+
+  public static void getDistanceToHub() {
+    // Find the distance from the hub.
+    // Get x and y values from all target centers, find the center of the circle from that
+    // Then find the angle between where the robot is facing and the center of circle
+   var target_centers = get_target_centers();
+   var circle_center = get_hub_center_from_target_centers(target_centers);
+
+   distanceToHub = circle_center.y;
   }
 
   private static Coords get_hub_center_from_target_centers(ArrayList<Coords> target_centers) {
