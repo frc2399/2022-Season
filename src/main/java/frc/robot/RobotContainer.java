@@ -105,6 +105,8 @@ public class RobotContainer {
 
     // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
+    private static Command m_driveStraightGivenDistance = new DriveStraightGivenDistance(0.5, 10, m_driveTrain);
+
     public static NetworkTableEntry a_value = Shuffleboard.getTab("Params")
         .addPersistent("Stick Sensitivity", 0.0).getEntry();
 
@@ -170,6 +172,8 @@ public class RobotContainer {
 
         Shuffleboard.getTab("Testing").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
         Shuffleboard.getTab("Testing").add("TurnNAngle", new TurnNAngle(.5, 90, m_driveTrain));
+
+        Shuffleboard.getTab("Testing").add("DriveStraightGivenDistance", new DriveStraightGivenDistance(.5, 10, m_driveTrain));
 
         SmartDashboard.putNumber("drive slew", XboxConstants.DRIVE_SLEW_RATE);
         SmartDashboard.putNumber("turn slew", XboxConstants.TURN_SLEW_RATE);
