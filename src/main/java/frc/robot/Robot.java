@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -93,6 +94,7 @@ public class Robot extends TimedRobot {
     */
     @Override
     public void autonomousInit() {
+        DriveTrain.autonomousInit();
         m_autonomousCommand = m_robotContainer.getAutonomousCommand();
         System.out.println("We are in auton init!" + m_autonomousCommand);
 
@@ -119,6 +121,7 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+        DriveTrain.teleopInit();
     }
 
     /**
@@ -126,8 +129,6 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
-
-       // System.out.println("DriveTrain.rightFrontMotorController");
 
         //DriveTrain.rightFrontMotorController.set(0.3);
     }

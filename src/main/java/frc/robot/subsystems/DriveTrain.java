@@ -58,10 +58,10 @@ public class DriveTrain extends SubsystemBase {
 
     private static CANSparkMax leftFrontMotorController;
     public static CANSparkMax rightFrontMotorController;
-    private CANSparkMax leftMiddleMotorController;
-    private CANSparkMax rightMiddleMotorController;
-    private CANSparkMax leftBackMotorController;
-    private CANSparkMax rightBackMotorController;
+    private static CANSparkMax leftMiddleMotorController;
+    private static CANSparkMax rightMiddleMotorController;
+    private static CANSparkMax leftBackMotorController;
+    private static CANSparkMax rightBackMotorController;
 
     public RelativeEncoder leftEncoder, rightEncoder;
 
@@ -110,24 +110,6 @@ public class DriveTrain extends SubsystemBase {
         rightMiddleMotorController = new CANSparkMax(DriveConstants.RIGHT_MIDDLE_MOTOR_ID, MotorType.kBrushless);
         leftBackMotorController = new CANSparkMax(DriveConstants.LEFT_BACK_MOTOR_ID, MotorType.kBrushless);
         rightBackMotorController = new CANSparkMax(DriveConstants.RIGHT_BACK_MOTOR_ID, MotorType.kBrushless);
-
-        // Set motors to brake mode 
-        /** 
-        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
-        */
-
-        // Set motors to coast mode
-        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
-        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
 
         // Make wheels go in same direction
@@ -298,6 +280,27 @@ public class DriveTrain extends SubsystemBase {
     { 
         return ahrs.getAngle();
     }
+
+    public static void teleopInit()
+    {
+        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    }
+
+    public static void autonomousInit()
+    {
+        leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+    }
+
 
 }
 

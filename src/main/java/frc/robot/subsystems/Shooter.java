@@ -45,6 +45,10 @@ public class Shooter extends SubsystemBase {
     bottomMotorController.restoreFactoryDefaults();
     topMotorController.restoreFactoryDefaults();
 
+    //set shooter motors to coast mode
+    bottomMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    topMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
     //initialize motor encoders
     bottomEncoder = bottomMotorController.getEncoder();
     topEncoder = topMotorController.getEncoder();

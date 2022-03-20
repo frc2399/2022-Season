@@ -44,6 +44,10 @@ public class Climber extends SubsystemBase {
     leftMotorController.restoreFactoryDefaults();
     rightMotorController.restoreFactoryDefaults();
 
+    //set climber motors to coast mode
+    leftMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+    rightMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+
     //initialize motor encoder
     leftEncoder = leftMotorController.getEncoder();
     rightEncoder = rightMotorController.getEncoder();
