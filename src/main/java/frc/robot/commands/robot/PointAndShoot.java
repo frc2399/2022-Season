@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.TurnToHub;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
 import frc.robot.subsystems.*;
+import frc.robot.Constants.ShooterConstants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -26,12 +27,15 @@ public class PointAndShoot extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      new TurnToHub(m_driveTrain),
+      // new TurnToHub(m_driveTrain),
   
       new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
       new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
-      new IndexerCmdForGivenTime(m_indexer, -0.5, 0.5),
-      new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 
+      new IndexerCmdForGivenTime(m_indexer, -0.2, 0.1),
+      //new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 
+      // commented out for hacking
+      new InstantCommand(
+            () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
     
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       new IndexerCmdForGivenTime(m_indexer, 0.5, 2)

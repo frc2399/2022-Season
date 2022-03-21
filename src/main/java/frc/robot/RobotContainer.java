@@ -112,13 +112,13 @@ public class RobotContainer {
     // Collect balls
     private static ParallelCommandGroup collectBall = new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake),
-        new IntakeFwdCmd(m_intake),
-        new IndexerFwdCmd(m_indexer, 0.5));
+        new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED),
+        new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED));
 
     private static ParallelCommandGroup noCollectBall = new ParallelCommandGroup(
         new RetractIntakeArm(m_intake),
         new IntakeCmd(m_intake, 0),
-        new IndexerFwdCmd(m_indexer, 0));
+        new IndexerCmd(m_indexer, 0));
 
     // Climber
     private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 0.5);

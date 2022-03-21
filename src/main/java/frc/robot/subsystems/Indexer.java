@@ -65,7 +65,7 @@ public class Indexer extends SubsystemBase {
 
   public void setSpeed(double indexerSpeed)
   {
-    indexerSpeed = filter.calculate(indexerSpeed);
+    //indexerSpeed = filter.calculate(indexerSpeed);
     indexerMotorController.set(indexerSpeed);
   }
 
