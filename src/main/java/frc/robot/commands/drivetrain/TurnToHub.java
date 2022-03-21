@@ -12,10 +12,8 @@ import frc.robot.subsystems.PhotonLimelight;
 
 public class TurnToHub extends CommandBase {
   /** Creates a new TurnToNAngle. */
-  public double turnAngle;
+  
   private DriveTrain m_driveTrain;
-  private double currentAngle;
-  double newAngle;
 
   public TurnToHub(DriveTrain subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.

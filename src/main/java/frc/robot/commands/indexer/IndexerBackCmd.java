@@ -1,13 +1,14 @@
 package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
 
 public class IndexerBackCmd extends CommandBase {
 
     private final Indexer indexerSubsystem;
     private final double speed;
+
+    // speed comes from shuffleboard
 
     public IndexerBackCmd(Indexer indexerSubsystem, double speed) {
         this.indexerSubsystem = indexerSubsystem;

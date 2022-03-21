@@ -8,17 +8,14 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.PerpetualCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.XboxConstants;
@@ -29,6 +26,7 @@ import frc.robot.commands.indexer.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.commands.intakearm.RetractIntakeArm;
+import frc.robot.commands.robot.PointAndShoot;
 // import frc.robot.commands.robot.PointAndShoot;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
@@ -104,6 +102,9 @@ public class RobotContainer {
     // Indexer
     private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
     private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer, -IndexerConstants.INDEXERSPEED);
+
+    // Ultimate command
+    private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
     // Collect balls
     private static ParallelCommandGroup collectBall = new  ParallelCommandGroup(
@@ -286,6 +287,8 @@ public class RobotContainer {
 
         new JoystickButton(XBOX, XboxMappingToJoystick.LEFT_STICK_PUSH).whenPressed(collectBall);
         new JoystickButton(XBOX, XboxMappingToJoystick.RIGHT_STICK_PUSH).whenPressed(noCollectBall);
+
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
 
         new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
         new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);

@@ -7,15 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.subsystems.PhotonLimelight;
 
 public class TurnToHub extends CommandBase {
   /** Creates a new TurnToNAngle. */
-  public double turnAngle;
   private DriveTrain m_driveTrain;
-  private double currentAngle;
-  double newAngle;
 
   public TurnToHub(DriveTrain subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.

@@ -9,6 +9,8 @@ public class IndexerFwdCmd extends CommandBase {
     private final Indexer indexerSubsystem;
     private final double speed;
 
+    // speed comes from shuffleboard
+
     public IndexerFwdCmd(Indexer indexerSubsystem, double speed) {
         this.indexerSubsystem = indexerSubsystem;
         this.speed = speed;

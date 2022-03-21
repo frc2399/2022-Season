@@ -1,16 +1,10 @@
 package frc.robot.commands.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.TurnToHub;
-import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
-import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
-import frc.robot.commands.intake.IntakeCmdForGivenTime;
-import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -36,6 +30,7 @@ public class PointAndShoot extends SequentialCommandGroup {
   
       new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
       new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
+      new IndexerCmdForGivenTime(m_indexer, -0.5, 0.5),
       new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 
     
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
