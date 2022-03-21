@@ -22,19 +22,23 @@ public class ExtendClimber extends CommandBase {
 
     @Override
     public void execute() {
-       if (m_climber.isLeftExtended()){
-        this.m_climber.setLeftSpeed(0);   
-       }
-       else {
         this.m_climber.setLeftSpeed(speed);
-       };
-
-       if (m_climber.isRightExtended()){
-        this.m_climber.setRightSpeed(0);   
-       }
-       else {
         this.m_climber.setRightSpeed(speed);
-       };
+
+
+    //     if (m_climber.isLeftExtended()){
+    //     this.m_climber.setLeftSpeed(0);   
+    //    }
+    //    else {
+    //     this.m_climber.setLeftSpeed(speed);
+    //    };
+
+    //    if (m_climber.isRightExtended()){
+    //     this.m_climber.setRightSpeed(0);   
+    //    }
+    //    else {
+    //     this.m_climber.setRightSpeed(speed);
+    //    };
     }
 
     @Override
@@ -45,9 +49,9 @@ public class ExtendClimber extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (m_climber.isLeftExtended() && m_climber.isRightExtended()) {
-            return true;
-        }
+        // if (m_climber.isLeftExtended() && m_climber.isRightExtended()) {
+        //     return true;
+        // }
        return false;
     }
 }
