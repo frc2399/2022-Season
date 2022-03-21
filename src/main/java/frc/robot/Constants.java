@@ -44,6 +44,7 @@ public class Constants {
 
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
+        public static final int INTAKE_BACK = 6;
 
         public static final int SHOOTER_BTN = 3; 
 
@@ -76,6 +77,9 @@ public class Constants {
         public static final int Y_BUTTON = 4;
         public static final int START_BUTTON = 8;
         public static final int BACK_BUTTON = 7;
+
+        public static final int LEFT_STICK_PUSH = 9;
+        public static final int RIGHT_STICK_PUSH = 10;
     }
 
     public static final class XboxConstants {
@@ -129,6 +133,12 @@ public class Constants {
 
         public static final double TOP_SETPOINT = 700;
         public static final double BOTTOM_SETPOINT = 1000;
+
+        public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 300;
+        public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 600;
+
+        public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 600;
+        public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 900;
 
         public static final double SHOOTER_KP = .0003;//1.875;
         public static final double SHOOTER_KI = 0;//0.006;
