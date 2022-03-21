@@ -1,7 +1,6 @@
 package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
 
 public class IndexerCmd extends CommandBase {
@@ -22,7 +21,6 @@ public class IndexerCmd extends CommandBase {
 
     @Override
     public void execute() {
-        double speed = Indexer.indexSpeedEntry.getDouble(0.3);
         this.indexerSubsystem.setSpeed(speed);
     }
 

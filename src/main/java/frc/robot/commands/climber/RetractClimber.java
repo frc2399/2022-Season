@@ -22,19 +22,23 @@ public class RetractClimber extends CommandBase {
 
     @Override
     public void execute() {
-       if (m_climber.isLeftRetracted()){
-        this.m_climber.setLeftSpeed(0);   
-       }
-       else {
         this.m_climber.setLeftSpeed(-speed);
-       };
-
-       if (m_climber.isRightRetracted()){
-        this.m_climber.setRightSpeed(0);   
-       }
-       else {
         this.m_climber.setRightSpeed(-speed);
-       };
+
+
+    //     if (m_climber.isLeftRetracted()){
+    //     this.m_climber.setLeftSpeed(0);   
+    //    }
+    //    else {
+    //     this.m_climber.setLeftSpeed(-speed);
+    //    };
+
+    //    if (m_climber.isRightRetracted()){
+    //     this.m_climber.setRightSpeed(0);   
+    //    }
+    //    else {
+    //     this.m_climber.setRightSpeed(-speed);
+    //    };
     }
 
     @Override
@@ -45,9 +49,9 @@ public class RetractClimber extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        if (m_climber.isLeftRetracted() && m_climber.isRightRetracted()) {
-            return true;
-        }
+        // if (m_climber.isLeftRetracted() && m_climber.isRightRetracted()) {
+        //     return true;
+        // }
        return false;
     }
 }

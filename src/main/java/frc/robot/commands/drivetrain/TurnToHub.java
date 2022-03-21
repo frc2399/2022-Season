@@ -2,15 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.PhotonLimelight;
 
 public class TurnToHub extends CommandBase {
   /** Creates a new TurnToNAngle. */
+  
   private DriveTrain m_driveTrain;
 
   public TurnToHub(DriveTrain subsystem) {
@@ -50,8 +52,7 @@ public class TurnToHub extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   double errorTolerance = DriveTrain.angleErrorTolerance.getDouble(5);
-    // SmartDashboard.getNumber("Error Tolerance", 5);
+    double errorTolerance = SmartDashboard.getNumber("Error Tolerance", 5);
     //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
     double error = PhotonLimelight.angleToHub();
     if (Math.abs(modAngle(error)) <= errorTolerance) {

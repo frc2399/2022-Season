@@ -21,8 +21,6 @@ public class Constants {
         //solenoids
         public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 0;
 	    public static final int SHIFT_HIGH_TORQUE_PORT= 1;
-        public static final boolean SHIFT_HIGH_SPEED_SOLENOID = true;
-	    public static final boolean SHIFT_HIGH_TORQUE_SOLENOID= true;
         public static final int PCM_ADDRESS = 3;
         public static final double SHIFT_TIMER = 0.5;
 
@@ -44,6 +42,7 @@ public class Constants {
 
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
+        public static final int INTAKE_BACK = 6;
 
         public static final int SHOOTER_BTN = 3; 
 
@@ -76,6 +75,9 @@ public class Constants {
         public static final int Y_BUTTON = 4;
         public static final int START_BUTTON = 8;
         public static final int BACK_BUTTON = 7;
+
+        public static final int LEFT_STICK_PUSH = 9;
+        public static final int RIGHT_STICK_PUSH = 10;
     }
 
     public static final class XboxConstants {
@@ -95,7 +97,7 @@ public class Constants {
         public static final int SHIFT_HIGH_TORQUE = XboxMappingToJoystick.LEFT_BUMPER ; 
         public static final int INTAKE = XboxMappingToJoystick.LEFT_TRIGGER; 
         public static final int INDEX_AND_SHOOT = XboxMappingToJoystick.RIGHT_TRIGGER;
-        public static final int LIMELIGHT_SHOOT = XboxMappingToJoystick.A_BUTTON;
+        public static final int POINT_AND_SHOOT = XboxMappingToJoystick.A_BUTTON;
         public static final int TURN_RIGHT_90_CCW = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_RIGHT_90_CW = XboxMappingToJoystick.X_BUTTON;
 
@@ -129,6 +131,12 @@ public class Constants {
 
         public static final double TOP_SETPOINT = 700;
         public static final double BOTTOM_SETPOINT = 1000;
+
+        public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 300;
+        public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 600;
+
+        public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 600;
+        public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 900;
 
         public static final double SHOOTER_KP = .0003;//1.875;
         public static final double SHOOTER_KI = 0;//0.006;
