@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -72,7 +73,8 @@ public class RobotContainer {
 
     // Shooter 
     private static InstantCommand startShooter = new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
-    private static Command stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
+    private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
+
     private  static Command shoot = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.5),
         new InstantCommand(
@@ -108,12 +110,12 @@ public class RobotContainer {
     private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
     // Collect balls
-    private static ParallelCommandGroup collectBall = new  ParallelCommandGroup(
+    private static ParallelCommandGroup collectBall = new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake),
         new IntakeFwdCmd(m_intake),
         new IndexerFwdCmd(m_indexer, 0.5));
 
-    private static ParallelCommandGroup noCollectBall = new  ParallelCommandGroup(
+    private static ParallelCommandGroup noCollectBall = new ParallelCommandGroup(
         new RetractIntakeArm(m_intake),
         new IntakeCmd(m_intake, 0),
         new IndexerFwdCmd(m_indexer, 0));
@@ -153,7 +155,8 @@ public class RobotContainer {
 
     // A chooser for autonomous commands
     static SendableChooser < Command > m_chooser = new SendableChooser < > ();
-    public final static ComplexWidget autonChooser = Shuffleboard.getTab("Driver").add("Choose Auton", m_chooser);
+    public final static ComplexWidget autonChooser = Shuffleboard.getTab("Driver")
+    .add("Choose Auton", m_chooser).withWidget(BuiltInWidgets.kSplitButtonChooser).withPosition(0, 4).withSize(9, 1);
 
     PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
 

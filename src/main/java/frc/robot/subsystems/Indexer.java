@@ -50,6 +50,8 @@ public class Indexer extends SubsystemBase {
     //set indexer motor to coast mode
     indexerMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
 
+    indexerMotorController.setInverted(true);
+
     // filter = new SlewRateLimiter(SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
     // System.out.println ("Indexer SlewRateLimiter " + SmartDashboard.getNumber("Indexer Slew Rate", IndexerConstants.INDEXER_SLEW));
   }

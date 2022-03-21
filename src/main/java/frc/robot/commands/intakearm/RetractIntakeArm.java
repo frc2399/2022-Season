@@ -19,6 +19,7 @@ public class RetractIntakeArm extends CommandBase {
 
 	@Override
 	public void initialize() {
+		System.out.println("Retract Intake initialized");
 
 	}
 

@@ -19,6 +19,7 @@ public class ExtendIntakeArm extends CommandBase {
 
 	@Override
 	public void initialize() {
+		System.out.println("Extend Intake initialized");
 
 	}
 

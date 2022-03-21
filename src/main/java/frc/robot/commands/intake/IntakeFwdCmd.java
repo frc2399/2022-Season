@@ -14,7 +14,7 @@ public class IntakeFwdCmd extends CommandBase {
 
     @Override
     public void initialize() {
-        System.out.println("Intake cmd started!");
+        System.out.println("Intake fwd cmd started!");
     }
 
     @Override

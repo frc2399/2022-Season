@@ -4,8 +4,6 @@ package frc.robot.commands.drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-
 
 public class DriveStraightGivenDistance extends CommandBase {
 
@@ -18,7 +16,6 @@ public class DriveStraightGivenDistance extends CommandBase {
     double startAngle;
     double currentAngle;
     
- 
 	public DriveStraightGivenDistance(double speed, double targetDistance, DriveTrain subsystem) {
         
         //initialize variables
@@ -56,10 +53,11 @@ public class DriveStraightGivenDistance extends CommandBase {
         double distanceError = newTargetDistance - currentPosition;
         double angleError = currentAngle - startAngle;
 
-        double straightCorrection = DriveTrain.angleErrorPValue.getDouble(0.01) * angleError;
-
         double outputSpeed = m_driveTrain.kP * distanceError;
         outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
+
+        double straightCorrection = DriveTrain.angleErrorPValue.getDouble(0.01) * angleError;
+        straightCorrection = MathUtil.clamp(straightCorrection, -0.5 * Math.abs(outputSpeed), 0.5 * Math.abs(outputSpeed));
 
         m_driveTrain.setMotors(outputSpeed - straightCorrection, outputSpeed + straightCorrection);
     }

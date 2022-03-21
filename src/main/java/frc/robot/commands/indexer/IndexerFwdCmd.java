@@ -1,7 +1,6 @@
 package frc.robot.commands.indexer;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Indexer;
 
 public class IndexerFwdCmd extends CommandBase {
