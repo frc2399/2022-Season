@@ -153,9 +153,19 @@ public class PhotonLimelight extends SubsystemBase {
       System.out.println("y distance to hub center: " + averageCenterY);
       System.out.println("x distance to hub center: " + averageCenterX);
 
-      double angle = 180/Math.PI * (Math.atan2(averageCenterX, averageCenterY));
-      System.out.println("angle!  " + angle);
+      //double angle = 180/Math.PI * (Math.atan2(averageCenterX, averageCenterY));
+      // System.out.println("angle!  " + angle);
 
+      if (x_distances.size() >= 3) {
+        double averageX = (x_distances.get(0) + x_distances.get(1) + x_distances.get(2))/3;
+        double averageY = (y_distances.get(0) + y_distances.get(1) + y_distances.get(2))/3;
+        double angle = 180/Math.PI * (Math.atan2(averageX, averageY));
+        System.out.println("angle!  " + angle);
+      }
+      else {
+        System.out.println("less than 3 targets!");
+      }
+    
 
     }
 
@@ -240,11 +250,28 @@ public class PhotonLimelight extends SubsystemBase {
     // Find the angle from the hub.
     // Get x and y values from all target centers, find the center of the circle from that
     // Then find the angle between where the robot is facing and the center of circle
-   var target_centers = get_target_centers();
-   var circle_center = get_hub_center_from_target_centers(target_centers);
 
-   double angle = Math.atan2(circle_center.x, circle_center.y) * (180 / Math.PI);
-   return angle;
+  //  var target_centers = get_target_centers();
+  //  var circle_center = get_hub_center_from_target_centers(target_centers);
+
+  //  double angle = Math.atan2(circle_center.x, circle_center.y) * (180 / Math.PI);
+  //  return angle;
+ 
+
+   var target_centers = get_target_centers();
+
+   if (target_centers.size() >= 3) {
+    double averageX = (target_centers.get(0).x + target_centers.get(1).x + target_centers.get(2).x)/3;
+    double averageY = (target_centers.get(0).y + target_centers.get(1).y + target_centers.get(2).y)/3;
+    double angle = 180/Math.PI * (Math.atan2(averageX, averageY));
+    System.out.println("angle!  " + angle);
+    return angle;
+  }
+  else {
+    System.out.println("less than 3 targets!");
+    return 0;
+  }
+   
   }
 
   public static void getDistanceToHub() {

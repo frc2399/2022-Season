@@ -99,7 +99,7 @@ public class DriveTrain extends SubsystemBase {
 
 
     final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
-    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Angle Err Tol", 5).getEntry();
+    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Angle Err Tol", 2).getEntry();
     public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Distance Err Tol", 5).getEntry();
     public static final NetworkTableEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
     public static final NetworkTableEntry angleErrorPValue = Shuffleboard.getTab("Params").add("angle err p", 0.01).getEntry();
@@ -200,6 +200,9 @@ public class DriveTrain extends SubsystemBase {
         // SmartDashboard.putNumber("Angle", ahrs.getAngle());
 
         SmartDashboard.putNumber("hub angle", PhotonLimelight.angleToHub());
+        double error = PhotonLimelight.angleToHub();
+        SmartDashboard.putNumber("hub error!!!!!!", error);
+
 // 
         // System.out.println("drive train periodic");
 

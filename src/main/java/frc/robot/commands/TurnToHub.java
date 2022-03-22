@@ -44,7 +44,7 @@ public class TurnToHub extends CommandBase {
     SmartDashboard.putNumber("hub outputSpeed", outputSpeed);
     System.out.println("Turn to hub outputSpeed" + outputSpeed);
 
-    m_driveTrain.setMotors(-outputSpeed, outputSpeed);
+    m_driveTrain.setMotors(outputSpeed, -outputSpeed);
 
   }
 
