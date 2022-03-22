@@ -121,8 +121,8 @@ public class RobotContainer {
         new IndexerCmd(m_indexer, 0));
 
     // Climber
-    private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 0.5);
-    private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 0.5);
+    private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 1.0);
+    private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 1.0);
 
     // Drive Train
     public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
@@ -314,8 +314,8 @@ public class RobotContainer {
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT_90_CW).whileHeld();
 
         // Climber
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whenPressed(retractClimberCmd);
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whenPressed(extendClimberCmd);
+        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whileHeld(retractClimberCmd);
+        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whileHeld(extendClimberCmd);
 
         // Shooter
         new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
