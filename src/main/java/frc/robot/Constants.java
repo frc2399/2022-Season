@@ -70,6 +70,7 @@ public class Constants {
         public static final int LEFT_BUMPER = 5;
         public static final int RIGHT_BUMPER = 6;
         public static final int A_BUTTON = 1;
+
         public static final int B_BUTTON = 2;
         public static final int X_BUTTON = 3;
         public static final int Y_BUTTON = 4;
@@ -92,7 +93,7 @@ public class Constants {
 
         public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
-        public static final int TURN_180 = XboxMappingToJoystick.Y_BUTTON;
+        public static final int TURN_180 = XboxMappingToJoystick.A_BUTTON;
         public static final int SHIFT_HIGH_SPEED = XboxMappingToJoystick.RIGHT_BUMPER; 
         public static final int SHIFT_HIGH_TORQUE = XboxMappingToJoystick.LEFT_BUMPER ; 
         public static final int INTAKE = XboxMappingToJoystick.LEFT_TRIGGER; 
@@ -100,6 +101,8 @@ public class Constants {
         public static final int POINT_AND_SHOOT = XboxMappingToJoystick.A_BUTTON;
         public static final int TURN_RIGHT_90_CCW = XboxMappingToJoystick.B_BUTTON;
         public static final int TURN_RIGHT_90_CW = XboxMappingToJoystick.X_BUTTON;
+        public static final int SPIT_OUT_BALL = XboxMappingToJoystick.Y_BUTTON;
+
 
 
         public static final double FORWARD_DEADBAND = 0.05;
@@ -132,8 +135,8 @@ public class Constants {
         public static final double TOP_SETPOINT = 700;
         public static final double BOTTOM_SETPOINT = 1000;
 
-        public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 300;
-        public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 600;
+        public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 1000;
+        public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 1000;
 
         public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 600;
         public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 900;
@@ -176,15 +179,12 @@ public class Constants {
 
     }
 
-    public static final class LimelightConstants {
-        public static final int HEIGHT_INCHES = 18;
-    }
 
     public static final class PhotonLimelightConstants {
-        public static final double CAMERA_HEIGHT_FEET = 45/12;
-        public static final double TARGET_HEIGHT_FEET = 91/12;
-        public static final double HUB_RADIUS_FEET = 2.25;
-        public static final double TILT_DEGREES = -5.3;
+        public static final double CAMERA_HEIGHT_INCHES = 38;
+        public static final double TARGET_HEIGHT_INCHES = 104;
+        public static final double HUB_RADIUS_INCHES = 27;
+        public static final double TILT_DEGREES = 36;
         // public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
         // public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
     }

@@ -57,23 +57,30 @@ public class PhotonLimelight extends SubsystemBase {
 
     Boolean photonExists = NetworkTableInstance.getDefault().getTable("photonvision").getEntry("gloworm").exists();
 
-    if (photonExists)
-    {
-      result = camera.getLatestResult();
-    }
-    else
-    {
-      if (!photonNotFoundMessagePrinted)
-      {
-        System.out.println("****** Photon Limelight not found *******");
-        photonNotFoundMessagePrinted = true ;
-      }
-      return;
-    }
+
+    // if (photonExists)
+    // {
+    //   result = camera.getLatestResult();
+
+    //   System.out.println("photon exists!");
+    // }
+    // else
+    // {
+    //   if (!photonNotFoundMessagePrinted)
+    //   {
+    //     System.out.println("****** Photon Limelight not found *******");
+    //     photonNotFoundMessagePrinted = true ;
+    //   }
+    //   System.out.println("photon does not exist!");
+    //   return;
+    // }
+
+    result = camera.getLatestResult();
+
     Boolean has_targets = result.hasTargets() ;
     SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
     if (has_targets) {
-      // System.out.println("Photon Limelight has targets!");
+      System.out.println("Photon Limelight has targets!");
       List<PhotonTrackedTarget> targets = result.getTargets();
       ArrayList<Double> x_distances = new ArrayList<>();
       ArrayList<Double> y_distances = new ArrayList<>();
@@ -88,8 +95,14 @@ public class PhotonLimelight extends SubsystemBase {
         // SmartDashboard.putNumber(smartdashy, coordinates.get(0));
 
         countTargets++;
+      
       }
+
+
+      System.out.println("number of targets: " + countTargets);
+
       amountTargets.setNumber(countTargets);
+    
 
       double totalCenterX = 0;
       double totalCenterY = 0;
@@ -99,11 +112,12 @@ public class PhotonLimelight extends SubsystemBase {
         double x2 = x_distances.get(i+1);
         double y1 = y_distances.get(i);
         double y2 = y_distances.get(i+1);
-
+        System.out.println("x coordinates: " + x1 + " " + x2);
+        System.out.println("y coordinates: " + y1 + " " + y2);
         String smartdashxi = "Xi=" + i;
         String smartdashyi = "Yi=" + i;
 
-        var circle = circle_from_p1p2r(x1, y1, x2, y2, PhotonLimelightConstants.HUB_RADIUS_FEET);
+        var circle = circle_from_p1p2r(x1, y1, x2, y2, PhotonLimelightConstants.HUB_RADIUS_INCHES);
         if(circle != null)
         {
           // SmartDashboard.putNumber(smartdashxi, circle.get(0));
@@ -111,20 +125,38 @@ public class PhotonLimelight extends SubsystemBase {
           totalCenterX += circle.get(0);
           totalCenterY += circle.get(1);
 
+          System.out.println("Y Circle points: " + y1 + " " + y2);
+          System.out.println("Circle Center Y: " + circle.get(1));
+
+          System.out.println("X Circle points: " + x1 + " " + x2);
+          System.out.println("Circle Center X: " + circle.get(0));
         }
         else
         {
          // SmartDashboard.putString(smartdashxi, "null");
          // SmartDashboard.putString(smartdashyi, "null");
+         System.out.println("No circle :(");
         }
         
       }
-      // double averageCenterX = totalCenterX/targets.size();
-      // double averageCenterY = totalCenterY/targets.size();
+      System.out.println("Total CenterX: " + totalCenterX);
+      System.out.println("Total CenterY: " + totalCenterY);
+
       
-      // SmartDashboard.putNumber("averageCenterX", averageCenterX);
-      // SmartDashboard.putNumber("averageCenterY", averageCenterY);
-      // SmartDashboard.putNumber("NUMBER OF TARGETS", targets.size());
+      double averageCenterX = totalCenterX/(countTargets - 1);  //targets.size();
+      double averageCenterY = totalCenterY/(countTargets - 1);   //targets.size();
+      
+      SmartDashboard.putNumber("averageCenterX", averageCenterX);
+      SmartDashboard.putNumber("averageCenterY", averageCenterY);
+      SmartDashboard.putNumber("NUMBER OF TARGETS", targets.size());
+      System.out.println("targets.size: " + targets.size());
+      System.out.println("y distance to hub center: " + averageCenterY);
+      System.out.println("x distance to hub center: " + averageCenterX);
+
+      double angle = 180/Math.PI * (Math.atan2(averageCenterY, averageCenterX));
+      System.out.println("angle!  " + angle);
+
+
     }
 
 
@@ -147,7 +179,7 @@ public class PhotonLimelight extends SubsystemBase {
 
     double y_angle = target.getPitch() + PhotonLimelightConstants.TILT_DEGREES;
     double y_angle_radians = Math.toRadians(y_angle);
-    double heightDifference = PhotonLimelightConstants.TARGET_HEIGHT_FEET - PhotonLimelightConstants.CAMERA_HEIGHT_FEET;
+    double heightDifference = PhotonLimelightConstants.TARGET_HEIGHT_INCHES - PhotonLimelightConstants.CAMERA_HEIGHT_INCHES;
     double y_distance = heightDifference / (Math.tan(y_angle_radians));
 
     double x_angle = target.getYaw();
@@ -178,8 +210,10 @@ public class PhotonLimelight extends SubsystemBase {
     double dy = y2 - y1;
     // dist between points
     double q = Math.sqrt(dx * dx + dy * dy);
+    System.out.println("dist between points: " + q);
+    System.out.println("radieus: " + r);
     if (q > 2.0 * r) {
-      // System.out.println("ERROR: separation of points > diameter");
+      System.out.println("ERROR: separation of points > diameter");
       return null;
     }
     // halfway point
@@ -233,7 +267,7 @@ public class PhotonLimelight extends SubsystemBase {
       Coords target_center_2 = target_centers.get(i + 1);
 
       var circle = circle_from_p1p2r(target_center_1.x, target_center_1.y, target_center_2.x, target_center_2.y,
-          PhotonLimelightConstants.HUB_RADIUS_FEET);
+          PhotonLimelightConstants.HUB_RADIUS_INCHES);
       if (circle != null) {
         totalCenterX += circle.get(0);
         totalCenterY += circle.get(1);
