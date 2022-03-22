@@ -5,8 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.RobotState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.PhotonLimelight;
 
 public class TurnToHub extends CommandBase {
@@ -23,6 +26,9 @@ public class TurnToHub extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("TurnToHub initialized!");
+
+    // Sets motors to brake mode
+    DriveTrain.autonomousInit();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,11 +36,15 @@ public class TurnToHub extends CommandBase {
   public void execute() {
 
     double error = PhotonLimelight.angleToHub();
-    double outputSpeed = m_driveTrain.kPSim * error;
-    outputSpeed = MathUtil.clamp(outputSpeed, -0.2, 0.2);
+    SmartDashboard.putNumber("hub error", error);
 
+    double outputSpeed = Constants.DriveConstants.TURN_TO_HUB_KP * error;
+    outputSpeed = MathUtil.clamp(outputSpeed, -0.1, 0.1);
 
-    m_driveTrain.setMotors(outputSpeed, -outputSpeed);
+    SmartDashboard.putNumber("hub outputSpeed", outputSpeed);
+    System.out.println("Turn to hub outputSpeed" + outputSpeed);
+
+    m_driveTrain.setMotors(-outputSpeed, outputSpeed);
 
   }
 
@@ -43,6 +53,16 @@ public class TurnToHub extends CommandBase {
   public void end(boolean interrupted) {
 
     m_driveTrain.setMotors(0, 0);
+
+  // Sets motors to correct mode
+    if (RobotState.isAutonomous())
+    {
+      DriveTrain.autonomousInit();
+    }
+    else if (RobotState.isTeleop())
+    {
+      DriveTrain.teleopInit();
+    }
     
     System.out.println("TurnToHub ended");
   }

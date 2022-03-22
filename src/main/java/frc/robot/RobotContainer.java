@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.*;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.XboxConstants;
+import frc.robot.commands.TurnToHub;
 import frc.robot.commands.autonomous.*;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.drivetrain.*;
@@ -224,6 +225,9 @@ public class RobotContainer {
         Shuffleboard.getTab("Testing").add("TurnNAngle", new TurnNAngle(.5, 90, m_driveTrain));
 
         Shuffleboard.getTab("Testing").add("DriveStraightGivenDistance", new DriveStraightGivenDistance(.5, 40, m_driveTrain));
+
+        Shuffleboard.getTab("Testing").add("Turn to hub", new TurnToHub(m_driveTrain));
+
 
         SmartDashboard.putNumber("drive slew", XboxConstants.DRIVE_SLEW_RATE);
         SmartDashboard.putNumber("turn slew", XboxConstants.TURN_SLEW_RATE);

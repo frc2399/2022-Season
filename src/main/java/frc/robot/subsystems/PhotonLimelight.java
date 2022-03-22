@@ -153,7 +153,7 @@ public class PhotonLimelight extends SubsystemBase {
       System.out.println("y distance to hub center: " + averageCenterY);
       System.out.println("x distance to hub center: " + averageCenterX);
 
-      double angle = 180/Math.PI * (Math.atan2(averageCenterY, averageCenterX));
+      double angle = 180/Math.PI * (Math.atan2(averageCenterX, averageCenterY));
       System.out.println("angle!  " + angle);
 
 
@@ -243,7 +243,7 @@ public class PhotonLimelight extends SubsystemBase {
    var target_centers = get_target_centers();
    var circle_center = get_hub_center_from_target_centers(target_centers);
 
-   double angle = Math.atan2(circle_center.y, circle_center.x);
+   double angle = Math.atan2(circle_center.x, circle_center.y) * (180 / Math.PI);
    return angle;
   }
 
@@ -278,8 +278,8 @@ public class PhotonLimelight extends SubsystemBase {
       }
 
     }
-    double averageCenterX = totalCenterX / amount_target_centers;
-    double averageCenterY = totalCenterY / amount_target_centers;
+    double averageCenterX = totalCenterX / (amount_target_centers - 1);
+    double averageCenterY = totalCenterY / (amount_target_centers - 1);
     Coords coordinate;
     coordinate = new Coords(averageCenterX, averageCenterY);
     return coordinate;

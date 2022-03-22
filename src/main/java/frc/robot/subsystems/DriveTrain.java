@@ -42,6 +42,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.util.NavX;
 // import edu.wpi.first.wpilibj.simulation.EncoderSim;
 // import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
@@ -195,8 +196,10 @@ public class DriveTrain extends SubsystemBase {
 
         // outputSpeed = kP * error;
 
-        robotAngle.setDouble(ahrs.getAngle());
+        // robotAngle.setDouble(ahrs.getAngle());
         // SmartDashboard.putNumber("Angle", ahrs.getAngle());
+
+        SmartDashboard.putNumber("hub angle", PhotonLimelight.angleToHub());
 // 
         // System.out.println("drive train periodic");
 

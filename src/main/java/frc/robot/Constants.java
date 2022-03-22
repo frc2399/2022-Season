@@ -30,6 +30,8 @@ public class Constants {
 
         // encoder 
         public static final double REVOLUTION_TO_INCH_CONVERSION = 2.35;
+
+        public static final double TURN_TO_HUB_KP = 0.5;
     }
 
     public static final class JoystickConstants {
