@@ -29,7 +29,7 @@ public class Constants {
         public static final double BUTTERY_FOLLOWING_SPEED = 0.035;
 
         // encoder 
-        public static final double TICK_TO_INCH_CONVERSION = 1;
+        public static final double REVOLUTION_TO_INCH_CONVERSION = 2.35;
     }
 
     public static final class JoystickConstants {

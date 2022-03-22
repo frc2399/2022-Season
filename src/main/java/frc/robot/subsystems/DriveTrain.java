@@ -142,8 +142,8 @@ public class DriveTrain extends SubsystemBase {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
 
-        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.TICK_TO_INCH_CONVERSION);
-        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.TICK_TO_INCH_CONVERSION);
+        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.REVOLUTION_TO_INCH_CONVERSION);
+        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.REVOLUTION_TO_INCH_CONVERSION);
 
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();

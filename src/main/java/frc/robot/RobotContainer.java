@@ -216,7 +216,7 @@ public class RobotContainer {
         Shuffleboard.getTab("Testing").add("Turn to N Angle", new TurnToNAngle(90, m_driveTrain));
         Shuffleboard.getTab("Testing").add("TurnNAngle", new TurnNAngle(.5, 90, m_driveTrain));
 
-        Shuffleboard.getTab("Testing").add("DriveStraightGivenDistance", new DriveStraightGivenDistance(.5, 10, m_driveTrain));
+        Shuffleboard.getTab("Testing").add("DriveStraightGivenDistance", new DriveStraightGivenDistance(.5, 40, m_driveTrain));
 
         SmartDashboard.putNumber("drive slew", XboxConstants.DRIVE_SLEW_RATE);
         SmartDashboard.putNumber("turn slew", XboxConstants.TURN_SLEW_RATE);
