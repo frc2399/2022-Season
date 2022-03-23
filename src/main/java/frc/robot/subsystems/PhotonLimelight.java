@@ -98,7 +98,7 @@ public class PhotonLimelight extends SubsystemBase {
       
       }
 
-
+      SmartDashboard.putBoolean("Can shoot", (countTargets >= 3));
       System.out.println("number of targets: " + countTargets);
 
       amountTargets.setNumber(countTargets);
@@ -260,18 +260,18 @@ public class PhotonLimelight extends SubsystemBase {
 
    var target_centers = get_target_centers();
 
-  //  if (target_centers.size() >= 3) {
-  //   double averageX = (target_centers.get(0).x + target_centers.get(1).x + target_centers.get(2).x)/3;
-  //   double averageY = (target_centers.get(0).y + target_centers.get(1).y + target_centers.get(2).y)/3;
-  //   double angle = 180/Math.PI * (Math.atan2(averageX, averageY));
-  //   System.out.println("angle!  " + angle);
-  //   return angle;
-  // }
-  // else {
-  //   System.out.println("less than 3 targets!");
-  //   return 0;
-  // }
-   return 0;
+   if (target_centers.size() >= 3) {
+    double averageX = (target_centers.get(0).x + target_centers.get(1).x + target_centers.get(2).x)/3;
+    double averageY = (target_centers.get(0).y + target_centers.get(1).y + target_centers.get(2).y)/3;
+    double angle = 180/Math.PI * (Math.atan2(averageX, averageY));
+    System.out.println("angle!  " + angle);
+    return angle;
+  }
+  else {
+    System.out.println("less than 3 targets!");
+    return 0;
+  }
+
   }
 
   public static void getDistanceToHub() {
@@ -330,4 +330,5 @@ public class PhotonLimelight extends SubsystemBase {
     }
     return centers;
   }
+
 }
