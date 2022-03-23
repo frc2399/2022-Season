@@ -31,7 +31,7 @@ public class Shifter extends SubsystemBase {
 		;
 
 		highSpeedEntry = gearsLayout.add("High Speed", false).getEntry();
-    	highTorqueEntry = gearsLayout.add("High Gear", false).getEntry();  
+    	highTorqueEntry = gearsLayout.add("High Torque", false).getEntry();  
 
 	}
 
