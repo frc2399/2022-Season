@@ -88,7 +88,7 @@ public class RobotContainer {
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_LOWER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_LOWER_SHOOTER_BOTTOM_SPEED), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+        new IndexerCmdForGivenTime(m_indexer, IndexerConstants.INDEXERSPEED, 2));
 
     private static Command upperShootFromFender = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),

@@ -199,7 +199,6 @@ public class DriveTrain extends SubsystemBase {
         // robotAngle.setDouble(ahrs.getAngle());
         // SmartDashboard.putNumber("Angle", ahrs.getAngle());
 
-        SmartDashboard.putNumber("hub angle", PhotonLimelight.angleToHub());
         double error = PhotonLimelight.angleToHub();
         SmartDashboard.putNumber("hub error!!!!!!", error);
 
