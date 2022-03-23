@@ -65,7 +65,8 @@ public class DriveTrain extends SubsystemBase {
     private static CANSparkMax leftBackMotorController;
     private static CANSparkMax rightBackMotorController;
 
-    public RelativeEncoder leftEncoder, rightEncoder;
+    public static RelativeEncoder leftEncoder;
+	public static RelativeEncoder rightEncoder;
 
     public static AHRS ahrs;
     public static PIDController turnController;
@@ -143,8 +144,8 @@ public class DriveTrain extends SubsystemBase {
         leftEncoder.setPosition(0);
         rightEncoder.setPosition(0);
 
-        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.REVOLUTION_TO_INCH_CONVERSION);
-        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.REVOLUTION_TO_INCH_CONVERSION);
+        leftEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
+        rightEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
 
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();

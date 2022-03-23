@@ -76,21 +76,21 @@ public class RobotContainer {
     private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
 
     private  static Command shoot = new SequentialCommandGroup(
-        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.5),
+        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
     // TODO: Change speed
-    private static Command lowerShootFromFender = new SequentialCommandGroup(
+    public static Command lowerShootFromFender = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_LOWER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_LOWER_SHOOTER_BOTTOM_SPEED), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, IndexerConstants.INDEXERSPEED, 2));
 
-    private static Command upperShootFromFender = new SequentialCommandGroup(
+    public static Command upperShootFromFender = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
@@ -153,6 +153,8 @@ public class RobotContainer {
     private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_air = new DoNothingAuton();
+    private static Command m_banana = new DriveOutAuton(m_driveTrain);
 
     // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
@@ -184,6 +186,8 @@ public class RobotContainer {
         m_chooser.addOption("Position 3 (jelly)", m_jelly);
         m_chooser.addOption("Position 4 (stale bread)", m_stale);
         m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
+        m_chooser.addOption("Do nothing (air)", m_air);
+        m_chooser.addOption("Drive out tarmac (banana)", m_banana);
 
         // Put the chooser on the dashboard
 
@@ -291,6 +295,8 @@ public class RobotContainer {
      */
 
     private void configureButtonBindings() {
+        // Robot
+
         // Drive train
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
@@ -333,10 +339,10 @@ public class RobotContainer {
 
         // Shooter
         new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
-        new JoystickButton(XBOX, XboxMappingToJoystick.BACK_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.START_BUTTON).whenPressed(upperShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
 
-        new JoystickButton(XBOX, XboxConstants.SPIT_OUT_BALL).whileHeld(spitOutBall);
+        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
 
     }
 

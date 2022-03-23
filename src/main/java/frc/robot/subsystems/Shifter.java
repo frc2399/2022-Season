@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 
 public class Shifter extends SubsystemBase {
@@ -43,12 +44,18 @@ public class Shifter extends SubsystemBase {
 		shifter.set(Value.kForward);
 		highSpeedEntry.setBoolean(true);
 		highTorqueEntry.setBoolean(false);
+
+		DriveTrain.leftEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_SPEED_REVOLUTION_TO_INCH_CONVERSION);
+        DriveTrain.rightEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_SPEED_REVOLUTION_TO_INCH_CONVERSION);
 	}
 	
 	public void setShifterHighTorque() {
 		shifter.set(Value.kReverse);
 		highTorqueEntry.setBoolean(true);
 		highSpeedEntry.setBoolean(false);
+
+		DriveTrain.leftEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
+        DriveTrain.rightEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
 	}
 
 	/**

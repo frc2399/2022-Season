@@ -34,22 +34,22 @@ public class Position2Auton extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake), 
-        new DriveForwardGivenDistance(0.5, 67.5, m_driveTrain),
-        new IntakeCmdForGivenTime(m_intake, 0.5, 2)
+        new DriveForwardGivenDistance(0.25, 67.5, m_driveTrain),
+        new IntakeCmdForGivenTime(m_intake, 0.25, 2)
       ),
 
-        new TurnNAngle(0.5, -90, m_driveTrain),
-        new DriveForwardGivenDistance(0.5, 34, m_driveTrain),
-        new TurnNAngle(0.5, 90, m_driveTrain),
-        new DriveForwardGivenDistance(0.5, -91.127, m_driveTrain),
+        new TurnNAngle(0.25, -90, m_driveTrain),
+        new DriveForwardGivenDistance(0.25, 34, m_driveTrain),
+        new TurnNAngle(0.25, 90, m_driveTrain),
+        new DriveForwardGivenDistance(0.25, -91.127, m_driveTrain),
 
         new ParallelCommandGroup(
-            new TurnNAngle(0.5, -45.6, m_driveTrain),
+            new TurnNAngle(0.25, -45.6, m_driveTrain),
             new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
         ),
     
       new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-      new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
+      new IndexerCmdForGivenTime(m_indexer, 0.25, 2)
      
     );
   }
