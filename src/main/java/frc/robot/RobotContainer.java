@@ -64,7 +64,7 @@ public class RobotContainer {
     private DriveTurnControls driveTurnControls = new DriveTurnControls(XBOX);
 
     // Defining commands
-    private static InstantCommand shiftHighGear = new InstantCommand(() -> m_shifter.setShifterHighTorque(),
+    private static InstantCommand shiftHighTorque = new InstantCommand(() -> m_shifter.setShifterHighTorque(),
         m_shifter);
     private static InstantCommand shiftHighSpeed = new InstantCommand(() -> m_shifter.setShifterHighSpeed(), m_shifter);
 
@@ -292,7 +292,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // Drive train
-        new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighGear);
+        new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
     
         // WE DISABLED FOR SAFETY WHEN TESTING
