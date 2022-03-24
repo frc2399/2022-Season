@@ -91,6 +91,7 @@ public class Shooter extends SubsystemBase {
   // constructor
   public Shooter() {
 
+    shooterTable = new ArrayList<List<Double>>();
    for(Double[] row : arr) {
       shooterTable.add(Arrays.asList(row));
    }

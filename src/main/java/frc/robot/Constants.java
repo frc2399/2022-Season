@@ -146,6 +146,9 @@ public class Constants {
         public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 600;
         public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 900;
 
+        public static final double TARMAC_UPPER_SHOOTER_TOP_SPEED = 1198;
+        public static final double TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 2995;
+
         public static final double SHOOTER_KP = .0003;//1.875;
         public static final double SHOOTER_KI = 0;//0.006;
         public static final double SHOOTER_KD = 0.0003;//52.5;

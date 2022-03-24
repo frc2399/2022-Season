@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -107,6 +108,16 @@ public class RobotContainer {
     private static Command spitOutBall = new ParallelCommandGroup(
         new IndexerBackCmd(m_indexer, 0.5),
         new IntakeCmd(m_intake, -IntakeConstants.INTAKESPEED));
+
+    public static Command upperShootFromTarmac = new SequentialCommandGroup(
+        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
+        new InstantCommand(
+            () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
+        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+    );
+
+    
     
 
     // Intake
@@ -157,7 +168,7 @@ public class RobotContainer {
 
     private static Command m_bread = new IntakeBallShootBothP1(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_PB = new Position2Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter);
+    private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
@@ -183,6 +194,14 @@ public class RobotContainer {
 
     private RobotContainer() {
 
+        // PortForwarder.add(5800, "photovision.local", 5800);
+
+        PortForwarder.add(5800, "10.23.99.11", 5800);
+        PortForwarder.add(5801, "10.23.99.11", 5801);
+        PortForwarder.add(5802, "10.23.99.11", 5802);
+        PortForwarder.add(5803, "10.23.99.11", 5803);
+        PortForwarder.add(5804, "10.23.99.11", 5804);
+        PortForwarder.add(5805, "10.23.99.11", 5805);
         // CameraServer.startAutomaticCapture();
 
         // Add commands to the autonomous command chooser
@@ -269,7 +288,7 @@ public class RobotContainer {
                 () -> -driveTurnControls.getDrive(),
                 () -> driveTurnControls.getTurn()));
 
-        m_intake.setDefaultCommand(defaultIntake);
+        m_intake.setDefaultCommand(defaultIntake.perpetually());
         m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
         m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
         m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
@@ -310,7 +329,7 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
 
         Trigger ultimateCmdTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
-             ultimateCmdTrigger.whileActiveContinuous(pointAndShootCmd);
+             ultimateCmdTrigger.whileActiveContinuous(upperShootFromTarmac);
         // WE DISABLED FOR SAFETY WHEN TESTING
         // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
@@ -355,6 +374,7 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
+        
 
     }
 
