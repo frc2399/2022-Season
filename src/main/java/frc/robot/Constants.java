@@ -46,19 +46,19 @@ public class Constants {
 
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
-        public static final int INTAKE_BACK = 6;
+        //public static final int INTAKE_BACK = 6;
 
         public static final int SHOOTER_BTN = 3; 
 
-        public static final int INDEXER = 9;
+        //public static final int INDEXER = 9;
 
-        public static final int INDEXER_FWD = 7;
-        public static final int INDEXER_BACK = 8;
+        public static final int INDEXER_FWD = 6;
+        public static final int INDEXER_BACK = 4;
 
         // public static final int TURN_TO_N = 12; // get rid of this eventually
 
-        public static final int CLIMBER_UP = 9;
-        public static final int CLIMBER_DOWN = 10;
+        public static final int CLIMBER_UP = 5;
+        public static final int CLIMBER_DOWN = 3;
 
     } 
 
