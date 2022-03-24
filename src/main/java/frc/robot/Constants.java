@@ -141,8 +141,8 @@ public class Constants {
         public static final double BOTTOM_SETPOINT = 2100;
         public static final double TOP_SETPOINT = BOTTOM_SETPOINT * SETPOINT_RATIO;
 
-        public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 1000;
-        public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 1000;
+        public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 950;
+        public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 925;
 
         public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 575;
         public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 2875;
@@ -154,13 +154,13 @@ public class Constants {
         public static final double MIDDLE_AUTON_TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 3025;
 
         public static final double SHOOTER_KP = .0003;//1.875;
-        //public static final double SHOOTER_KI = 0.000001;//0.006;
-        public static final double SHOOTER_KI = 0.0;//0.006;
+        public static final double SHOOTER_KI = 0.000001;//0.006;
+        // public static final double SHOOTER_KI = 1;//0.006;
         //0.000001
         public static final double SHOOTER_KD = 0.0003;//52.5;
         public static final double SHOOTER_KF = 0.00023; //0.15;
-        //public static final double SHOOTER_KIZ = 250;
-        public static final double SHOOTER_KIZ = 0;
+        public static final double SHOOTER_KIZ = 250;
+        // public static final double SHOOTER_KIZ = 0;
 
         //250
         public static final double SHOOTER_K_MAX_OUTPUT = 1;

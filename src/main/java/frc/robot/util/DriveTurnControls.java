@@ -45,14 +45,9 @@ public class DriveTurnControls {
         if (Math.abs(val) <= XboxConstants.TURN_DEADBAND) {
             val = 0.0;
         }
-        if (RobotContainer.m_shifter.isHighSpeed())
-        {
-            val = val * XboxConstants.TURN_JOYSTICK_INVERT * DriveConstants.TURN_SENSITIVITY;
-        }
-        else
-        {
-            val = val * XboxConstants.TURN_JOYSTICK_INVERT;
-        }
+        
+        val = val * XboxConstants.TURN_JOYSTICK_INVERT;
+     
         driveLimiter.calculate(val);
         // val = Math.pow(val, 3);
         SmartDashboard.putNumber("new value", val);

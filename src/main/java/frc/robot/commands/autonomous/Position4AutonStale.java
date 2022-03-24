@@ -3,6 +3,7 @@ package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.RobotContainer;
@@ -35,14 +36,15 @@ public class Position4AutonStale extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
      //addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // extends intake and leaves tarmac
-      new ParallelCommandGroup(
+      // extends intake and leaves tarmac and intakes ball
+      new ParallelDeadlineGroup(
+        new DriveStraightGivenDistance(0.5, 40, m_driveTrain),
         new ExtendIntakeArm(m_intake), 
-        new DriveStraightGivenDistance(0.5, 40, m_driveTrain)
-      ),
-      // Intakes ball
-      new IntakeCmdForGivenTime(m_intake, 0.5, 2),
-    
+        new IntakeCmdForGivenTime(m_intake, 0.5, 2)
+        ),
+
+      new IntakeCmdForGivenTime(m_intake, 0.5, 0.5),
+
       // Drives backward
       new DriveStraightGivenDistance(0.5, -60, m_driveTrain),
 
@@ -54,12 +56,19 @@ public class Position4AutonStale extends SequentialCommandGroup {
       // Shoots ball from middle of tarmac
       new UpperShootFromMiddleTarmac(m_indexer, m_shooter),
 
-      // turns and drives straight to get ball
+      // turns
       new TurnNAngle(0.5, 57.4, m_driveTrain),
-      new DriveStraightGivenDistance(0.5, 87, m_driveTrain),
 
+      // drives straight and intakes
+      new ParallelDeadlineGroup(
+        new DriveStraightGivenDistance(0.5, 87, m_driveTrain),
+        new IntakeCmdForGivenTime(m_intake, 0.5, 2)
+      ),
+
+      new IntakeCmdForGivenTime(m_intake, 0.5, 0.5),
+
+      
       // intakes ball and drives backwards
-      new IntakeCmdForGivenTime(m_intake, 0.5, 2),
       new DriveStraightGivenDistance(0.5, -87, m_driveTrain),
 
       // turns left to face hub

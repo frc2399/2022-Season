@@ -62,13 +62,10 @@ public class Shifter extends SubsystemBase {
 	 * Gets value of Solenoid for testing purposes
 	 * @return
 	 */
-	// public boolean getShifterHotSolenoid() {
-	// 	return shifter.get();
-	// }
-	
-	// public boolean getShifterDangerousSolenoid() {
-	// 	return shifterDangerousSolenoid.get();
-	// }
+	public boolean isHighSpeed() {
+		return shifter.get() == Value.kForward;
+	}
+
 
 	/**
 	 * Default state of subsystem is neither hot nor dangerous

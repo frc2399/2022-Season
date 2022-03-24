@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase {
   private double topSetpoint;
   private double bottomSetpoint;
   // private static final double RANGE = 650;
-  private static final double RANGE_PERCENT = .05;
+  private static final double RANGE_PERCENT = .02;
 
   static double calculatedOptimalTopSpeed;
   static double calculatedOptimalBottomSpeed;
