@@ -49,7 +49,9 @@ public class Position3Auton extends SequentialCommandGroup {
       // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
       //new PointAndShoot(m_driveTrain, m_shooter, m_indexer)
       new DriveStraightGivenDistance(0.5, -38, m_driveTrain),
-      RobotContainer.upperShootFromFender
+      //RobotContainer.upperShootFromFender
+      new UpperShootFromFender(m_indexer, m_shooter)
+
     );
   }
 }

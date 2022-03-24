@@ -115,7 +115,7 @@ public class RobotContainer {
             () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
-    );
+    
 
     
     
@@ -125,9 +125,7 @@ public class RobotContainer {
     private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
     private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
 
-    private static ParallelCommandGroup defaultIntake = new ParallelCommandGroup(
-        new RetractIntakeArm(m_intake),
-        new IntakeCmd(m_intake, 0));
+    private static Command defaultIntake = new IntakeCmd(m_intake, 0);
 
     // Indexer
     private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
@@ -341,6 +339,7 @@ public class RobotContainer {
         
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
              intakeTrigger.whileActiveContinuous(collectBall);
+             intakeTrigger.whenInactive(noCollectBall);
 
         
 

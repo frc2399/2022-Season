@@ -58,7 +58,8 @@ public class JellyStrawberryAuton extends SequentialCommandGroup {
         //new ShootForNSeconds(m_shooter, Constants.ShooterConstants.SHOOTER_SPEED, Constants.ShooterConstants.SHOOTER_SPEED, 0.5),
         //new PointAndShoot(m_driveTrain, m_shooter, m_indexer)
         new DriveStraightGivenDistance(0.5, -38, m_driveTrain),
-        RobotContainer.upperShootFromFender
+        //RobotContainer.upperShootFromFender
+        new UpperShootFromFender(m_indexer, m_shooter)
      
     );
   }
