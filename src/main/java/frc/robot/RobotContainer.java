@@ -114,6 +114,10 @@ public class RobotContainer {
     private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
     private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
 
+    private static ParallelCommandGroup defaultIntake = new ParallelCommandGroup(
+        new RetractIntakeArm(m_intake),
+        new IntakeCmd(m_intake, 0));
+
     // Indexer
     private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
     private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer, -IndexerConstants.INDEXERSPEED);
@@ -265,14 +269,13 @@ public class RobotContainer {
                 () -> -driveTurnControls.getDrive(),
                 () -> driveTurnControls.getTurn()));
 
+        m_intake.setDefaultCommand(defaultIntake);
         m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
         m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
         m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
         m_climber.setDefaultCommand(new StopClimber(m_climber));
 
         m_shifter.setShifterHighTorque();
-
-        m_intake.retractArm();
 
         // Shuffleboard.getTab("Robot").add("Index and Shoot", new
         // SequentialCommandGroup(
@@ -306,7 +309,8 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.RIGHT_TRIGGER).whenPressed(pointAndShootCmd);
+        Trigger ultimateCmdTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+             ultimateCmdTrigger.whileActiveContinuous(pointAndShootCmd);
         // WE DISABLED FOR SAFETY WHEN TESTING
         // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
@@ -318,7 +322,6 @@ public class RobotContainer {
         
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
              intakeTrigger.whileActiveContinuous(collectBall);
-             intakeTrigger.whenInactive(noCollectBall);
 
         
 
