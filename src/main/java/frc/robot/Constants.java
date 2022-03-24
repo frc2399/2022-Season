@@ -150,10 +150,12 @@ public class Constants {
         public static final double TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 2995;
 
         public static final double SHOOTER_KP = .0003;//1.875;
-        public static final double SHOOTER_KI = 0;//0.006;
+        public static final double SHOOTER_KI = 0.000001;//0.006;
+        //0.000001
         public static final double SHOOTER_KD = 0.0003;//52.5;
         public static final double SHOOTER_KF = 0.00023; //0.15;
-        public static final double SHOOTER_KIZ = 0;
+        public static final double SHOOTER_KIZ = 250;
+        //250
         public static final double SHOOTER_K_MAX_OUTPUT = 1;
         public static final double SHOOTER_K_MIN_OUTPUT = 0;
         public static final double SHOOTER_MAX_RPM = 5700;
