@@ -60,7 +60,7 @@ public class Shooter extends SubsystemBase {
   // ? - don't know if these are right/go with sparks
   private double topSetpoint;
   private double bottomSetpoint;
-  private static final double RANGE = 50;
+  private static final double RANGE = 650;
 
   static double calculatedOptimalTopSpeed;
   static double calculatedOptimalBottomSpeed;

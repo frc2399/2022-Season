@@ -29,7 +29,9 @@ public class Constants {
         public static final double BUTTERY_FOLLOWING_SPEED = 0.035;
 
         // encoder 
-        public static final double REVOLUTION_TO_INCH_CONVERSION = 2.35;
+       public static final double HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION = 2.317175948;
+       public static final double HIGH_SPEED_REVOLUTION_TO_INCH_CONVERSION = 1.048247093;
+
 
         public static final double TURN_TO_HUB_KP = 0.005;
     }
@@ -38,25 +40,25 @@ public class Constants {
         // joystick ports
         public static final int JOYSTICK_PORT = 1;
 
-        public static final int FORWARD_JOYSTICK_INVERT = 1;
+        public static final int FORWARD_JOYSTICK_INVERT = 1;    
         public static final int TURN_JOYSTICK_INVERT = 1;
       
 
         public static final int INTAKE_ARM_RETRACT = 11; 
         public static final int INTAKE_ARM_EXTEND = 12; 
-        public static final int INTAKE_BACK = 6;
+        //public static final int INTAKE_BACK = 6;
 
         public static final int SHOOTER_BTN = 3; 
 
-        public static final int INDEXER = 9;
+        //public static final int INDEXER = 9;
 
-        public static final int INDEXER_FWD = 7;
-        public static final int INDEXER_BACK = 8;
+        public static final int INDEXER_FWD = 6;
+        public static final int INDEXER_BACK = 4;
 
         // public static final int TURN_TO_N = 12; // get rid of this eventually
 
-        public static final int CLIMBER_UP = 9;
-        public static final int CLIMBER_DOWN = 10;
+        public static final int CLIMBER_UP = 5;
+        public static final int CLIMBER_DOWN = 3;
 
     } 
 
@@ -133,9 +135,10 @@ public class Constants {
         public static final int BOTTOM_MOTOR_ID = 9;
 
         public static final double SHOOTER_SPEED = 0.06;
-
-        public static final double TOP_SETPOINT = 700;
-        public static final double BOTTOM_SETPOINT = 1000;
+ 
+        public static final double SETPOINT_RATIO = 2.7;
+        public static final double BOTTOM_SETPOINT = 2100;
+        public static final double TOP_SETPOINT = BOTTOM_SETPOINT * SETPOINT_RATIO;
 
         public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 1000;
         public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 1000;

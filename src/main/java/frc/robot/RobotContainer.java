@@ -12,12 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.XboxConstants;
@@ -71,12 +73,16 @@ public class RobotContainer {
     private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
     private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
 
+    // Robot
+    private static InstantCommand killCommand = new InstantCommand(() -> CommandScheduler.getInstance().cancelAll());
+
+
     // Shooter 
     private static InstantCommand startShooter = new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
     private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
 
     private  static Command shoot = new SequentialCommandGroup(
-        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.5),
+        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
@@ -102,13 +108,15 @@ public class RobotContainer {
         new IndexerBackCmd(m_indexer, 0.5),
         new IntakeCmd(m_intake, -IntakeConstants.INTAKESPEED));
     
-    
-    
 
     // Intake
     // private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
     private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
     private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
+
+    private static ParallelCommandGroup defaultIntake = new ParallelCommandGroup(
+        new RetractIntakeArm(m_intake),
+        new IntakeCmd(m_intake, 0));
 
     // Indexer
     private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
@@ -153,6 +161,8 @@ public class RobotContainer {
     private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_air = new DoNothingAuton();
+    private static Command m_banana = new DriveOutAuton(m_driveTrain);
 
     // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
@@ -184,6 +194,8 @@ public class RobotContainer {
         m_chooser.addOption("Position 3 (jelly)", m_jelly);
         m_chooser.addOption("Position 4 (stale bread)", m_stale);
         m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
+        m_chooser.addOption("Do nothing (air)", m_air);
+        m_chooser.addOption("Drive out tarmac (banana)", m_banana);
 
         // Put the chooser on the dashboard
 
@@ -257,14 +269,13 @@ public class RobotContainer {
                 () -> -driveTurnControls.getDrive(),
                 () -> driveTurnControls.getTurn()));
 
+        m_intake.setDefaultCommand(defaultIntake);
         m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
         m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
         m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
         m_climber.setDefaultCommand(new StopClimber(m_climber));
 
         m_shifter.setShifterHighTorque();
-
-        m_intake.retractArm();
 
         // Shuffleboard.getTab("Robot").add("Index and Shoot", new
         // SequentialCommandGroup(
@@ -291,26 +302,33 @@ public class RobotContainer {
      */
 
     private void configureButtonBindings() {
+        // Robot
+        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(killCommand);
+
         // Drive train
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
-    
+
+        Trigger ultimateCmdTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
+             ultimateCmdTrigger.whileActiveContinuous(pointAndShootCmd);
         // WE DISABLED FOR SAFETY WHEN TESTING
         // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
         // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
         // Intake
-        new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_BACK).whileHeld(intakeBackCmd);
+        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_BACK).whileHeld(intakeBackCmd);
         // Sets the intake command to the left trigger
         
-        // Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
-        //     intakeTrigger.whileActiveContinuous(collectBall);
+        Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
+             intakeTrigger.whileActiveContinuous(collectBall);
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.LEFT_STICK_PUSH).whenPressed(collectBall);
-        new JoystickButton(XBOX, XboxMappingToJoystick.RIGHT_STICK_PUSH).whenPressed(noCollectBall);
+        
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
+        // new JoystickButton(XBOX, XboxMappingToJoystick.LEFT_STICK_PUSH).whenPressed(collectBall);
+        // new JoystickButton(XBOX, XboxMappingToJoystick.RIGHT_STICK_PUSH).whenPressed(noCollectBall);
+
+        //new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
 
         // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
         // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
@@ -323,9 +341,9 @@ public class RobotContainer {
         // new JoystickButton(XBOX, XboxConstants.POINT_AND_SHOOT).whenPressed(m_pointAndShoot);
 
         //turning
-        new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CCW).whenPressed(m_turnRight);
-        new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CW).whenPressed(m_turnLeft);
-        new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
+        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CCW).whenPressed(m_turnRight);
+        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CW).whenPressed(m_turnLeft);
+        // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
         // Climber
         new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whileHeld(retractClimberCmd);
@@ -333,10 +351,10 @@ public class RobotContainer {
 
         // Shooter
         new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
-        new JoystickButton(XBOX, XboxMappingToJoystick.BACK_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.START_BUTTON).whenPressed(upperShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
 
-        new JoystickButton(XBOX, XboxConstants.SPIT_OUT_BALL).whileHeld(spitOutBall);
+        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
 
     }
 
