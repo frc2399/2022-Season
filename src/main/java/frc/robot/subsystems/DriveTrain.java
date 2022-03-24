@@ -177,7 +177,7 @@ public class DriveTrain extends SubsystemBase {
             field = new Field2d();
 
             // Ethan is suspicious and thinks we need to re-enable this but it doesn't matter
-            // SmartDashboard.putData("Field", field);
+            SmartDashboard.putData("Field", field);
 
             field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
         }

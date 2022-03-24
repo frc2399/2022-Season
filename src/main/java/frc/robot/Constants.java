@@ -149,12 +149,18 @@ public class Constants {
         public static final double TARMAC_UPPER_SHOOTER_TOP_SPEED = 1198;
         public static final double TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 2995;
 
+        public static final double MIDDLE_AUTON_TARMAC_UPPER_SHOOTER_TOP_SPEED = 907.5;
+        public static final double MIDDLE_AUTON_TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 3025;
+
         public static final double SHOOTER_KP = .0003;//1.875;
         public static final double SHOOTER_KI = 0.000001;//0.006;
+        //public static final double SHOOTER_KI = 0.0;//0.006;
         //0.000001
         public static final double SHOOTER_KD = 0.0003;//52.5;
         public static final double SHOOTER_KF = 0.00023; //0.15;
         public static final double SHOOTER_KIZ = 250;
+        //public static final double SHOOTER_KIZ = 0;
+
         //250
         public static final double SHOOTER_K_MAX_OUTPUT = 1;
         public static final double SHOOTER_K_MIN_OUTPUT = 0;
