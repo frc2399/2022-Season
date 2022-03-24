@@ -138,7 +138,7 @@ public class RobotContainer {
     private static ParallelCommandGroup collectBall = new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake),
         new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED),
-        new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED));
+        new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED)); 
 
     private static ParallelCommandGroup noCollectBall = new ParallelCommandGroup(
         new RetractIntakeArm(m_intake),
@@ -368,7 +368,7 @@ public class RobotContainer {
         new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whileHeld(extendClimberCmd);
 
         // Shooter
-        new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
+        // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
         new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
 
