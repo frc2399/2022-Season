@@ -34,6 +34,8 @@ public class Constants {
 
 
         public static final double TURN_TO_HUB_KP = 0.005;
+
+        public static final double TURN_SENSITIVITY = 0.6;
     }
 
     public static final class JoystickConstants {
@@ -74,7 +76,6 @@ public class Constants {
         public static final int LEFT_BUMPER = 5;
         public static final int RIGHT_BUMPER = 6;
         public static final int A_BUTTON = 1;
-
         public static final int B_BUTTON = 2;
         public static final int X_BUTTON = 3;
         public static final int Y_BUTTON = 4;
@@ -120,7 +121,7 @@ public class Constants {
 
     public static final class IntakeConstants {
         public static final int INTAKE_MOTOR_ID = 1;
-        public static final double INTAKESPEED = 0.5;
+        public static final double INTAKESPEED = 0.75;
         public static final double INTAKE_SLEW = 5;
 
         //intake arm
@@ -143,8 +144,8 @@ public class Constants {
         public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 1000;
         public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 1000;
 
-        public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 600;
-        public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 900;
+        public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 575;
+        public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 2875;
 
         public static final double TARMAC_UPPER_SHOOTER_TOP_SPEED = 1198;
         public static final double TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 2995;
@@ -153,13 +154,13 @@ public class Constants {
         public static final double MIDDLE_AUTON_TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 3025;
 
         public static final double SHOOTER_KP = .0003;//1.875;
-        public static final double SHOOTER_KI = 0.000001;//0.006;
-        //public static final double SHOOTER_KI = 0.0;//0.006;
+        //public static final double SHOOTER_KI = 0.000001;//0.006;
+        public static final double SHOOTER_KI = 0.0;//0.006;
         //0.000001
         public static final double SHOOTER_KD = 0.0003;//52.5;
         public static final double SHOOTER_KF = 0.00023; //0.15;
-        public static final double SHOOTER_KIZ = 250;
-        //public static final double SHOOTER_KIZ = 0;
+        //public static final double SHOOTER_KIZ = 250;
+        public static final double SHOOTER_KIZ = 0;
 
         //250
         public static final double SHOOTER_K_MAX_OUTPUT = 1;

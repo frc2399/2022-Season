@@ -4,7 +4,9 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.XboxConstants;
+import frc.robot.subsystems.Shifter;
 
 public class DriveTurnControls {
 
@@ -43,7 +45,14 @@ public class DriveTurnControls {
         if (Math.abs(val) <= XboxConstants.TURN_DEADBAND) {
             val = 0.0;
         }
-        val = val * XboxConstants.TURN_JOYSTICK_INVERT;
+        if (RobotContainer.m_shifter.isHighSpeed())
+        {
+            val = val * XboxConstants.TURN_JOYSTICK_INVERT * DriveConstants.TURN_SENSITIVITY;
+        }
+        else
+        {
+            val = val * XboxConstants.TURN_JOYSTICK_INVERT;
+        }
         driveLimiter.calculate(val);
         // val = Math.pow(val, 3);
         SmartDashboard.putNumber("new value", val);
