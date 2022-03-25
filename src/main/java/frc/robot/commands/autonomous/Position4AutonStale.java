@@ -62,10 +62,14 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
       // drives straight and intakes
       new ParallelDeadlineGroup(
         new DriveStraightGivenDistance(0.5, 87, m_driveTrain),
-        new IntakeCmdForGivenTime(m_intake, 0.5, 2)
+        new IntakeCmdForGivenTime(m_intake, 0.5, 2),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 0.5)
       ),
 
-      new IntakeCmdForGivenTime(m_intake, 0.5, 0.5),
+      new ParallelCommandGroup(
+        new IntakeCmdForGivenTime(m_intake, 0.5, 0.5),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 0.5)
+      ),
 
       
       // intakes ball and drives backwards

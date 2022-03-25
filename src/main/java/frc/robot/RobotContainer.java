@@ -319,7 +319,7 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
 
         Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
-             upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromTarmac);
+             upperShootFromTarmacTrigger.whileActiveContinuous(lowerShootFromFender);
         // WE DISABLED FOR SAFETY WHEN TESTING
         // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
@@ -362,7 +362,7 @@ public class RobotContainer {
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
         
