@@ -33,7 +33,7 @@ public class PopAndDriveOutAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new UpperShootFromFender(m_indexer, m_shooter),
+        new UpperShootFromFender(m_indexer, m_shooter, m_driveTrain),
         new DriveStraightGivenDistance(0.25, 95, m_driveTrain)
     );
   }

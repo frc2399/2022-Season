@@ -54,8 +54,7 @@ public class Position2AutonPB extends SequentialCommandGroup {
 
         new DriveStraightGivenDistance(0.25, -51, m_driveTrain),
         //RobotContainer.upperShootFromFender
-        new UpperShootFromFender(m_indexer, m_shooter)
-
+        new UpperShootFromFender(m_indexer, m_shooter, m_driveTrain)
     
     
     
