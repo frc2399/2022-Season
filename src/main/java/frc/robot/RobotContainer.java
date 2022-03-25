@@ -6,6 +6,7 @@ import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
@@ -192,7 +193,11 @@ public class RobotContainer {
         PortForwarder.add(5804, "10.23.99.11", 5804);
         PortForwarder.add(5805, "10.23.99.11", 5805);
         
-       CameraServer.startAutomaticCapture();
+        // camera not in simulator to make it not crash
+        if (RobotBase.isReal())
+        {
+            CameraServer.startAutomaticCapture();
+        }
 
         // Add commands to the autonomous command chooser
         m_chooser.addOption("Index and Shoot Both", m_bread);
@@ -362,7 +367,7 @@ public class RobotContainer {
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
         

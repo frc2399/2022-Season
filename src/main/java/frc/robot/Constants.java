@@ -151,8 +151,8 @@ public class Constants {
         // public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 1100;
         // public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 650;
 
-        public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 575;
-        public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 2875;
+        public static final double FENDER_UPPER_SHOOTER_TOP_SPEED = 575 * 1.1;
+        public static final double FENDER_UPPER_SHOOTER_BOTTOM_SPEED = 2875 * 1.1;
 
         public static final double TARMAC_UPPER_SHOOTER_TOP_SPEED = 1198;
         public static final double TARMAC_UPPER_SHOOTER_BOTTOM_SPEED = 2995;

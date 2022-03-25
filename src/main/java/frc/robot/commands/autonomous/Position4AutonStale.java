@@ -73,17 +73,23 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
 
       
       // intakes ball and drives backwards
-      new DriveStraightGivenDistance(0.5, -87, m_driveTrain),
-
+      new ParallelDeadlineGroup(
+        new SequentialCommandGroup(
+          new DriveStraightGivenDistance(0.5, -87, m_driveTrain),
+          new TurnNAngle(0.5, -57.4, m_driveTrain),
+          new DriveStraightGivenDistance(0.5, -38, m_driveTrain)
+      ),
+        new IntakeCmdForGivenTime(m_intake, 0.5, 0.5),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
+        
+      ),
       // turns left to face hub
-      new TurnNAngle(0.5, -57.4, m_driveTrain),
 
       // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
       //new PointAndShoot(m_driveTrain, m_shooter, m_indexer)
 
       // drive backward to line up with fender
-      new DriveStraightGivenDistance(0.5, -38, m_driveTrain),
       //RobotContainer.upperShootFromFender
 
       // Shoot from fender
