@@ -192,7 +192,7 @@ public class RobotContainer {
         PortForwarder.add(5804, "10.23.99.11", 5804);
         PortForwarder.add(5805, "10.23.99.11", 5805);
         
-        CameraServer.startAutomaticCapture();
+       CameraServer.startAutomaticCapture();
 
         // Add commands to the autonomous command chooser
         m_chooser.addOption("Index and Shoot Both", m_bread);

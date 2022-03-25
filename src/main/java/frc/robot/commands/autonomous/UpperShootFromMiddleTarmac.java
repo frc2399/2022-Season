@@ -3,6 +3,7 @@ package frc.robot.commands.autonomous;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
@@ -34,8 +35,9 @@ public class UpperShootFromMiddleTarmac extends SequentialCommandGroup {
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.MIDDLE_AUTON_TARMAC_UPPER_SHOOTER_TOP_SPEED, ShooterConstants.MIDDLE_AUTON_TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
-        );
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 0.3),
+        new WaitCommand(0.5),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 1)        );
   }
 }
 
