@@ -38,21 +38,21 @@ public class Position2AutonPB extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake), 
-        new DriveStraightGivenDistance(0.25, 67.5, m_driveTrain),
+        new DriveStraightGivenDistance(0.5, 67.5, m_driveTrain),
         new IntakeCmdForGivenTime(m_intake, 0.25, 2)
       ),
 
         new TurnNAngle(0.25, -90, m_driveTrain),
-        new DriveStraightGivenDistance(0.25, 34, m_driveTrain),
+        new DriveStraightGivenDistance(0.5, 34, m_driveTrain),
         new TurnNAngle(0.25, 90, m_driveTrain),
-        new DriveStraightGivenDistance(0.25, -91.127, m_driveTrain),
+        new DriveStraightGivenDistance(0.5, -91.127, m_driveTrain),
 
         new ParallelCommandGroup(
             new TurnNAngle(0.25, -45.6, m_driveTrain),
             new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_UPPER_SHOOTER_TOP_SPEED, ShooterConstants.FENDER_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter)
         ),
-
-        new DriveStraightGivenDistance(0.25, -51, m_driveTrain),
+ 
+        new DriveStraightGivenDistance(0.5, -51, m_driveTrain),
         //RobotContainer.upperShootFromFender
         new UpperShootFromFender(m_indexer, m_shooter, m_driveTrain)
     

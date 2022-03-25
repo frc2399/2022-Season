@@ -34,7 +34,7 @@ public class UpperShootFromFender extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      new DriveStraightGivenDistance(0.1, 10, m_driveTrain).withTimeout(1),
+      new DriveStraightGivenDistance(0.25, 10, m_driveTrain).withTimeout(1),
       new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
