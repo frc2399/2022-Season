@@ -42,15 +42,15 @@ public class Position3AutonJELLY extends SequentialCommandGroup {
       new IntakeCmdForGivenTime(m_intake, 0.5, 2),
       new DriveStraightGivenDistance(0.5, -65, m_driveTrain),
       new ParallelCommandGroup (
-        new TurnNAngle(0.5, -22.5, m_driveTrain),
-        new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
+        new TurnNAngle(0.5, -22.5, m_driveTrain)
+        // new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter)
       ),
       // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
       // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
       //new PointAndShoot(m_driveTrain, m_shooter, m_indexer)
       new DriveStraightGivenDistance(0.5, -38, m_driveTrain),
       //RobotContainer.upperShootFromFender
-      new UpperShootFromFender(m_indexer, m_shooter)
+      new LowerShootFromFender(m_indexer, m_shooter)
 
     );
   }
