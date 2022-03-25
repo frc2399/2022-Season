@@ -19,7 +19,7 @@ import frc.robot.subsystems.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Position2Auton extends SequentialCommandGroup {
+public class Position2AutonPB extends SequentialCommandGroup {
   /** Creates a new IntakeBallShootBothP1. */
 
   private final DriveTrain m_driveTrain;
@@ -27,7 +27,7 @@ public class Position2Auton extends SequentialCommandGroup {
   private final Indexer m_indexer;
   private final Shooter m_shooter;
 
-  public Position2Auton(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
+  public Position2AutonPB(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
     m_driveTrain = dt;
     m_intake = it;
     m_indexer = id;

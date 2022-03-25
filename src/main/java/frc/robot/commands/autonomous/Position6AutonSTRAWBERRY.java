@@ -20,7 +20,7 @@ import frc.robot.subsystems.*;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class JellyStrawberryAuton extends SequentialCommandGroup {
+public class Position6AutonSTRAWBERRY extends SequentialCommandGroup {
   /** Creates a new IntakeBallShootBothP1. */
 
   private final DriveTrain m_driveTrain;
@@ -28,7 +28,7 @@ public class JellyStrawberryAuton extends SequentialCommandGroup {
   private final Shooter m_shooter;
   private final Indexer m_indexer;
 
-  public JellyStrawberryAuton(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
+  public Position6AutonSTRAWBERRY(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
     m_driveTrain = dt;
     m_intake = it;
     m_shooter = sh;

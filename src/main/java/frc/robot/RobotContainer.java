@@ -164,12 +164,12 @@ public class RobotContainer {
         new WaitCommand(2),
         new TurnToNAngle(0, m_driveTrain));
 
-    private static Command m_bread = new IntakeBallShootBothP1(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_PB = new Position2Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_bread = new Position1AutonBREAD(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_PB = new Position2AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_jellyStrawberryAuton = new Position6AutonSTRAWBERRY(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_jelly = new Position3AutonJELLY(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_stale = new Position4AutonSTALE(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_crunchy = new Position5AutonCRUNCHY(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_air = new DoNothingAuton();
     private static Command m_banana = new DriveOutAuton(m_driveTrain);
 
