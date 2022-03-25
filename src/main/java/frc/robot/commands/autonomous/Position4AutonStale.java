@@ -83,7 +83,7 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
       //RobotContainer.upperShootFromFender
 
       // Shoot from fender
-      new UpperShootFromFender(m_indexer, m_shooter)
+      new LowerShootFromFender(m_indexer, m_shooter)
 
     );
   }
