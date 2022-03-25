@@ -50,7 +50,10 @@ public class DriveTurnControls {
      
         driveLimiter.calculate(val);
         // val = Math.pow(val, 3);
+
+        val = val * DriveConstants.TURN_SENSITIVITY;
         SmartDashboard.putNumber("new value", val);
+        
         return val;
     }
 
