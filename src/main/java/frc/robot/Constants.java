@@ -35,7 +35,11 @@ public class Constants {
 
         public static final double TURN_TO_HUB_KP = 0.005;
 
-        public static final double TURN_SENSITIVITY = 0.6;
+        // No turning sensitivity
+        public static final double MAX_TURN_SPEED = 1;
+
+        public static final double TURN_SENSITIVITY = 0;
+
     }
 
     public static final class JoystickConstants {

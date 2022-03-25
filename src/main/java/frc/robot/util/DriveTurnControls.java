@@ -47,11 +47,14 @@ public class DriveTurnControls {
         }
         
         val = val * XboxConstants.TURN_JOYSTICK_INVERT;
+
+        double a = DriveConstants.TURN_SENSITIVITY;
+        val = ((1 - a) * val) + (a * Math.pow(val, 3));
      
         driveLimiter.calculate(val);
         // val = Math.pow(val, 3);
 
-        val = val * DriveConstants.TURN_SENSITIVITY;
+        val = val * DriveConstants.MAX_TURN_SPEED;
         SmartDashboard.putNumber("new value", val);
         
         return val;
