@@ -14,6 +14,7 @@ import frc.robot.commands.indexer.IndexerCmdForGivenTime;
 import frc.robot.commands.intake.IntakeCmdForGivenTime;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.commands.robot.PointAndShoot;
+import frc.robot.commands.shooter.SetShootPowerCmd;
 import frc.robot.subsystems.*;
 
 public class UpperShootFromMiddleTarmac extends SequentialCommandGroup {
@@ -37,7 +38,8 @@ public class UpperShootFromMiddleTarmac extends SequentialCommandGroup {
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 0.3),
         new WaitCommand(0.5),
-        new IndexerCmdForGivenTime(m_indexer, 0.5, 1)        );
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 1)
+      );
   }
 }
 

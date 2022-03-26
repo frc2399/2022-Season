@@ -14,6 +14,7 @@ import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
 import frc.robot.commands.intake.IntakeCmdForGivenTime;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
+import frc.robot.commands.shooter.SetShootPowerCmd;
 import frc.robot.subsystems.*;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -55,7 +56,7 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
       ),
       // Shoots ball from middle of tarmac
       new UpperShootFromMiddleTarmac(m_indexer, m_shooter),
-
+      new InstantCommand(() -> m_shooter.setMotors(0, 0)),
       // turns
       new TurnNAngle(0.5, 57.4, m_driveTrain),
 
@@ -76,8 +77,9 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
       new ParallelDeadlineGroup(
         new SequentialCommandGroup(
           new DriveStraightGivenDistance(0.5, -87, m_driveTrain),
-          new TurnNAngle(0.5, -57.4, m_driveTrain),
-          new DriveStraightGivenDistance(0.5, -38, m_driveTrain)
+          new TurnNAngle(0.5, -57.4, m_driveTrain)
+          // for in case the upper middle tarmac shot is not good
+          //new DriveStraightGivenDistance(0.5, -38, m_driveTrain)
       ),
         new IntakeCmdForGivenTime(m_intake, 0.5, 0.5),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
@@ -93,7 +95,7 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
       //RobotContainer.upperShootFromFender
 
       // Shoot from fender
-      new LowerShootFromFender(m_indexer, m_shooter)
+      new UpperShootFromMiddleTarmac(m_indexer, m_shooter)
 
     );
   }
