@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
+import frc.robot.commands.drivetrain.DriveStraightGivenDistance;
 import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
 import frc.robot.commands.intake.IntakeCmdForGivenTime;
@@ -35,10 +36,10 @@ public class Position1AutonBREAD extends SequentialCommandGroup {
     addCommands(
       new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake), 
-        new DriveForwardGivenDistance(0.5, 40, m_driveTrain),
+        new DriveStraightGivenDistance(0.5, 40, m_driveTrain),
         new IntakeCmdForGivenTime(m_intake, 0.5, 2)
       ),
-      new DriveForwardGivenDistance(0.5, -54.96, m_driveTrain),
+      new DriveStraightGivenDistance(0.5, -54.96, m_driveTrain),
 
      new ParallelCommandGroup (
         new TurnNAngle(0.5, 22.5, m_driveTrain),
