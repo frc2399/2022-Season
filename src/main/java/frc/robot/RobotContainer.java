@@ -164,6 +164,9 @@ public class RobotContainer {
     private static Command m_crunchy = new Position5AutonCRUNCHY(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_air = new DoNothingAuton();
     private static Command m_banana = new DriveOutAuton(m_driveTrain);
+    private static Command m_ploop = new PloopAndDriveOutAuton(m_driveTrain, m_shooter, m_indexer);
+    private static Command m_pop = new PopAndDriveOutAuton(m_driveTrain, m_shooter, m_indexer);
+
 
     // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
@@ -210,6 +213,8 @@ public class RobotContainer {
         m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
         m_chooser.addOption("Do nothing (air)", m_air);
         m_chooser.addOption("Drive out tarmac (banana)", m_banana);
+        m_chooser.addOption("Ploop and drive out", m_ploop);
+        m_chooser.addOption("Pop and drive out", m_pop);
 
         // Put the chooser on the dashboard
 
