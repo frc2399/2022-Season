@@ -91,6 +91,13 @@ public class RobotContainer {
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
+    private  static Command maxShoot = new SequentialCommandGroup(
+        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
+        new InstantCommand(
+            () -> m_shooter.setSpeedWithPID(ShooterConstants.MAX_SETPOINT,ShooterConstants.MAX_SETPOINT), m_shooter),
+        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+
     // TODO: Change speed
     public static Command lowerShootFromFender = new LowerShootFromFender(m_indexer, m_shooter);
 
@@ -373,6 +380,7 @@ public class RobotContainer {
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
         new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
+        new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
         

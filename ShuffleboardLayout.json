@@ -10,7 +10,87 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "titleType": 0,
-        "tiles": {}
+        "tiles": {
+          "0,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Climber Slew Rate",
+              "_title": "Climber Slew Rate"
+            }
+          },
+          "1,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/hub error!!!!!!",
+              "_title": "hub error!!!!!!"
+            }
+          },
+          "2,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/drive slew",
+              "_title": "drive slew"
+            }
+          },
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Photon Limelight hasTargets: ",
+              "_title": "Photon Limelight hasTargets: ",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/turn slew",
+              "_title": "turn slew"
+            }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/value",
+              "_title": "value"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/new value",
+              "_title": "new value"
+            }
+          }
+        }
       }
     },
     {
@@ -23,13 +103,248 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "titleType": 0,
-        "tiles": {}
+        "tiles": {
+          "0,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Climber",
+              "_title": "Climber",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "2,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Ungrouped",
+              "_title": "Ungrouped",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PIDController[1]",
+                  "_title": "PIDController[1]"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DigitalInput[0]/Value",
+                  "_title": "DigitalInput[0]/Value",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/SwitchableChannel",
+                  "_title": "PowerDistribution[0]/SwitchableChannel",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[3,2]/Value",
+                  "_title": "DoubleSolenoid[3,2]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Voltage",
+                  "_title": "PowerDistribution[0]/Voltage"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan10",
+                  "_title": "PowerDistribution[0]/Chan10"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan11",
+                  "_title": "PowerDistribution[0]/Chan11"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan12",
+                  "_title": "PowerDistribution[0]/Chan12"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan13",
+                  "_title": "PowerDistribution[0]/Chan13"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan14",
+                  "_title": "PowerDistribution[0]/Chan14"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan15",
+                  "_title": "PowerDistribution[0]/Chan15"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan16",
+                  "_title": "PowerDistribution[0]/Chan16"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan17",
+                  "_title": "PowerDistribution[0]/Chan17"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan18",
+                  "_title": "PowerDistribution[0]/Chan18"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan19",
+                  "_title": "PowerDistribution[0]/Chan19"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DoubleSolenoid[3,0]/Value",
+                  "_title": "DoubleSolenoid[3,0]/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan20",
+                  "_title": "PowerDistribution[0]/Chan20"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan22",
+                  "_title": "PowerDistribution[0]/Chan22"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan21",
+                  "_title": "PowerDistribution[0]/Chan21"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan23",
+                  "_title": "PowerDistribution[0]/Chan23"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan0",
+                  "_title": "PowerDistribution[0]/Chan0"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan1",
+                  "_title": "PowerDistribution[0]/Chan1"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan3",
+                  "_title": "PowerDistribution[0]/Chan3"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan2",
+                  "_title": "PowerDistribution[0]/Chan2"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan5",
+                  "_title": "PowerDistribution[0]/Chan5"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan9",
+                  "_title": "PowerDistribution[0]/Chan9"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan6",
+                  "_title": "PowerDistribution[0]/Chan6"
+                },
+                {
+                  "_type": "Gyro",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/navX-Sensor[4]",
+                  "_title": "navX-Sensor[4]",
+                  "Visuals/Major tick spacing": 45.0,
+                  "Visuals/Starting angle": 180.0,
+                  "Visuals/Show tick mark ring": true,
+                  "Visuals/Counter clockwise": false
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan7",
+                  "_title": "PowerDistribution[0]/Chan7"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan8",
+                  "_title": "PowerDistribution[0]/Chan8"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/Chan4",
+                  "_title": "PowerDistribution[0]/Chan4"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistribution[0]/TotalCurrent",
+                  "_title": "PowerDistribution[0]/TotalCurrent"
+                }
+              ]
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Shifter",
+              "_title": "Shifter",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Intake",
+              "_title": "Intake",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "8,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/DriveTrain",
+              "_title": "DriveTrain",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          }
+        }
       }
     }
   ],
   "windowGeometry": {
-    "x": -101.0,
-    "y": -948.0,
+    "x": 46.0,
+    "y": 91.0,
     "width": 1440.0,
     "height": 801.0
   }
