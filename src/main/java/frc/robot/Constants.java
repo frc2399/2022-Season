@@ -67,6 +67,8 @@ public class Constants {
         public static final int CLIMBER_DOWN = 3;
 
         public static final int MAX_SHOOT = 7;
+        public static final int SHOOT = 8;
+        public static final int INTAKE = 9;
 
     } 
 

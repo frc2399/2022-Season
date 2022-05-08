@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.*;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.XboxConstants;
@@ -335,8 +334,9 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
 
-        Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
-             upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
+        new JoystickButton(JOYSTICK, JoystickConstants.SHOOT).whenPressed(upperShootFromTarmac);
+       // Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
+       //      upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
         // WE DISABLED FOR SAFETY WHEN TESTING
         // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
@@ -346,9 +346,10 @@ public class RobotContainer {
         // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_BACK).whileHeld(intakeBackCmd);
         // Sets the intake command to the left trigger
         
-        Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
-             intakeTrigger.whileActiveContinuous(collectBall);
-             intakeTrigger.whenInactive(noCollectBall);
+        new JoystickButton(JOYSTICK, JoystickConstants.INTAKE).whenHeld(collectBall);
+        // Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
+        //      intakeTrigger.whileActiveContinuous(collectBall);
+        //      intakeTrigger.whenInactive(noCollectBall);
 
         
 
