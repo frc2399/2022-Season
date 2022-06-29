@@ -163,7 +163,7 @@ public class PhotonLimelight extends SubsystemBase {
         System.out.println("angle!  " + angle);
       }
       else {
-        System.out.println("less than 3 targets!");
+        //System.out.println("less than 3 targets!");
       }
     
 
@@ -268,7 +268,7 @@ public class PhotonLimelight extends SubsystemBase {
     return angle;
   }
   else {
-    System.out.println("less than 3 targets!");
+    //System.out.println("less than 3 targets!");
     return 0;
   }
 

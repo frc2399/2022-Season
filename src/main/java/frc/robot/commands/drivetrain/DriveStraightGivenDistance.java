@@ -54,7 +54,7 @@ public class DriveStraightGivenDistance extends CommandBase {
         double angleError = currentAngle - startAngle;
 
         double outputSpeed = m_driveTrain.kP * distanceError;
-        outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
+        outputSpeed = MathUtil.clamp(outputSpeed, -speed, speed);
 
         double straightCorrection = DriveTrain.angleErrorPValue.getDouble(0.01) * angleError;
         straightCorrection = MathUtil.clamp(straightCorrection, -0.5 * Math.abs(outputSpeed), 0.5 * Math.abs(outputSpeed));

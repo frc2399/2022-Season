@@ -16,6 +16,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.revrobotics.CANSparkMax;
@@ -51,6 +52,23 @@ public class Shooter extends SubsystemBase {
   double kMinOutput;
   double kMaxAccel;
 
+  Double[][] arr = 
+  {
+    {4.,2875.,0.2},
+    {5.,2925.,0.2},
+    {6.,3025.,0.3},
+    {8.,2995.,0.45},
+    {9.,2995.,0.4},
+    {10.,2050.,1.},
+    {11.,1225.,3.},
+    {12.,1700.,2.},
+    {13.,1700.,2.},
+    {14.,1725.,2.},
+    {15.,1500.,3.},
+    {16.,1550.,3.5},
+    {17.,2125.,2.5}    
+  };
+
   // instantiate motor controllers
   private CANSparkMax bottomMotorController;
   private CANSparkMax topMotorController;
@@ -60,7 +78,8 @@ public class Shooter extends SubsystemBase {
   // ? - don't know if these are right/go with sparks
   private double topSetpoint;
   private double bottomSetpoint;
-  private static final double RANGE = 650;
+  // private static final double RANGE = 650;
+  private static final double RANGE_PERCENT = .02;
 
   static double calculatedOptimalTopSpeed;
   static double calculatedOptimalBottomSpeed;
@@ -72,7 +91,11 @@ public class Shooter extends SubsystemBase {
   // constructor
   public Shooter() {
 
-   
+    shooterTable = new ArrayList<List<Double>>();
+   for(Double[] row : arr) {
+      shooterTable.add(Arrays.asList(row));
+   }
+
    // Shuffleboard.getTab("Shooter").add("Stop Shooter", new DriveForwardGivenTime(0.3, 0.5, m_driveTrain));
 
     // initialize motor controllers
@@ -129,15 +152,14 @@ public class Shooter extends SubsystemBase {
 
     System.out.println("Working Directory = " + System.getProperty("user.dir"));
 
-    try {
-      shooterTable = readData("src/main/deploy/ShooterTable.csv");
+    // try {
       double[] speedsBottomTop = shootingInterpolation(5.2, shooterTable);
       System.out.println("Bottom Motor Speed: " + speedsBottomTop[0]);
       System.out.println("Top Motor Speed: " + speedsBottomTop[1]);
-    }
-    catch (IOException e) {
-      System.out.println("Can't read shooter table");
-    }
+    // }
+    // catch (IOException e) {
+    //   System.out.println("Can't read shooter table");
+    // }
 
   }
 
@@ -155,8 +177,8 @@ public class Shooter extends SubsystemBase {
     updatePIDGains();
     topVelocity.setNumber(topEncoder.getVelocity());
     bottomVelocity.setNumber(bottomEncoder.getVelocity());
-    topSpeedInRange.setBoolean(checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE));
-    bottomSpeedInRange.setBoolean(checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+    topSpeedInRange.setBoolean(checkWithinRange(topSetpoint, topEncoder.getVelocity(), (topSetpoint*RANGE_PERCENT)));
+    bottomSpeedInRange.setBoolean(checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), (bottomSetpoint*RANGE_PERCENT)));
     topSetpointEntry.setDouble(topSetpoint);
     bottomSetpointEntry.setDouble(bottomSetpoint);
   }
@@ -180,8 +202,8 @@ public class Shooter extends SubsystemBase {
 
   // Checks to see if both motors are within range of the setpoints
   public boolean correctSpeed() {
-    return (checkWithinRange(topSetpoint, topEncoder.getVelocity(), RANGE) &&
-        checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), RANGE));
+    return (checkWithinRange(topSetpoint, topEncoder.getVelocity(), (topSetpoint*RANGE_PERCENT)) &&
+        checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), (bottomSetpoint*RANGE_PERCENT)));
   }
 
   // THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART
@@ -212,47 +234,46 @@ public class Shooter extends SubsystemBase {
 //     System.out.println("Bottom Motor Speed: " + speedsBottomTop[0]);
 //     System.out.println("Top Motor Speed: " + speedsBottomTop[1]);
 
-public static List<List<Double>> readData(String file) throws IOException { 
-  List<List<Double>> content = new ArrayList<>();
-  try(BufferedReader br = new BufferedReader(new FileReader(file))) {
-      String line = "";
-      while ((line = br.readLine()) != null) {
-          List<Double> cells = new ArrayList<>();
-          for(String cell : line.split(",")) {
-              Double d = Double.parseDouble(cell);
-              cells.add(d.doubleValue());
-          }
-          content.add(cells);
-      }
-  } catch (FileNotFoundException e) {
-    //Some error logging
-  }
-  return content;
-}
+// public static List<List<Double>> readData(String file) throws IOException { 
+//   List<List<Double>> content = new ArrayList<>();
+//   try(BufferedReader br = new BufferedReader(new FileReader(file))) {
+//       String line = "";
+//       while ((line = br.readLine()) != null) {
+//           List<Double> cells = new ArrayList<>();
+//           for(String cell : line.split(",")) {
+//               Double d = Double.parseDouble(cell);
+//               cells.add(d.doubleValue());
+//           }
+//           content.add(cells);
+//       }
+//   } catch (FileNotFoundException e) {
+//     //Some error logging
+//   }
+//   return content;
+// }
 
 
 public static double[] shootingInterpolation(Double distance, List<List<Double>> values) {
   double[] speedsBottomTop = new double[2];
-  for (int i = 0; i < (values.size()); i++) {
+  for (int i = 0; i < (values.size()-1); i++) {
       if(distance > values.get(i).get(0) && distance < values.get(i+1).get(0)) {
-          double d0, d1, sb0, sb1, st0, st1;
+          double d0, d1, sb0, sb1, sr0, sr1;
           d0 = values.get(i).get(0);
           d1 = values.get(i+1).get(0);
           sb0 = values.get(i).get(1);
           sb1 = values.get(i+1).get(1);
-          st0 = values.get(i).get(2);
-          st1 = values.get(i+1).get(2);
+          sr0 = values.get(i).get(2);
+          sr1 = values.get(i+1).get(2);
           
           double sbm = (sb1-sb0)/(d1-d0);
-          double stm = (st1-st0)/(d1-d0);
+          double srm = (sr1-sr0)/(d1-d0);
           double sb = sbm * (distance - d0) + sb0;
-          double st = stm * (distance - d0) + st0;
+          double sr = srm * (distance - d0) + sr0;
           speedsBottomTop[0] = sb;
-          speedsBottomTop[1] = st;
+          speedsBottomTop[1] = sr*sb;
           break;
       }
   }
-
   return speedsBottomTop;
 }
 

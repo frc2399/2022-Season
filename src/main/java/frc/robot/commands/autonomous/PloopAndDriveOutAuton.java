@@ -33,8 +33,8 @@ public class PloopAndDriveOutAuton extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        RobotContainer.lowerShootFromFender,  
-        new DriveStraightGivenDistance(0.5, 54.96, m_driveTrain)
+        new LowerShootFromFender(m_indexer, m_shooter),  
+        new DriveStraightGivenDistance(0.25, 95, m_driveTrain)
     );
   }
 }

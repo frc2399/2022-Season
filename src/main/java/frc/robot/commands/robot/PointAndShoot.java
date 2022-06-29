@@ -27,7 +27,8 @@ public class PointAndShoot extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      // new TurnToHub(m_driveTrain),
+      
+    new TurnToHub(m_driveTrain),
   
       new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
       new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),

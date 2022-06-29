@@ -1,9 +1,12 @@
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.util.net.PortForwarder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
@@ -88,25 +91,32 @@ public class RobotContainer {
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
-    // TODO: Change speed
-    public static Command lowerShootFromFender = new SequentialCommandGroup(
+    private  static Command maxShoot = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
-            () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_LOWER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_LOWER_SHOOTER_BOTTOM_SPEED), m_shooter),
-        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        new IndexerCmdForGivenTime(m_indexer, IndexerConstants.INDEXERSPEED, 2));
-
-    public static Command upperShootFromFender = new SequentialCommandGroup(
-        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
-        new InstantCommand(
-            () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
+            () -> m_shooter.setSpeedWithPID(ShooterConstants.MAX_SETPOINT,ShooterConstants.MAX_SETPOINT), m_shooter),
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+
+    // TODO: Change speed
+    public static Command lowerShootFromFender = new LowerShootFromFender(m_indexer, m_shooter);
+
+    public static Command upperShootFromFender = new UpperShootFromFender(m_indexer, m_shooter, m_driveTrain);
 
         
     private static Command spitOutBall = new ParallelCommandGroup(
         new IndexerBackCmd(m_indexer, 0.5),
         new IntakeCmd(m_intake, -IntakeConstants.INTAKESPEED));
+
+    public static Command upperShootFromTarmac = new SequentialCommandGroup(
+        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
+        new InstantCommand(
+            () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
+        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+        new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+    
+
+    
     
 
     // Intake
@@ -114,9 +124,7 @@ public class RobotContainer {
     private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
     private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
 
-    private static ParallelCommandGroup defaultIntake = new ParallelCommandGroup(
-        new RetractIntakeArm(m_intake),
-        new IntakeCmd(m_intake, 0));
+    private static Command defaultIntake = new IntakeCmd(m_intake, 0);
 
     // Indexer
     private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
@@ -129,7 +137,7 @@ public class RobotContainer {
     private static ParallelCommandGroup collectBall = new ParallelCommandGroup(
         new ExtendIntakeArm(m_intake),
         new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED),
-        new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED));
+        new IndexerCmd(m_indexer, IndexerConstants.INDEXERSPEED)); 
 
     private static ParallelCommandGroup noCollectBall = new ParallelCommandGroup(
         new RetractIntakeArm(m_intake),
@@ -155,14 +163,17 @@ public class RobotContainer {
         new WaitCommand(2),
         new TurnToNAngle(0, m_driveTrain));
 
-    private static Command m_bread = new IntakeBallShootBothP1(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_PB = new Position2Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_jellyStrawberryAuton = new JellyStrawberryAuton(m_driveTrain, m_intake, m_shooter);
-    private static Command m_jelly = new Position3Auton(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_crunchy = new Position5AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_bread = new Position1AutonBREAD(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_PB = new Position2AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_jellyStrawberryAuton = new Position6AutonSTRAWBERRY(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_jelly = new Position3AutonJELLY(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_stale = new Position4AutonSTALE(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_crunchy = new Position5AutonCRUNCHY(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_air = new DoNothingAuton();
     private static Command m_banana = new DriveOutAuton(m_driveTrain);
+    private static Command m_ploop = new PloopAndDriveOutAuton(m_driveTrain, m_shooter, m_indexer);
+    private static Command m_pop = new PopAndDriveOutAuton(m_driveTrain, m_shooter, m_indexer);
+
 
     // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
@@ -183,7 +194,20 @@ public class RobotContainer {
 
     private RobotContainer() {
 
-        // CameraServer.startAutomaticCapture();
+        // PortForwarder.add(5800, "photovision.local", 5800);
+
+        PortForwarder.add(5800, "10.23.99.11", 5800);
+        PortForwarder.add(5801, "10.23.99.11", 5801);
+        PortForwarder.add(5802, "10.23.99.11", 5802);
+        PortForwarder.add(5803, "10.23.99.11", 5803);
+        PortForwarder.add(5804, "10.23.99.11", 5804);
+        PortForwarder.add(5805, "10.23.99.11", 5805);
+        
+        // camera not in simulator to make it not crash
+        if (RobotBase.isReal())
+        {
+            CameraServer.startAutomaticCapture();
+        }
 
         // Add commands to the autonomous command chooser
         m_chooser.addOption("Index and Shoot Both", m_bread);
@@ -196,6 +220,8 @@ public class RobotContainer {
         m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
         m_chooser.addOption("Do nothing (air)", m_air);
         m_chooser.addOption("Drive out tarmac (banana)", m_banana);
+        m_chooser.addOption("Ploop and drive out", m_ploop);
+        m_chooser.addOption("Pop and drive out", m_pop);
 
         // Put the chooser on the dashboard
 
@@ -269,7 +295,7 @@ public class RobotContainer {
                 () -> -driveTurnControls.getDrive(),
                 () -> driveTurnControls.getTurn()));
 
-        m_intake.setDefaultCommand(defaultIntake);
+        m_intake.setDefaultCommand(defaultIntake.perpetually());
         m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
         m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
         m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
@@ -309,8 +335,8 @@ public class RobotContainer {
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
 
-        Trigger ultimateCmdTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.1);
-             ultimateCmdTrigger.whileActiveContinuous(pointAndShootCmd);
+        Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
+             upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
         // WE DISABLED FOR SAFETY WHEN TESTING
         // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
         // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
@@ -322,6 +348,7 @@ public class RobotContainer {
         
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
              intakeTrigger.whileActiveContinuous(collectBall);
+             intakeTrigger.whenInactive(noCollectBall);
 
         
 
@@ -350,11 +377,13 @@ public class RobotContainer {
         new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whileHeld(extendClimberCmd);
 
         // Shooter
-        new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
+        // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(upperShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
+        new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
+        
 
     }
 
