@@ -6,19 +6,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.XboxConstants;
-import frc.robot.subsystems.Shifter;
+//import frc.robot.subsystems.Shifter;
 
 public class DriveTurnControls {
 
     private Joystick xbox;
-    private SlewRateLimiter driveLimiter, turnLimiter;
+    private SlewRateLimiter driveLimiter;
 
     public DriveTurnControls(Joystick xBox) {
         this.xbox = xBox;
         double driveSlew = SmartDashboard.getNumber("drive slew", XboxConstants.DRIVE_SLEW_RATE);
-        double turnSlew = SmartDashboard.getNumber("turn slew", XboxConstants.TURN_SLEW_RATE);
+        //double turnSlew = SmartDashboard.getNumber("turn slew", XboxConstants.TURN_SLEW_RATE);
         this.driveLimiter = new SlewRateLimiter(driveSlew);
-        this.turnLimiter = new SlewRateLimiter(turnSlew);
+        //this.turnLimiter = new SlewRateLimiter(turnSlew);
     }
 
     public double getDrive() {

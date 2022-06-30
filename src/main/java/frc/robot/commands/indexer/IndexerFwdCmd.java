@@ -6,13 +6,11 @@ import frc.robot.subsystems.Indexer;
 public class IndexerFwdCmd extends CommandBase {
 
     private final Indexer indexerSubsystem;
-    private final double speed;
 
     // speed comes from shuffleboard
 
-    public IndexerFwdCmd(Indexer indexerSubsystem, double speed) {
+    public IndexerFwdCmd(Indexer indexerSubsystem) {
         this.indexerSubsystem = indexerSubsystem;
-        this.speed = speed;
         addRequirements(indexerSubsystem);
     }
 

@@ -34,7 +34,7 @@ import frc.robot.commands.indexer.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.commands.intakearm.RetractIntakeArm;
-import frc.robot.commands.robot.PointAndShoot;
+//import frc.robot.commands.robot.PointAndShoot;
 // import frc.robot.commands.robot.PointAndShoot;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
@@ -73,8 +73,8 @@ public class RobotContainer {
         m_shifter);
     private static InstantCommand shiftHighSpeed = new InstantCommand(() -> m_shifter.setShifterHighSpeed(), m_shifter);
 
-    private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
-    private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
+    //private static InstantCommand extendIntakeArm = new InstantCommand(() -> m_intake.extendArm(), m_intake);
+    //private static InstantCommand retractIntakeArm = new InstantCommand(() -> m_intake.retractArm(), m_intake);
 
     // Robot
     private static InstantCommand killCommand = new InstantCommand(() -> CommandScheduler.getInstance().cancelAll());
@@ -84,12 +84,12 @@ public class RobotContainer {
     private static InstantCommand startShooter = new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
     private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
 
-    private  static Command shoot = new SequentialCommandGroup(
-        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
-        new InstantCommand(
-            () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
-        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+    // private  static Command shoot = new SequentialCommandGroup(
+    //     new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
+    //     new InstantCommand(
+    //         () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
+    //     new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+    //     new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
     private  static Command maxShoot = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
@@ -98,14 +98,13 @@ public class RobotContainer {
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
-    // TODO: Change speed
     public static Command lowerShootFromFender = new LowerShootFromFender(m_indexer, m_shooter);
 
     public static Command upperShootFromFender = new UpperShootFromFender(m_indexer, m_shooter, m_driveTrain);
 
         
     private static Command spitOutBall = new ParallelCommandGroup(
-        new IndexerBackCmd(m_indexer, 0.5),
+        new IndexerBackCmd(m_indexer),
         new IntakeCmd(m_intake, -IntakeConstants.INTAKESPEED));
 
     public static Command upperShootFromTarmac = new SequentialCommandGroup(
@@ -121,17 +120,17 @@ public class RobotContainer {
 
     // Intake
     // private static IntakeCmd intakeCmd = new IntakeCmd(m_intake, IntakeConstants.INTAKESPEED);
-    private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
-    private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
+    // private static IntakeFwdCmd intakeFwdCmd = new IntakeFwdCmd(m_intake);
+    // private static IntakeBackCmd intakeBackCmd = new IntakeBackCmd(m_intake);
 
     private static Command defaultIntake = new IntakeCmd(m_intake, 0);
 
     // Indexer
-    private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer, IndexerConstants.INDEXERSPEED);
-    private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer, -IndexerConstants.INDEXERSPEED);
+    private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer);
+    private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer);
 
     // Ultimate command
-    private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
+    //private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
     // Collect balls
     private static ParallelCommandGroup collectBall = new ParallelCommandGroup(
@@ -167,7 +166,7 @@ public class RobotContainer {
     private static Command m_PB = new Position2AutonPB(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_jellyStrawberryAuton = new Position6AutonSTRAWBERRY(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_jelly = new Position3AutonJELLY(m_driveTrain, m_intake, m_shooter, m_indexer);
-    private static Command m_stale = new Position4AutonSTALE(m_driveTrain, m_intake, m_shooter, m_indexer);
+    private static Command m_stale = new Position4AutonStale(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_crunchy = new Position5AutonCRUNCHY(m_driveTrain, m_intake, m_shooter, m_indexer);
     private static Command m_air = new DoNothingAuton();
     private static Command m_banana = new DriveOutAuton(m_driveTrain);
@@ -177,7 +176,7 @@ public class RobotContainer {
 
     // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
-    private static Command m_driveStraightGivenDistance = new DriveStraightGivenDistance(0.5, 10, m_driveTrain);
+   // private static Command m_driveStraightGivenDistance = new DriveStraightGivenDistance(0.5, 10, m_driveTrain);
 
     public static NetworkTableEntry a_value = Shuffleboard.getTab("Params")
         .addPersistent("Stick Sensitivity", 0.0).getEntry();
@@ -363,7 +362,7 @@ public class RobotContainer {
         // Indexer
         new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
         new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
-        // TODO: Need to create these commands
+
         // new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
         // new JoystickButton(XBOX, XboxConstants.POINT_AND_SHOOT).whenPressed(m_pointAndShoot);
 
