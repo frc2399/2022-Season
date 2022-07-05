@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * Shift to dangerous (high) speed or hot (low) speed with pneums
+ * stolen from 2017 code
  */
 
 public class Shift extends CommandBase {

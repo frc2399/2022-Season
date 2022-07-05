@@ -5,6 +5,11 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
 
+/**
+ * turns the robot at a constant speed until it reaches its desired angle
+ * not used anywhere in code
+ */
+
 public class FollowTarget extends CommandBase {
 
     private final DriveTrain driveSubsystem;

@@ -6,6 +6,10 @@ import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
+/**
+ * Drives the robot forward a given distance (relative to the robot's position upon initialization), and a given speed
+ * only used for shuffleboard testing, not used in any commands
+ **/
 
 public class DriveForwardGivenDistance extends CommandBase {
 

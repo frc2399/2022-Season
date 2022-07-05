@@ -10,6 +10,12 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.PhotonLimelight;
 
+/**
+ * Turns the robot until the limelight senses the hub
+ * Uses a kP value to adjust robot turning speed relative to its distance to the hub
+ * Used in PointAndShoot command
+ */
+
 public class TurnToHub extends CommandBase {
   /** Creates a new TurnToNAngle. */
   
