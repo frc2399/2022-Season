@@ -4,6 +4,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
 
+/**
+ * Turns the robot to a target angle (value is passed through the constructor)
+ * factors in the robot's current angle to calculate the angle the robot needs to turn in order to reach its target
+ * Used in turnAuto sequential auton command
+ */
+
 public class TurnToNAngle extends CommandBase {
   /** Creates a new TurnToNAngle. */
   public double targetAngle;

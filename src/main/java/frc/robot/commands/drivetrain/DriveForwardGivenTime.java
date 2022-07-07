@@ -5,6 +5,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 
+/**
+ * Drives robot forward for a given time and speed
+ * Used in driveStraightAuto command for autonomous
+ */
 
 public class DriveForwardGivenTime extends CommandBase {
 

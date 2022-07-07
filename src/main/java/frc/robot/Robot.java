@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
-    public static double targetAngle = 0.0;
+    public double targetAngle = 0.0;
 
     static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     public static NetworkTableEntry tx = table.getEntry("tx");

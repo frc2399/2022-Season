@@ -5,22 +5,20 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.RobotContainer;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
 import frc.robot.commands.drivetrain.DriveStraightGivenDistance;
 import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.indexer.IndexerCmdForGivenTime;
 import frc.robot.commands.intake.IntakeCmdForGivenTime;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
-import frc.robot.commands.shooter.SetShootPowerCmd;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Position4AutonSTALE extends SequentialCommandGroup {
+public class Position4AutonStale extends SequentialCommandGroup {
   /** Creates a new IntakeBallShootBothP1. */
 
   private final DriveTrain m_driveTrain;
@@ -28,7 +26,7 @@ public class Position4AutonSTALE extends SequentialCommandGroup {
   private final Indexer m_indexer;
   private final Shooter m_shooter;
 
-  public Position4AutonSTALE(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
+  public Position4AutonStale(DriveTrain dt, Intake it, Shooter sh, Indexer id) {
     m_driveTrain = dt;
     m_intake = it;
     m_indexer = id;

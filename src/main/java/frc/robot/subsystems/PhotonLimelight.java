@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
+//import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -55,7 +55,7 @@ public class PhotonLimelight extends SubsystemBase {
 
     PhotonPipelineResult result = null;
 
-    Boolean photonExists = NetworkTableInstance.getDefault().getTable("photonvision").getEntry("gloworm").exists();
+    //Boolean photonExists = NetworkTableInstance.getDefault().getTable("photonvision").getEntry("gloworm").exists();
 
 
     // if (photonExists)
@@ -114,8 +114,8 @@ public class PhotonLimelight extends SubsystemBase {
         double y2 = y_distances.get(i+1);
         System.out.println("x coordinates: " + x1 + " " + x2);
         System.out.println("y coordinates: " + y1 + " " + y2);
-        String smartdashxi = "Xi=" + i;
-        String smartdashyi = "Yi=" + i;
+        // String smartdashxi = "Xi=" + i;
+        // String smartdashyi = "Yi=" + i;
 
         var circle = circle_from_p1p2r(x1, y1, x2, y2, PhotonLimelightConstants.HUB_RADIUS_INCHES);
         if(circle != null)

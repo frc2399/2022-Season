@@ -5,6 +5,12 @@ import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotBase;
 
+/**
+ * Rotates the robot by an angle (value passed through the constructor) 
+ * Calculates the angle that the robot should reach by adding its current angle to the angle passed through the constructor
+ * Used for autonomous commands
+ */
+
 public class TurnNAngle extends CommandBase {
   /** Creates a new TurnToNAngle. */
   public double turnAngle;

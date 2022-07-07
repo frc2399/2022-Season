@@ -5,6 +5,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
 
+/**
+ * Uses encoders to drive the robot straight for a given distance (relative to its angle and position upon initialization)
+ * Used for autonomous commands
+ */
+
 public class DriveStraightGivenDistance extends CommandBase {
 
     //insantiate global variables
