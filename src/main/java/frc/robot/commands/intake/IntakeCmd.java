@@ -3,6 +3,8 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
+//runs intake at a given speed, can be forward of backward depending on whether the speed is positive or negative
+
 public class IntakeCmd extends CommandBase {
 
     private final Intake intakeSubsystem;

@@ -3,6 +3,8 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
+//extends both climber hooks at the same given speed, assigned to joystick button 5
+
 public class ExtendClimber extends CommandBase {
 
     private final Climber m_climber;

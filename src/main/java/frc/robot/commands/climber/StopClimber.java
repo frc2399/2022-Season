@@ -3,6 +3,8 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 
+//sets climbers' speeds equal to zero, default command for th climber subsystem
+
 public class StopClimber extends CommandBase {
 
     private final Climber m_climber;

@@ -3,6 +3,9 @@ package frc.robot.commands.intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
+//runs the intake at a speed given in the smart dashboard, never used
+//note: this command is exactly the same as the IntakeFwdCmd
+
 public class IntakeBackCmd extends CommandBase {
 
     private final Intake intakeSubsystem;
