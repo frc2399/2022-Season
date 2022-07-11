@@ -81,8 +81,8 @@ public class Shooter extends SubsystemBase {
   // private static final double RANGE = 650;
   private static final double RANGE_PERCENT = .02;
 
-  static double calculatedOptimalTopSpeed;
-  static double calculatedOptimalBottomSpeed;
+  public static double calculatedOptimalTopSpeed;
+  public static double calculatedOptimalBottomSpeed;
 
   static List<List<Double>> shooterTable;
 

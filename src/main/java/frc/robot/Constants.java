@@ -58,13 +58,16 @@ public class Constants {
 
         //public static final int INDEXER = 9;
 
-        public static final int INDEXER_FWD = 6;
-        public static final int INDEXER_BACK = 4;
+        // public static final int INDEXER_FWD = 6;
+        // public static final int INDEXER_BACK = 4;
 
         // public static final int TURN_TO_N = 12; // get rid of this eventually
 
         public static final int CLIMBER_UP = 5;
         public static final int CLIMBER_DOWN = 3;
+
+        public static final int RIGHT_CLIMBER_UP = 4;
+        public static final int LEFT_CLIMBER_UP = 6;
 
         public static final int MAX_SHOOT = 7;
 
