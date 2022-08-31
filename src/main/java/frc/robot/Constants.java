@@ -203,6 +203,10 @@ public class Constants {
         public static final double MIN_HEIGHT = 0;
 
         public static final int CLIMBER_SLEW = 5;
+        
+        public static final int EXTEND_PISTON = 11;
+        public static final int RETRACT_PISTON = 12;
+
 
     }
 

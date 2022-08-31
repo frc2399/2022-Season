@@ -10,6 +10,7 @@ import frc.robot.Constants.ClimberConstants;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -84,6 +85,8 @@ public class Climber extends SubsystemBase {
     SmartDashboard.putNumber("Climber Slew Rate", SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
     filter = new SlewRateLimiter(SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
     System.out.println ("Climber SlewRateLimiter " + SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
+
+    piston = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, ClimberConstants.EXTEND_PISTON, ClimberConstants.RETRACT_PISTON);
 
   }
 
