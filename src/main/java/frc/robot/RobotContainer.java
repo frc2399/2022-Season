@@ -83,6 +83,9 @@ public class RobotContainer {
     private static InstantCommand startShooter = new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
     private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
 
+    //Turn To Hub
+    private static Command turnToHub = new TurnToHub(m_driveTrain);
+
     // private  static Command shoot = new SequentialCommandGroup(
     //     new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
     //     new InstantCommand(
@@ -387,6 +390,7 @@ public class RobotContainer {
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
         
+        new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_HUB).whenHeld(turnToHub);
 
     }
 

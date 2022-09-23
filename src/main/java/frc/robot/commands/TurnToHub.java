@@ -35,7 +35,7 @@ public class TurnToHub extends CommandBase {
   @Override
   public void execute() {
 
-    double error = PhotonLimelight.angleToHub();
+    double error = PhotonLimelight.getAngleToHub();
     SmartDashboard.putNumber("hub error", error);
 
     double outputSpeed = Constants.DriveConstants.TURN_TO_HUB_KP * error;

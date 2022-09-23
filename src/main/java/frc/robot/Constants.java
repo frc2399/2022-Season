@@ -71,6 +71,8 @@ public class Constants {
 
         public static final int MAX_SHOOT = 7;
 
+        public static final int TURN_TO_HUB = 9;
+
     } 
 
     public static final class XboxMappingToJoystick{
@@ -211,10 +213,13 @@ public class Constants {
 
 
     public static final class PhotonLimelightConstants {
-        public static final double CAMERA_HEIGHT_INCHES = 38;
-        public static final double TARGET_HEIGHT_INCHES = 104;
+        //real robot height public static final double CAMERA_HEIGHT_INCHES = 38;
+        public static final double CAMERA_HEIGHT_INCHES = 23;
+        // real hub height public static final double TARGET_HEIGHT_INCHES = 104;
+        public static final double TARGET_HEIGHT_INCHES = 62;
         public static final double HUB_RADIUS_INCHES = 27;
-        public static final double TILT_DEGREES = 36;
+        // real angle public static final double TILT_DEGREES = 36;
+        public static final double TILT_DEGREES = 5;
         // public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
         // public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
     }

@@ -31,8 +31,10 @@ public class PhotonLimelight extends SubsystemBase {
   public static final NetworkTableEntry hub_y_entry = Shuffleboard.getTab("Driver").add("Hub Y", 0).getEntry();
   public static final NetworkTableEntry hub_distance_entry = Shuffleboard.getTab("Driver").add("Hub dist", 0).getEntry();
   public static final NetworkTableEntry hub_angle_entry = Shuffleboard.getTab("Driver").add("Hub angle", 0).getEntry();
+  public static final NetworkTableEntry in_line_entry = Shuffleboard.getTab("Driver").add("In Line", false).getEntry();
   static PhotonCamera camera;
   public static double distanceToHub;
+  public static double angleToHub;
 
   Boolean photonNotFoundMessagePrinted = false ;
 
@@ -54,12 +56,12 @@ public class PhotonLimelight extends SubsystemBase {
         // List<PhotonTrackedTarget> targets = result.getTargets();
         PhotonTrackedTarget best_target = result.getBestTarget();
 
-        double distance_to_target =
-                        PhotonUtils.calculateDistanceToTargetMeters(
-                          PhotonLimelightConstants.CAMERA_HEIGHT_INCHES,
-                          PhotonLimelightConstants.TARGET_HEIGHT_INCHES,
-                          Units.degreesToRadians(PhotonLimelightConstants.TILT_DEGREES),
-                          Units.degreesToRadians(best_target.getPitch()));
+        double distance_to_target = PhotonUtils.calculateDistanceToTargetMeters(
+          PhotonLimelightConstants.CAMERA_HEIGHT_INCHES,
+          PhotonLimelightConstants.TARGET_HEIGHT_INCHES,
+          Units.degreesToRadians(PhotonLimelightConstants.TILT_DEGREES),
+          Units.degreesToRadians(best_target.getPitch())
+        );
 
 
         Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
@@ -72,12 +74,32 @@ public class PhotonLimelight extends SubsystemBase {
         hub_x_entry.setNumber(x_translation);
         hub_y_entry.setNumber(y_translation);
         double hub_dist = Math.hypot(x_translation, y_translation);
-        double hub_angle = Units.radiansToDegrees(Math.atan2(y_translation, x_translation));
+        angleToHub = Units.radiansToDegrees(Math.atan2(y_translation, x_translation));
         hub_distance_entry.setNumber(hub_dist);
-        hub_angle_entry.setNumber(hub_angle);
+        hub_angle_entry.setNumber(angleToHub);
+        int countTargets = result.getTargets().size();
+        amountTargets.setNumber(countTargets);
+        boolean isInLine = Math.abs(angleToHub) < 7.5;
+        in_line_entry.setBoolean(isInLine);
+        
+
+    }
+    else {
+      hub_x_entry.setNumber(0);
+      hub_y_entry.setNumber(0);
+      hub_distance_entry.setNumber(0);
+      hub_angle_entry.setNumber(0);
+      amountTargets.setNumber(0);
+      in_line_entry.setBoolean(false);
 
     }
   }
+
+
+  public static double getAngleToHub() {
+    return angleToHub;
+  }
+
 
   //@Override
   public void periodic_og() {
