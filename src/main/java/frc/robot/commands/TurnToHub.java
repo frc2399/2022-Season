@@ -73,8 +73,8 @@ public class TurnToHub extends CommandBase {
    double errorTolerance = DriveTrain.angleErrorTolerance.getDouble(5);
     // SmartDashboard.getNumber("Error Tolerance", 5);
     //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
-    double error = PhotonLimelight.angleToHub();
-    if (Math.abs(modAngle(error)) <= errorTolerance) {
+    double error = PhotonLimelight.getAngleToHub();
+    if (Math.abs(modAngle(error)) <= errorTolerance && PhotonLimelight.has_targets){
       return true;
     }
     return false;

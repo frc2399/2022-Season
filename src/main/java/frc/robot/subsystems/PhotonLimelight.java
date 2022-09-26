@@ -35,6 +35,7 @@ public class PhotonLimelight extends SubsystemBase {
   static PhotonCamera camera;
   public static double distanceToHub;
   public static double angleToHub;
+  public static boolean has_targets;
 
   Boolean photonNotFoundMessagePrinted = false ;
 
@@ -48,7 +49,7 @@ public class PhotonLimelight extends SubsystemBase {
 
     var result = camera.getLatestResult();
 
-    boolean has_targets = result.hasTargets();
+    has_targets = result.hasTargets();
 
     SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
     if (has_targets) {
@@ -91,6 +92,7 @@ public class PhotonLimelight extends SubsystemBase {
       hub_angle_entry.setNumber(0);
       amountTargets.setNumber(0);
       in_line_entry.setBoolean(false);
+      angleToHub = 0;
 
     }
   }

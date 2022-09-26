@@ -189,7 +189,7 @@ public class RobotContainer {
     // A chooser for autonomous commands
     static SendableChooser < Command > m_chooser = new SendableChooser < > ();
     public final static ComplexWidget autonChooser = Shuffleboard.getTab("Driver")
-    .add("Choose Auton", m_chooser).withWidget(BuiltInWidgets.kSplitButtonChooser).withPosition(0, 4).withSize(9, 1);
+    .add("Choose Auton", m_chooser).withWidget(BuiltInWidgets.kSplitButtonChooser).withPosition(4, 4).withSize(9, 1);
 
     PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
