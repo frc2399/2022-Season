@@ -35,6 +35,7 @@ import frc.robot.commands.intake.*;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.commands.intakearm.RetractIntakeArm;
 import frc.robot.commands.robot.PointAndShoot;
+import frc.robot.commands.robot.UpperShootFromFender;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
 import frc.robot.util.DriveTurnControls;
@@ -198,19 +199,11 @@ public class RobotContainer {
 
     private RobotContainer() {
 
-        // PortForwarder.add(5800, "photovision.local", 5800);
-
-        PortForwarder.add(5800, "10.23.99.11", 5800);
-        PortForwarder.add(5801, "10.23.99.11", 5801);
-        PortForwarder.add(5802, "10.23.99.11", 5802);
-        PortForwarder.add(5803, "10.23.99.11", 5803);
-        PortForwarder.add(5804, "10.23.99.11", 5804);
-        PortForwarder.add(5805, "10.23.99.11", 5805);
         
         // camera not in simulator to make it not crash
         if (RobotBase.isReal())
         {
-            CameraServer.startAutomaticCapture();
+           // CameraServer.startAutomaticCapture();
         }
 
         // Add commands to the autonomous command chooser
@@ -341,14 +334,7 @@ public class RobotContainer {
 
         Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
              upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
-        // WE DISABLED FOR SAFETY WHEN TESTING
-        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
-        // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
-        // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
-        // Intake
-        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_BACK).whileHeld(intakeBackCmd);
-        // Sets the intake command to the left trigger
         
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
              intakeTrigger.whileActiveContinuous(collectBall);
@@ -356,25 +342,14 @@ public class RobotContainer {
 
         
 
-        // new JoystickButton(XBOX, XboxMappingToJoystick.LEFT_STICK_PUSH).whenPressed(collectBall);
-        // new JoystickButton(XBOX, XboxMappingToJoystick.RIGHT_STICK_PUSH).whenPressed(noCollectBall);
+ 
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
+        // new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
 
-        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
-        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
-
-        // Indexer
-        // new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
-        // new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
-
-        // new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
+      
         new JoystickButton(XBOX, XboxConstants.POINT_AND_SHOOT).whenPressed(m_pointAndShoot);
 
-        //turning
-        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CCW).whenPressed(m_turnRight);
-        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CW).whenPressed(m_turnLeft);
-        // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
+     
 
         // Climber
         new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whileHeld(retractClimberCmd);
@@ -390,7 +365,7 @@ public class RobotContainer {
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
         
-        new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_HUB).whenHeld(turnToHub);
+        new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_HUB).whenPressed(turnToHub);
 
     }
 

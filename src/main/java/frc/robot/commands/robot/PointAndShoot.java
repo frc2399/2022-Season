@@ -1,6 +1,7 @@
 package frc.robot.commands.robot;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.TurnToHub;
@@ -31,14 +32,20 @@ public class PointAndShoot extends SequentialCommandGroup {
     new TurnToHub(m_driveTrain),
     new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
     new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
-    new IndexerCmdForGivenTime(m_indexer, -0.2, 0.1),
+    new IndexerCmdForGivenTime(m_indexer, -0.2, 0.5),
+    new PrintCommand("Indexer backup completed!"),
     //new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 
     // commented out for hacking
+    // new InstantCommand(
+    //      // () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
+    //       () -> m_shooter.setOptimalSpeedWithPID()),
     new InstantCommand(
-         // () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
-          () -> m_shooter.setOptimalSpeedWithPID()),
+            () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED, ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
+    new PrintCommand("Optimal speed set with PID!"),
     new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-    new IndexerCmdForGivenTime(m_indexer, 0.5, 2)
+    new PrintCommand("correct speed attained!"),
+    new IndexerCmdForGivenTime(m_indexer, 0.5, 2),
+    new PrintCommand("Indexer for given time worked!!!!!")
 
     );
   }

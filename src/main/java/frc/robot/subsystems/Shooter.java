@@ -279,16 +279,20 @@ public static double[] shootingInterpolation(Double distance, List<List<Double>>
 
 public static void calculateSpeedGivenDistance()
 {
-  double[] optimalSpeeds = shootingInterpolation(PhotonLimelight.distanceToHub, shooterTable);
-  calculatedOptimalBottomSpeed = optimalSpeeds[0];
-  calculatedOptimalTopSpeed = optimalSpeeds[1];
+  // double[] optimalSpeeds = shootingInterpolation(PhotonLimelight.distanceToHub, shooterTable);
+  // calculatedOptimalBottomSpeed = optimalSpeeds[0];
+  // calculatedOptimalTopSpeed = optimalSpeeds[1];
+
+  calculatedOptimalBottomSpeed = ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED;
+  calculatedOptimalTopSpeed = ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED;
 }
 
 public void setOptimalSpeedWithPID() {
-  bottomPIDController.setReference(calculatedOptimalBottomSpeed, CANSparkMax.ControlType.kVelocity);
-  topPIDController.setReference(calculatedOptimalTopSpeed, CANSparkMax.ControlType.kVelocity);
+  //bottomPIDController.setReference(calculatedOptimalBottomSpeed, CANSparkMax.ControlType.kVelocity);
+  //topPIDController.setReference(calculatedOptimalTopSpeed, CANSparkMax.ControlType.kVelocity);
   topSetpoint = calculatedOptimalTopSpeed;
   bottomSetpoint = calculatedOptimalBottomSpeed;
+  setMotors(topSetpoint, bottomSetpoint);
 }
 }
 
