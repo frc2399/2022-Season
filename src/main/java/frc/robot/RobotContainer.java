@@ -207,14 +207,14 @@ public class RobotContainer {
         }
 
         // Add commands to the autonomous command chooser
-        m_chooser.addOption("Index and Shoot Both", m_bread);
-        m_chooser.addOption("position 2 auton", m_PB);
-        m_chooser.addOption("Jelly Strawberry auton", m_jellyStrawberryAuton);
+        m_chooser.addOption("Bread - position 1 (2 ball)", m_bread);
+        m_chooser.addOption("Peanut Butter - position 2 (2 ball)", m_PB);
+        m_chooser.addOption("Strawberry Jelly - position 3 (3 ball)", m_jellyStrawberryAuton);
         m_chooser.addOption("Turn Auto", m_turnAuto);
         m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
-        m_chooser.addOption("Position 3 (jelly)", m_jelly);
-        m_chooser.addOption("Position 4 (stale bread)", m_stale);
-        m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
+        m_chooser.addOption("Jelly - position 3 (2 ball)", m_jelly);
+        m_chooser.addOption("Stale Bread - position 1 (2 ball)", m_stale);
+        m_chooser.addOption("Crunchy Peanut Butter - position 2 (3 ball)", m_crunchy);
         m_chooser.addOption("Do nothing (air)", m_air);
         m_chooser.addOption("Drive out tarmac (banana)", m_banana);
         m_chooser.addOption("Ploop and drive out", m_ploop);

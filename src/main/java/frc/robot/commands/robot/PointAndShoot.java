@@ -40,7 +40,7 @@ public class PointAndShoot extends SequentialCommandGroup {
     //      // () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
     //       () -> m_shooter.setOptimalSpeedWithPID()),
     new InstantCommand(
-            () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED, ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
+           // () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED, ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
     new PrintCommand("Optimal speed set with PID!"),
     new WaitUntilCommand(() -> m_shooter.correctSpeed()),
     new PrintCommand("correct speed attained!"),

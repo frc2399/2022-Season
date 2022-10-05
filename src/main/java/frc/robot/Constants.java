@@ -138,7 +138,7 @@ public class Constants {
         public static final double SETPOINT_RATIO = 2.7;
         public static final double BOTTOM_SETPOINT = 2100;
         public static final double TOP_SETPOINT = BOTTOM_SETPOINT * SETPOINT_RATIO;
-        public static final double MAX_SETPOINT = 5000;
+        public static final double MAX_SETPOINT = 3000;
 
         public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 900;
         public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 850;
