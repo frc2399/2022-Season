@@ -30,8 +30,8 @@ public class PointAndShoot extends SequentialCommandGroup {
     addCommands(
       
     new TurnToHub(m_driveTrain),
-    new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
-    new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
+    // new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
+    // new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
     new IndexerCmdForGivenTime(m_indexer, -0.2, 0.5),
     new PrintCommand("Indexer backup completed!"),
     //new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 

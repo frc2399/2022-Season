@@ -234,15 +234,6 @@ public class RobotContainer {
         // Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new
         // ButterySmoothFollowTarget(m_driveTrain));
 
-        // //Shuffleboard.getTab("Robot").add("Index and Shoot", new
-        // SequentialCommandGroup(
-        // new InstantCommand(
-        // () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,
-        // ShooterConstants.BOTTOM_SETPOINT),
-        // m_shooter),
-        // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
-
         Shuffleboard.getTab("Shooter").add(
             "Start Shooter", startShooter.perpetually()
             );
@@ -360,7 +351,7 @@ public class RobotContainer {
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        //new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
+
         new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
