@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -202,8 +203,14 @@ public class Shooter extends SubsystemBase {
 
   // Checks to see if both motors are within range of the setpoints
   public boolean correctSpeed() {
-    return (checkWithinRange(topSetpoint, topEncoder.getVelocity(), (topSetpoint*RANGE_PERCENT)) &&
-        checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), (bottomSetpoint*RANGE_PERCENT)));
+    SmartDashboard.putNumber("topSetpoint", topSetpoint);
+    double topEncoderVelocity = topEncoder.getVelocity();
+    double bottomEncoderVelocity = bottomEncoder.getVelocity();
+    SmartDashboard.putNumber("top encoder velocity", topEncoderVelocity);
+    SmartDashboard.putNumber("bottom encoder velocity", bottomEncoderVelocity);
+    SmartDashboard.putNumber("bottomSetpoint", bottomSetpoint);
+    return (checkWithinRange(topSetpoint, topEncoderVelocity, (topSetpoint*RANGE_PERCENT)) &&
+        checkWithinRange(bottomSetpoint, bottomEncoderVelocity, (bottomSetpoint*RANGE_PERCENT)));
   }
 
   // THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART

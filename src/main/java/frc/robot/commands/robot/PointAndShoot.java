@@ -28,25 +28,26 @@ public class PointAndShoot extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      
-    new TurnToHub(m_driveTrain),
+    
+    new TurnToHub(m_driveTrain).withTimeout(1.0),
     // new InstantCommand(() -> PhotonLimelight.getDistanceToHub()),
     // new InstantCommand(() -> Shooter.calculateSpeedGivenDistance()),
     new IndexerCmdForGivenTime(m_indexer, -0.2, 0.5),
     new PrintCommand("Indexer backup completed!"),
     //new InstantCommand(() -> m_shooter.setOptimalSpeedWithPID(), m_shooter), 
     // commented out for hacking
-    // new InstantCommand(
-    //      // () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,ShooterConstants.BOTTOM_SETPOINT), m_shooter),
-    //       () -> m_shooter.setOptimalSpeedWithPID()),
+    new InstantCommand(
+         () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
+          // () -> m_shooter.setOptimalSpeedWithPID(),
     new InstantCommand(
            // () -> m_shooter.setSpeedWithPID(ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED, ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),
-    new PrintCommand("Optimal speed set with PID!"),
-    new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-    new PrintCommand("correct speed attained!"),
+    // new PrintCommand("Optimal speed set with PID!")
+    // new PrintCommand("correct speed attained!")
+
+    ),
+    new WaitUntilCommand(() -> m_shooter.correctSpeed()).withTimeout(2.0),
     new IndexerCmdForGivenTime(m_indexer, 0.5, 2),
     new PrintCommand("Indexer for given time worked!!!!!")
-
     );
   }
 

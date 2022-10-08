@@ -38,6 +38,7 @@ import frc.robot.commands.robot.PointAndShoot;
 import frc.robot.commands.robot.UpperShootFromFender;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
+import frc.robot.util.DPadButton;
 import frc.robot.util.DriveTurnControls;
 
 /**
@@ -79,6 +80,8 @@ public class RobotContainer {
     // Robot
     private static InstantCommand killCommand = new InstantCommand(() -> CommandScheduler.getInstance().cancelAll());
 
+    private static InstantCommand toggleSpeedCommand = new InstantCommand(() -> m_driveTrain.isSlow = !m_driveTrain.isSlow);
+
 
     // Shooter 
     private static InstantCommand startShooter = new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
@@ -107,8 +110,10 @@ public class RobotContainer {
 
         
     private static Command spitOutBall = new ParallelCommandGroup(
+        new ExtendIntakeArm(m_intake),
         new IndexerBackCmd(m_indexer),
         new IntakeCmd(m_intake, -IntakeConstants.INTAKESPEED));
+    
 
     public static Command upperShootFromTarmac = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
@@ -317,7 +322,9 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // Robot
-        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(killCommand);
+       // new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(killCommand);
+        new DPadButton(XBOX, DPadButton.Direction.DOWN).whenPressed(killCommand);
+        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(toggleSpeedCommand);
 
         // Drive train
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
@@ -354,7 +361,7 @@ public class RobotContainer {
 
         new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
+        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall).whenReleased(noCollectBall);
         
         new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_HUB).whenPressed(turnToHub);
 

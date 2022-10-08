@@ -23,6 +23,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.util.SimEncoder;
 import frc.robot.util.SimGyro;
 
+import javax.lang.model.util.ElementScanner6;
+
 //import edu.wpi.first.wpilibj.Joystick;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -84,6 +86,8 @@ public class DriveTrain extends SubsystemBase {
     //private static double currentAngle = 0;
     //private static double targetAngle = 0;
     public static double outputSpeed;
+
+    public boolean isSlow = true;
 
     
     //static double kToleranceDegrees = 2.0f;
@@ -190,7 +194,7 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-
+       
         // currentAngle = ahrs.getAngle();
         // targetAngle = Robot.targetAngle;
 
@@ -267,8 +271,17 @@ public class DriveTrain extends SubsystemBase {
 
     public void setMotors(double leftSpeed, double rightSpeed) {
 
-        leftFrontMotorController.set(leftSpeed);
-        rightFrontMotorController.set(rightSpeed);
+        if (isSlow)
+        {
+            leftFrontMotorController.set(leftSpeed * DriveConstants.SLOW_SPEED_FRACTION);
+            rightFrontMotorController.set(rightSpeed * DriveConstants.SLOW_SPEED_FRACTION);
+        }
+        else
+        {
+            leftFrontMotorController.set(leftSpeed);
+            rightFrontMotorController.set(rightSpeed);
+        }
+
 
         // SmartDashboard.putNumber("outputSpeed", leftSpeed);
     }

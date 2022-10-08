@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -40,6 +41,8 @@ public class PhotonLimelight extends SubsystemBase {
   Boolean photonNotFoundMessagePrinted = false ;
 
   public PhotonLimelight() {
+
+    PhotonLimelight.turnLEDOff();
     camera = new PhotonCamera("gloworm");
 
   }
@@ -401,6 +404,14 @@ public class PhotonLimelight extends SubsystemBase {
       }
     }
     return centers;
+  }
+
+  public static void turnLEDOn() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+  }
+
+  public static void turnLEDOff() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
 }

@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.PhotonLimelightConstants;
 import frc.robot.subsystems.DriveTrain;
@@ -26,6 +27,9 @@ public class TurnToHub extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  
+    PhotonLimelight.turnLEDOn();
+  
     System.out.println("TurnToHub initialized!");
 
     // Sets motors to brake mode
@@ -79,6 +83,8 @@ public class TurnToHub extends CommandBase {
     System.out.println("Error Tolerance: " + errorTolerance);
     if (PhotonLimelight.has_targets  && Math.abs(modAngle(error)) <= errorTolerance ){
       System.out.println("turn to hub finished!!");
+      
+      PhotonLimelight.turnLEDOff();
 
       return true;
     }

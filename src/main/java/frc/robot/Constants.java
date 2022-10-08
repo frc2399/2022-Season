@@ -40,6 +40,8 @@ public class Constants {
 
         public static final double TURN_SENSITIVITY = 0;
 
+        public static final double SLOW_SPEED_FRACTION = 0.3;
+
     }
 
     public static final class JoystickConstants {
