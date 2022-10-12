@@ -87,7 +87,7 @@ public class DriveTrain extends SubsystemBase {
     //private static double targetAngle = 0;
     public static double outputSpeed;
 
-    public boolean isSlow = true;
+    public static boolean isSlow = false;
 
     
     //static double kToleranceDegrees = 2.0f;
@@ -325,6 +325,7 @@ public class DriveTrain extends SubsystemBase {
         rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
         leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
+        isSlow = true;
     }
 
     public static void autonomousInit()
@@ -335,6 +336,7 @@ public class DriveTrain extends SubsystemBase {
         rightMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         leftBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
+        isSlow = false;
     }
 
 

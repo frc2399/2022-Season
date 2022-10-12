@@ -323,7 +323,7 @@ public class RobotContainer {
     private void configureButtonBindings() {
         // Robot
        // new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(killCommand);
-        new DPadButton(XBOX, DPadButton.Direction.DOWN).whenPressed(killCommand);
+       // new DPadButton(XBOX, DPadButton.Direction.DOWN).whenPressed(killCommand);
         new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(toggleSpeedCommand);
 
         // Drive train
