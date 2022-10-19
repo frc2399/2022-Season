@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -115,6 +116,8 @@ public class RobotContainer {
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
     
 
+
+
     
     
 
@@ -146,6 +149,26 @@ public class RobotContainer {
     // Climber
     private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 1.0);
     private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 1.0);
+
+    public static Command reachUp = new ExtendClimber(m_climber, 1.0);
+    public static Command pullUp = new RetractClimber(m_climber, 1.0);
+    public static Command reachBack = new SequentialCommandGroup(
+        new ExtendClimber(m_climber, 1.0),
+        new WaitUntilCommand(() -> m_climber.getClimberHeight() > ClimberConstants.MAX_HEIGHT / 4), // TODO: edit later
+        new ParallelCommandGroup(
+            new InstantCommand(
+                 () -> m_climber.tiltBack()),
+            new ExtendClimber(m_climber, 1.0),
+            new PrintCommand("reach back activated")
+        )
+    );
+
+    public static Command grabNextBar = new SequentialCommandGroup(
+        new RetractClimber(m_climber, 1.0),
+        new WaitUntilCommand(() -> m_climber.getClimberHeight() < ClimberConstants.MAX_HEIGHT / 2), // TODO: edit later
+        new PrintCommand("grab next bar activated")
+    );
+
 
     // Drive Train
     public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
@@ -372,14 +395,18 @@ public class RobotContainer {
         // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
         // Climber
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whileHeld(retractClimberCmd);
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whileHeld(extendClimberCmd);
+        new JoystickButton(JOYSTICK, 7).whileHeld(retractClimberCmd);
+        new JoystickButton(JOYSTICK, 1).whileHeld(extendClimberCmd);
+        new JoystickButton(JOYSTICK, 3).whenPressed(reachUp);
+        new JoystickButton(JOYSTICK, 4).whenPressed(pullUp);
+        new JoystickButton(JOYSTICK, 5).whenPressed(reachBack);
+        new JoystickButton(JOYSTICK, 6).whenPressed(grabNextBar);
 
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
         new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
+        // new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
         

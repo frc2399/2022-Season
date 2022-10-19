@@ -7,10 +7,12 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -130,5 +132,20 @@ public class Climber extends SubsystemBase {
   public boolean isRightRetracted()
   {
     return (rightEncoder.getPosition() < ClimberConstants.MIN_HEIGHT);
+  }
+
+  public double getClimberHeight()
+  {
+    return (leftEncoder.getPosition() + rightEncoder.getPosition())/2;
+  }
+
+  public void tiltBack()
+  {
+    piston.set(Value.kForward);
+  }
+
+  public void tiltForward()
+  {
+    piston.set(Value.kReverse);
   }
 }
