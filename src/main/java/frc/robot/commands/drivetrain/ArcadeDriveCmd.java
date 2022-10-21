@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.DriveConstants;
 // import frc.robot.RobotContainer;
 // import frc.robot.Constants.JoystickConstants;
 // import frc.robot.Constants.XboxConstants;
@@ -17,6 +18,7 @@ public class ArcadeDriveCmd extends CommandBase {
 
     private final DriveTrain driveSubsystem;
     private final Supplier<Double> speedFunction, turnFunction;
+    public static boolean isSlow = false;
 
     public ArcadeDriveCmd(DriveTrain driveSubsystem, //
             Supplier<Double> speedFunction, Supplier<Double> turnFunction) {
@@ -29,6 +31,7 @@ public class ArcadeDriveCmd extends CommandBase {
     @Override
     public void initialize() {
         System.out.println("ArcadeDriveCmd started!");
+        isSlow = true;
     }
 
     @Override
@@ -63,18 +66,26 @@ public class ArcadeDriveCmd extends CommandBase {
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
-       
+        if (isSlow)
+        {        
+            this.driveSubsystem.setMotors(left * DriveConstants.SLOW_SPEED_FRACTION, right * DriveConstants.SLOW_SPEED_FRACTION);
+        }
+        else
+        {
+            this.driveSubsystem.setMotors(left, right);
+        }
+
         leftSpeed.setNumber(left);
         rightSpeed.setNumber(right);
        // SmartDashboard.putNumber("left speed", left);
        // SmartDashboard.putNumber("right speed", right);
 
-        this.driveSubsystem.setMotors(left, right);
     }
 
     @Override
     public void end(boolean interrupted) {
         System.out.println("ArcadeDriveCmd ended!");
+        isSlow = false;
     }
 
     @Override

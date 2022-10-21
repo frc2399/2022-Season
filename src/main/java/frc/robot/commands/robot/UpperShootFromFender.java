@@ -29,13 +29,7 @@ public class UpperShootFromFender extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(
-      new InstantCommand(
-        () -> DriveTrain.isSlow = false
-      ),
       new DriveStraightGivenDistance(0.1, 8, m_driveTrain).withTimeout(5),
-      new InstantCommand(
-        () -> DriveTrain.isSlow = true
-      ),
       new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
         new InstantCommand(
             () -> m_shooter.setSpeedWithPID(ShooterConstants.FENDER_UPPER_SHOOTER_TOP_SPEED,ShooterConstants.FENDER_UPPER_SHOOTER_BOTTOM_SPEED), m_shooter),

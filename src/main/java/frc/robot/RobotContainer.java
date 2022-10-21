@@ -80,7 +80,7 @@ public class RobotContainer {
     // Robot
     private static InstantCommand killCommand = new InstantCommand(() -> CommandScheduler.getInstance().cancelAll());
 
-    private static InstantCommand toggleSpeedCommand = new InstantCommand(() -> m_driveTrain.isSlow = !m_driveTrain.isSlow);
+    private static InstantCommand toggleSpeedCommand = new InstantCommand(() -> ArcadeDriveCmd.isSlow = !ArcadeDriveCmd.isSlow);
 
 
     // Shooter 
