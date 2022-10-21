@@ -8,6 +8,7 @@ public class SimEncoder {
 
   private SimDouble distance;
   private SimDouble speed;
+  private double distancePerPulse;
 
   /**
    * Construct a encoder given a CAN ID.
@@ -26,6 +27,7 @@ public class SimEncoder {
     SimDevice device = SimDevice.create("Encoder[" + name + "]");
     distance = device.createDouble("Distance", Direction.kOutput, 0);
     speed = device.createDouble("Speed", Direction.kOutput, 0);
+    distancePerPulse = 1;
   }
   
   /**
@@ -35,7 +37,7 @@ public class SimEncoder {
    *     calling setSpeed.
    */
   public double getSpeed() {
-    return speed.get();
+    return speed.get() * distancePerPulse;
   }
 
   /**
@@ -45,7 +47,7 @@ public class SimEncoder {
    *     calling setDistance.
    */
   public double getDistance() {
-    return distance.get();
+    return distance.get() * distancePerPulse;
   }
 
   /**
@@ -65,4 +67,8 @@ public class SimEncoder {
   public void setDistance(double distance) {
     this.distance.set(distance);
   }
+
+public void setDistancePerPulse(double distancePerPulse) {
+    this.distancePerPulse = distancePerPulse;
+}
 }

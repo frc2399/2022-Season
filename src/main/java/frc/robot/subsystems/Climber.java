@@ -6,15 +6,24 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
+import frc.robot.RobotContainer;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.util.SimEncoder;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.simulation.ElevatorSim;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
 
 public class Climber extends SubsystemBase {
   
@@ -23,6 +32,12 @@ public class Climber extends SubsystemBase {
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPIDController, rightPIDController;
   private DoubleSolenoid piston;
+
+  private static double climberDrumRadius = 0.01; //in meters
+  private SimEncoder climberEncoderSim;
+  private ElevatorSim climberSim; 
+  private static final double kElevatorEncoderDistPerPulse =
+  2.0 * Math.PI * climberDrumRadius / 4096;
 
 
   public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
@@ -90,6 +105,21 @@ public class Climber extends SubsystemBase {
 
     piston = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, ClimberConstants.EXTEND_PISTON, ClimberConstants.RETRACT_PISTON);
 
+
+    //this code is instantiating the simulator stuff for climber
+    if(RobotBase.isSimulation()) {
+        climberEncoderSim = new SimEncoder("Climber");
+        climberSim = new ElevatorSim(
+          DCMotor.getNEO(1), //1 NEO motor on the climber
+          10, //10:1 gearing ratio - this was an estimate
+          0.01, //carriage mass in kg
+          climberDrumRadius, //drum radius in meter
+          0, //minimum height in meters
+          Units.feetToMeters(2), //maximum height in meters of climber
+          VecBuilder.fill(0.01) //standard deviation of the measurements, adds noise to the simulation
+        ); 
+        climberEncoderSim.setDistancePerPulse(kElevatorEncoderDistPerPulse);
+    }
   }
 
   @Override
@@ -97,7 +127,23 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putBoolean("Left Climber Extended", this.isLeftExtended());
     // SmartDashboard.putBoolean("Right Climber Extended", this.isRightExtended());
+    SmartDashboard.putNumber("Left Climber Height", getLeftEncoderPosition());
+    SmartDashboard.putNumber("Right Climber Hieght", getRightEncoderPosition());
 
+  }
+
+  @Override
+  public void simulationPeriodic() {
+    //sets input for climber motor in simulation
+    climberSim.setInput(leftMotorController.get() * RobotController.getInputVoltage());
+    // Next, we update it. The standard loop time is 20ms.
+    climberSim.update(0.02);
+    // Finally, we set our simulated encoder's readings
+    climberEncoderSim.setDistance(climberSim.getPositionMeters());
+    //sets our simulated encoder speeds
+    climberEncoderSim.setSpeed(climberSim.getVelocityMetersPerSecond());
+
+    
   }
 
   public void setLeftSpeed(double speed)
@@ -148,4 +194,32 @@ public class Climber extends SubsystemBase {
   {
     piston.set(Value.kReverse);
   }
+
+  public double getLeftEncoderPosition()
+  {
+    if (RobotBase.isSimulation())
+    {
+        return Units.metersToInches(climberEncoderSim.getDistance());
+    }
+    else
+    {
+        //gets position in inches
+        return leftEncoder.getPosition();
+    }
+  }
+
+  public double getRightEncoderPosition()
+  {
+    if (RobotBase.isSimulation())
+    {
+        return Units.metersToInches(climberEncoderSim.getDistance());
+    }
+    else
+    {
+        //gets position in inches
+        return rightEncoder.getPosition();
+    }
+  }
+
 }
+
