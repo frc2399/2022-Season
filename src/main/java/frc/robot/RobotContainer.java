@@ -155,30 +155,30 @@ public class RobotContainer {
         new IndexerCmd(m_indexer, 0));
 
     // Climber
-    private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 1.0);
-    private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 1.0);
+    private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 0.3);
+    private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 0.3);
 
-    public static Command reachUp = new ExtendClimber(m_climber, 1.0);
-    public static Command pullUp = new RetractClimber(m_climber, 1.0);
+    public static Command reachUp = new ExtendClimber(m_climber, 0.3);
+    public static Command pullUp = new RetractClimber(m_climber, 0.3);
     public static Command reachBack = new SequentialCommandGroup(
-        new ExtendClimber(m_climber, 1.0),
+        new ExtendClimber(m_climber, 0.3),
         new WaitUntilCommand(() -> m_climber.getClimberHeight() > ClimberConstants.MAX_HEIGHT / 4), // TODO: edit later
         new ParallelCommandGroup(
             new InstantCommand(
                  () -> m_climber.tiltBack()),
-            new ExtendClimber(m_climber, 1.0),
+            new ExtendClimber(m_climber, 0.3),
             new PrintCommand("reach back activated")
         )
     );
 
     public static Command grabNextBar = new SequentialCommandGroup(
-        new RetractClimber(m_climber, 1.0),
+        new RetractClimber(m_climber, 0.3),
         new WaitUntilCommand(() -> m_climber.getClimberHeight() < ClimberConstants.MAX_HEIGHT / 2), // TODO: edit later
         new PrintCommand("grab next bar activated")
     );
 
-    private static RetractRightClimber retractRightClimberCmd = new RetractRightClimber(m_climber, 1.0);
-    private static ExtendRightClimber extendRightClimberCmd = new ExtendRightClimber(m_climber, 1.0);
+    private static RetractRightClimber retractRightClimberCmd = new RetractRightClimber(m_climber, 0.3);
+    private static ExtendRightClimber extendRightClimberCmd = new ExtendRightClimber(m_climber, 0.3);
 
     // Drive Train
     public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);

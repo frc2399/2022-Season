@@ -51,9 +51,9 @@ public class RetractClimber extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // if (m_climber.isLeftRetracted() && m_climber.isRightRetracted()) {
-        //     return true;
-        // }
+        if (m_climber.isLeftRetracted() || m_climber.isRightRetracted()) {
+            return true;
+        }
        return false;
     }
 }
