@@ -344,7 +344,7 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // Robot
-       // new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(killCommand);
+       new JoystickButton(JOYSTICK, 7).whenPressed(killCommand);
        // new DPadButton(XBOX, DPadButton.Direction.DOWN).whenPressed(killCommand);
         new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(toggleSpeedCommand);
 
@@ -360,36 +360,25 @@ public class RobotContainer {
              intakeTrigger.whileActiveContinuous(collectBall);
              intakeTrigger.whenInactive(noCollectBall);
 
-        
-
- 
-
-        // new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
-
-      
-        new JoystickButton(XBOX, XboxConstants.POINT_AND_SHOOT).whenPressed(m_pointAndShoot);
-
-     
 
         // Climber
-        new JoystickButton(JOYSTICK, 7).whileHeld(retractClimberCmd);
+        new JoystickButton(JOYSTICK, 2).whileHeld(retractClimberCmd);
         new JoystickButton(JOYSTICK, 1).whileHeld(extendClimberCmd);
-        new JoystickButton(JOYSTICK, 3).whenPressed(reachUp);
-        new JoystickButton(JOYSTICK, 4).whenPressed(pullUp);
-        new JoystickButton(JOYSTICK, 5).whenPressed(reachBack);
+        new JoystickButton(JOYSTICK, 5).whenPressed(reachUp);
+        new JoystickButton(JOYSTICK, 3).whenPressed(pullUp);
+        new JoystickButton(JOYSTICK, 4).whenPressed(reachBack);
         new JoystickButton(JOYSTICK, 6).whenPressed(grabNextBar);
 
-        new JoystickButton(JOYSTICK, JoystickConstants.LEFT_CLIMBER_UP).whileHeld(extendRightClimberCmd);
-        new JoystickButton(JOYSTICK, JoystickConstants.RIGHT_CLIMBER_UP).whileHeld(extendLeftClimberCmd);
+        new JoystickButton(JOYSTICK, 10).whileHeld(extendRightClimberCmd);
+        new JoystickButton(JOYSTICK, 9).whileHeld(retractRightClimberCmd);
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(turnToHub);
         // new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall).whenReleased(noCollectBall);
         
-        new JoystickButton(JOYSTICK, JoystickConstants.TURN_TO_HUB).whenPressed(turnToHub);
 
     }
 
