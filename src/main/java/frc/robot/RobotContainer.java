@@ -177,7 +177,7 @@ public class RobotContainer {
         new PrintCommand("grab next bar activated")
     );
 
-    private static ExtendLeftClimber extendLeftClimberCmd = new ExtendLeftClimber(m_climber, 1.0);
+    private static RetractRightClimber retractRightClimberCmd = new RetractRightClimber(m_climber, 1.0);
     private static ExtendRightClimber extendRightClimberCmd = new ExtendRightClimber(m_climber, 1.0);
 
     // Drive Train
