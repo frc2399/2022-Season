@@ -90,6 +90,7 @@ public class Climber extends SubsystemBase {
 
     piston = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, ClimberConstants.EXTEND_PISTON, ClimberConstants.RETRACT_PISTON);
 
+    this.tiltForward();
   }
 
   @Override
