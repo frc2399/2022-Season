@@ -97,6 +97,7 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putBoolean("Left Climber Extended", this.isLeftExtended());
     // SmartDashboard.putBoolean("Right Climber Extended", this.isRightExtended());
+    SmartDashboard.putNumber("Climber right encoder", rightEncoder.getPosition());
 
   }
 
