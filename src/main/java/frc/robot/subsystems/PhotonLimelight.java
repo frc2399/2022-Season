@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
 import frc.robot.Constants.PhotonLimelightConstants;
 import frc.robot.util.Coords;
 
@@ -7,13 +8,18 @@ import frc.robot.util.Coords;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,35 +28,104 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class PhotonLimelight extends SubsystemBase {
 
   public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
+  public static final NetworkTableEntry hub_x_entry = Shuffleboard.getTab("Driver").add("Hub X", 0).getEntry();
+  public static final NetworkTableEntry hub_y_entry = Shuffleboard.getTab("Driver").add("Hub Y", 0).getEntry();
+  public static final NetworkTableEntry hub_distance_entry = Shuffleboard.getTab("Driver").add("Hub dist", 0).getEntry();
+  public static final NetworkTableEntry hub_angle_entry = Shuffleboard.getTab("Driver").add("Hub angle", 0).getEntry();
+  public static final NetworkTableEntry in_line_entry = Shuffleboard.getTab("Driver").add("In Line", false).getEntry();
   static PhotonCamera camera;
   public static double distanceToHub;
+  public static double angleToHub;
+  public static boolean has_targets;
 
   Boolean photonNotFoundMessagePrinted = false ;
 
   public PhotonLimelight() {
+
+    PhotonLimelight.turnLEDOff();
     camera = new PhotonCamera("gloworm");
 
   }
 
   @Override
   public void periodic() {
+
+    var result = camera.getLatestResult();
+
+    has_targets = result.hasTargets();
+
+    SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
+    if (has_targets) {
+
+        // List<PhotonTrackedTarget> targets = result.getTargets();
+        PhotonTrackedTarget best_target = result.getBestTarget();
+
+        double distance_to_target = PhotonUtils.calculateDistanceToTargetMeters(
+          PhotonLimelightConstants.CAMERA_HEIGHT_INCHES,
+          PhotonLimelightConstants.TARGET_HEIGHT_INCHES,
+          Units.degreesToRadians(PhotonLimelightConstants.TILT_DEGREES),
+          Units.degreesToRadians(best_target.getPitch())
+        );
+
+
+        Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
+          distance_to_target, Rotation2d.fromDegrees(-best_target.getYaw()));
+
+
+        double x_translation = translation.getX();
+        double y_translation = translation.getY();
+
+        hub_x_entry.setNumber(x_translation);
+        hub_y_entry.setNumber(y_translation);
+        double hub_dist = Math.hypot(x_translation, y_translation);
+        angleToHub = Units.radiansToDegrees(Math.atan2(y_translation, x_translation));
+        hub_distance_entry.setNumber(hub_dist);
+        hub_angle_entry.setNumber(angleToHub);
+        int countTargets = result.getTargets().size();
+        amountTargets.setNumber(countTargets);
+        boolean isInLine = Math.abs(angleToHub) < 7.5;
+        in_line_entry.setBoolean(isInLine);
+        
+
+    }
+    else {
+      hub_x_entry.setNumber(0);
+      hub_y_entry.setNumber(0);
+      hub_distance_entry.setNumber(0);
+      hub_angle_entry.setNumber(0);
+      amountTargets.setNumber(0);
+      in_line_entry.setBoolean(false);
+      angleToHub = 0;
+
+    }
+  }
+
+
+  public static double getAngleToHub() {
+    return angleToHub;
+  }
+
+
+  //@Override
+  public void periodic_og() {
     // This method will be called once per scheduler run
-    /*
-     * double y_angle = Robot.ty.getDouble(1);
-     * SmartDashboard.putNumber("y_angle", Robot.ty.getDouble(1));
-     * double y_angle_radians = Math.toRadians(y_angle);
-     * SmartDashboard.putNumber("y_angle_radians", y_angle_radians);
-     * double y_distance =
-     * LimelightConstants.HEIGHT_INCHES/(Math.tan(y_angle_radians));
-     * SmartDashboard.putNumber("y_distance", y_distance);
-     * 
-     * double x_angle = Robot.tx.getDouble(1);
-     * SmartDashboard.putNumber("x_angle", Robot.tx.getDouble(1));
-     * double x_angle_radians = Math.toRadians(x_angle);
-     * SmartDashboard.putNumber("x_angle_radians", x_angle_radians);
-     * double x_distance = y_distance * Math.sin(x_angle_radians);
-     * SmartDashboard.putNumber("x_distance", x_distance);
-     */
+    
+      double y_angle = Robot.ty.getDouble(1);
+      SmartDashboard.putNumber("y_angle", Robot.ty.getDouble(1));
+      double y_angle_radians = Math.toRadians(y_angle);
+      SmartDashboard.putNumber("y_angle_radians", y_angle_radians);
+      double y_distance =
+      (PhotonLimelightConstants.TARGET_HEIGHT_INCHES - PhotonLimelightConstants.CAMERA_HEIGHT_INCHES) 
+         /(Math.tan(y_angle_radians));
+      SmartDashboard.putNumber("y_distance", y_distance);
+      
+      double x_angle = Robot.tx.getDouble(1);
+      SmartDashboard.putNumber("x_angle", Robot.tx.getDouble(1));
+      double x_angle_radians = Math.toRadians(x_angle);
+      SmartDashboard.putNumber("x_angle_radians", x_angle_radians);
+      double x_distance = y_distance * Math.sin(x_angle_radians);
+      SmartDashboard.putNumber("x_distance", x_distance);
+     
     // System.out.println("Testing for photon limelight targets");
 
     PhotonPipelineResult result = null;
@@ -329,6 +404,14 @@ public class PhotonLimelight extends SubsystemBase {
       }
     }
     return centers;
+  }
+
+  public static void turnLEDOn() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
+  }
+
+  public static void turnLEDOff() {
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
   }
 
 }

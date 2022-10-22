@@ -9,6 +9,7 @@ import frc.robot.commands.drivetrain.DriveStraightGivenDistance;
 import frc.robot.commands.drivetrain.TurnNAngle;
 import frc.robot.commands.intake.IntakeCmdForGivenTime;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
+import frc.robot.commands.robot.UpperShootFromFender;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;

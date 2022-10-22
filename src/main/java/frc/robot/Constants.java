@@ -40,6 +40,8 @@ public class Constants {
 
         public static final double TURN_SENSITIVITY = 0;
 
+        public static final double SLOW_SPEED_FRACTION = 0.3;
+
     }
 
     public static final class JoystickConstants {
@@ -50,23 +52,19 @@ public class Constants {
         public static final int TURN_JOYSTICK_INVERT = 1;
       
 
-        public static final int INTAKE_ARM_RETRACT = 11; 
-        public static final int INTAKE_ARM_EXTEND = 12; 
-        //public static final int INTAKE_BACK = 6;
+
 
         public static final int SHOOTER_BTN = 3; 
-
-        //public static final int INDEXER = 9;
-
-        public static final int INDEXER_FWD = 6;
-        public static final int INDEXER_BACK = 4;
-
-        // public static final int TURN_TO_N = 12; // get rid of this eventually
 
         public static final int CLIMBER_UP = 5;
         public static final int CLIMBER_DOWN = 3;
 
+        public static final int RIGHT_CLIMBER_UP = 4;
+        public static final int LEFT_CLIMBER_UP = 6;
+
         public static final int MAX_SHOOT = 7;
+
+        public static final int TURN_TO_HUB = 9;
 
     } 
 
@@ -102,16 +100,12 @@ public class Constants {
         public static final int FORWARD_JOYSTICK_INVERT = 1;
         public static final int TURN_JOYSTICK_INVERT = 1;
 
-        public static final int TURN_RIGHT = XboxMappingToJoystick.B_BUTTON;
-        public static final int TURN_LEFT = XboxMappingToJoystick.X_BUTTON;
-        public static final int TURN_180 = XboxMappingToJoystick.A_BUTTON;
+        
         public static final int SHIFT_HIGH_SPEED = XboxMappingToJoystick.RIGHT_BUMPER; 
         public static final int SHIFT_HIGH_TORQUE = XboxMappingToJoystick.LEFT_BUMPER ; 
         public static final int INTAKE = XboxMappingToJoystick.LEFT_TRIGGER; 
         public static final int INDEX_AND_SHOOT = XboxMappingToJoystick.RIGHT_TRIGGER;
         public static final int POINT_AND_SHOOT = XboxMappingToJoystick.A_BUTTON;
-        public static final int TURN_RIGHT_90_CCW = XboxMappingToJoystick.B_BUTTON;
-        public static final int TURN_RIGHT_90_CW = XboxMappingToJoystick.X_BUTTON;
         public static final int SPIT_OUT_BALL = XboxMappingToJoystick.Y_BUTTON;
 
 
@@ -146,7 +140,7 @@ public class Constants {
         public static final double SETPOINT_RATIO = 2.7;
         public static final double BOTTOM_SETPOINT = 2100;
         public static final double TOP_SETPOINT = BOTTOM_SETPOINT * SETPOINT_RATIO;
-        public static final double MAX_SETPOINT = 5000;
+        public static final double MAX_SETPOINT = 3000;
 
         public static final double FENDER_LOWER_SHOOTER_TOP_SPEED = 900;
         public static final double FENDER_LOWER_SHOOTER_BOTTOM_SPEED = 850;
@@ -218,6 +212,8 @@ public class Constants {
         public static final double TILT_DEGREES = 36;
         // public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
         // public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+
+        public static final double ANGLE_ERROR_TOLERANCE = 3; 
     }
 }
 
