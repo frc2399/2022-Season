@@ -155,11 +155,11 @@ public class RobotContainer {
         new IndexerCmd(m_indexer, 0));
 
     // Climber
-    private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 0.3);
-    private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 0.3);
+    private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 1.0);
+    private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 1.0);
 
-    public static Command reachUp = new ExtendClimber(m_climber, 0.3);
-    public static Command pullUp = new RetractClimber(m_climber, 0.3);
+    public static Command reachUp = new ExtendClimber(m_climber, 1.0);
+    public static Command pullUp = new RetractClimber(m_climber, 1.0);
     public static Command reachBack = new SequentialCommandGroup(
         new ExtendClimber(m_climber, 0.3),
         new WaitUntilCommand(() -> m_climber.getClimberHeight() > ClimberConstants.MAX_HEIGHT / 4), // TODO: edit later
@@ -170,6 +170,12 @@ public class RobotContainer {
             new PrintCommand("reach back activated")
         )
     );
+
+    public static Command tiltBack = new InstantCommand( () -> m_climber.tiltBack());
+    public static Command tiltForward = new InstantCommand( () -> m_climber.tiltForward());
+
+
+
 
     public static Command grabNextBar = new SequentialCommandGroup(
         new RetractClimber(m_climber, 0.3),
@@ -364,9 +370,9 @@ public class RobotContainer {
         // Climber
         new JoystickButton(JOYSTICK, 2).whileHeld(retractClimberCmd);
         new JoystickButton(JOYSTICK, 1).whileHeld(extendClimberCmd);
-        new JoystickButton(JOYSTICK, 5).whenPressed(reachUp);
-        new JoystickButton(JOYSTICK, 3).whenPressed(pullUp);
-        new JoystickButton(JOYSTICK, 4).whenPressed(reachBack);
+        new JoystickButton(JOYSTICK, 3).whenPressed(tiltForward);
+        new JoystickButton(JOYSTICK, 4).whenPressed(pullUp);
+        new JoystickButton(JOYSTICK, 5).whenPressed(tiltBack);
         new JoystickButton(JOYSTICK, 6).whenPressed(grabNextBar);
 
         new JoystickButton(JOYSTICK, 10).whileHeld(extendRightClimberCmd);
@@ -374,7 +380,7 @@ public class RobotContainer {
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(turnToHub);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
         // new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
         new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall).whenReleased(noCollectBall);

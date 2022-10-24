@@ -19,6 +19,7 @@ public class RetractClimber extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Retract initialized");
     
     }
 

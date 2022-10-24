@@ -149,6 +149,11 @@ public class PhotonLimelight extends SubsystemBase {
     //   System.out.println("photon does not exist!");
     //   return;
     // }
+    // try {
+    //   result = camera.getLatestResult();
+    // } catch(Exception e) {
+    //   return;
+    // }
 
     result = camera.getLatestResult();
 
@@ -164,92 +169,92 @@ public class PhotonLimelight extends SubsystemBase {
         ArrayList<Double> coordinates = getTargetLocation(target, countTargets);
         x_distances.add(coordinates.get(0));
         y_distances.add(coordinates.get(1));
+      }
+    }
         // String smartdashx = "X" + countTargets;
         // String smartdashy = "Y" + countTargets;
         // SmartDashboard.putNumber(smartdashx, coordinates.get(1));
         // SmartDashboard.putNumber(smartdashy, coordinates.get(0));
 
-        countTargets++;
-      
-      }
+    //   }
 
-      SmartDashboard.putBoolean("Can shoot", (countTargets >= 3));
-      System.out.println("number of targets: " + countTargets);
+    //   SmartDashboard.putBoolean("Can shoot", (countTargets >= 3));
+    //   System.out.println("number of targets: " + countTargets);
 
-      amountTargets.setNumber(countTargets);
+    //   amountTargets.setNumber(countTargets);
     
 
-      double totalCenterX = 0;
-      double totalCenterY = 0;
-      for (int i = 0; i< targets.size() - 1; i++)
-      {
-        double x1 = x_distances.get(i);
-        double x2 = x_distances.get(i+1);
-        double y1 = y_distances.get(i);
-        double y2 = y_distances.get(i+1);
-        System.out.println("x coordinates: " + x1 + " " + x2);
-        System.out.println("y coordinates: " + y1 + " " + y2);
-        // String smartdashxi = "Xi=" + i;
-        // String smartdashyi = "Yi=" + i;
+    //   double totalCenterX = 0;
+    //   double totalCenterY = 0;
+    //   for (int i = 0; i< targets.size() - 1; i++)
+    //   {
+    //     double x1 = x_distances.get(i);
+    //     double x2 = x_distances.get(i+1);
+    //     double y1 = y_distances.get(i);
+    //     double y2 = y_distances.get(i+1);
+    //     System.out.println("x coordinates: " + x1 + " " + x2);
+    //     System.out.println("y coordinates: " + y1 + " " + y2);
+    //     // String smartdashxi = "Xi=" + i;
+    //     // String smartdashyi = "Yi=" + i;
 
-        var circle = circle_from_p1p2r(x1, y1, x2, y2, PhotonLimelightConstants.HUB_RADIUS_INCHES);
-        if(circle != null)
-        {
-          // SmartDashboard.putNumber(smartdashxi, circle.get(0));
-          // SmartDashboard.putNumber(smartdashyi, circle.get(1));
-          totalCenterX += circle.get(0);
-          totalCenterY += circle.get(1);
+    //     var circle = circle_from_p1p2r(x1, y1, x2, y2, PhotonLimelightConstants.HUB_RADIUS_INCHES);
+    //     if(circle != null)
+    //     {
+    //       // SmartDashboard.putNumber(smartdashxi, circle.get(0));
+    //       // SmartDashboard.putNumber(smartdashyi, circle.get(1));
+    //       totalCenterX += circle.get(0);
+    //       totalCenterY += circle.get(1);
 
-          System.out.println("Y Circle points: " + y1 + " " + y2);
-          System.out.println("Circle Center Y: " + circle.get(1));
+    //       System.out.println("Y Circle points: " + y1 + " " + y2);
+    //       System.out.println("Circle Center Y: " + circle.get(1));
 
-          System.out.println("X Circle points: " + x1 + " " + x2);
-          System.out.println("Circle Center X: " + circle.get(0));
-        }
-        else
-        {
-         // SmartDashboard.putString(smartdashxi, "null");
-         // SmartDashboard.putString(smartdashyi, "null");
-         System.out.println("No circle :(");
-        }
+    //       System.out.println("X Circle points: " + x1 + " " + x2);
+    //       System.out.println("Circle Center X: " + circle.get(0));
+    //     }
+    //     else
+    //     {
+    //      // SmartDashboard.putString(smartdashxi, "null");
+    //      // SmartDashboard.putString(smartdashyi, "null");
+    //      System.out.println("No circle :(");
+    //     }
         
-      }
-      System.out.println("Total CenterX: " + totalCenterX);
-      System.out.println("Total CenterY: " + totalCenterY);
+    //   }
+    //   System.out.println("Total CenterX: " + totalCenterX);
+    //   System.out.println("Total CenterY: " + totalCenterY);
 
       
-      double averageCenterX = totalCenterX/(countTargets - 1);  //targets.size();
-      double averageCenterY = totalCenterY/(countTargets - 1);   //targets.size();
+    //   double averageCenterX = totalCenterX/(countTargets - 1);  //targets.size();
+    //   double averageCenterY = totalCenterY/(countTargets - 1);   //targets.size();
       
-      SmartDashboard.putNumber("averageCenterX", averageCenterX);
-      SmartDashboard.putNumber("averageCenterY", averageCenterY);
-      SmartDashboard.putNumber("NUMBER OF TARGETS", targets.size());
-      System.out.println("targets.size: " + targets.size());
-      System.out.println("y distance to hub center: " + averageCenterY);
-      System.out.println("x distance to hub center: " + averageCenterX);
+    //   SmartDashboard.putNumber("averageCenterX", averageCenterX);
+    //   SmartDashboard.putNumber("averageCenterY", averageCenterY);
+    //   SmartDashboard.putNumber("NUMBER OF TARGETS", targets.size());
+    //   System.out.println("targets.size: " + targets.size());
+    //   System.out.println("y distance to hub center: " + averageCenterY);
+    //   System.out.println("x distance to hub center: " + averageCenterX);
 
-      //double angle = 180/Math.PI * (Math.atan2(averageCenterX, averageCenterY));
-      // System.out.println("angle!  " + angle);
+    //   //double angle = 180/Math.PI * (Math.atan2(averageCenterX, averageCenterY));
+    //   // System.out.println("angle!  " + angle);
 
-      if (x_distances.size() >= 3) {
-        double averageX = (x_distances.get(0) + x_distances.get(1) + x_distances.get(2))/3;
-        double averageY = (y_distances.get(0) + y_distances.get(1) + y_distances.get(2))/3;
-        double angle = 180/Math.PI * (Math.atan2(averageX, averageY));
-        System.out.println("angle!  " + angle);
-      }
-      else {
-        //System.out.println("less than 3 targets!");
-      }
+    //   if (x_distances.size() >= 3) {
+    //     double averageX = (x_distances.get(0) + x_distances.get(1) + x_distances.get(2))/3;
+    //     double averageY = (y_distances.get(0) + y_distances.get(1) + y_distances.get(2))/3;
+    //     double angle = 180/Math.PI * (Math.atan2(averageX, averageY));
+    //     System.out.println("angle!  " + angle);
+    //   }
+    //   else {
+    //     //System.out.println("less than 3 targets!");
+    //   }
     
 
-    }
+    // }
 
 
   }
 
   @Override
   public void simulationPeriodic() {
-    // This method will be called once per scheduler run when in simulation
+    //This method will be called once per scheduler run when in simulation
 
   }
 
