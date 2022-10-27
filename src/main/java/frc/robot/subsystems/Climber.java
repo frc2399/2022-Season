@@ -36,8 +36,6 @@ public class Climber extends SubsystemBase {
   private static double climberDrumRadius = 0.01; //in meters
   private SimEncoder climberEncoderSim;
   private ElevatorSim climberSim; 
-  private static final double kElevatorEncoderDistPerPulse =
-  2.0 * Math.PI * climberDrumRadius / 4096;
 
 
   public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
@@ -115,10 +113,9 @@ public class Climber extends SubsystemBase {
           0.01, //carriage mass in kg
           climberDrumRadius, //drum radius in meter
           0, //minimum height in meters
-          Units.feetToMeters(2), //maximum height in meters of climber
+          Units.inchesToMeters(25), //maximum height in meters of climber
           VecBuilder.fill(0.01) //standard deviation of the measurements, adds noise to the simulation
         ); 
-        climberEncoderSim.setDistancePerPulse(kElevatorEncoderDistPerPulse);
     }
   }
 
@@ -199,6 +196,7 @@ public class Climber extends SubsystemBase {
   {
     if (RobotBase.isSimulation())
     {
+      // simulator output is in meters, needs to be converted to inches to work with the rest of the code. encoders are already in inches
         return Units.metersToInches(climberEncoderSim.getDistance());
     }
     else
@@ -211,6 +209,7 @@ public class Climber extends SubsystemBase {
   public double getRightEncoderPosition()
   {
     if (RobotBase.isSimulation())
+      // simulator output is in meters, needs to be converted to inches to work with the rest of the code. encoders are already in inches
     {
         return Units.metersToInches(climberEncoderSim.getDistance());
     }
