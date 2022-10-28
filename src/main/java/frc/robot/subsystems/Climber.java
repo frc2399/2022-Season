@@ -6,9 +6,14 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
+import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.DriveConstants;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,8 +23,13 @@ public class Climber extends SubsystemBase {
   private CANSparkMax rightMotorController;
   private RelativeEncoder leftEncoder, rightEncoder;
   private SparkMaxPIDController leftPIDController, rightPIDController;
+  private DoubleSolenoid piston;
+
 
   public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
+  public static final NetworkTableEntry leftClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Left Climber Motor", 0).getEntry();
+  public static final NetworkTableEntry rightClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Right Climber Motor", 0).getEntry();
+
 
 
   SlewRateLimiter filter;
@@ -82,6 +92,13 @@ public class Climber extends SubsystemBase {
     filter = new SlewRateLimiter(SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
     System.out.println ("Climber SlewRateLimiter " + SmartDashboard.getNumber("Climber Slew Rate", ClimberConstants.CLIMBER_SLEW));
 
+    piston = new DoubleSolenoid(DriveConstants.PCM_ADDRESS, PneumaticsModuleType.CTREPCM, ClimberConstants.EXTEND_PISTON, ClimberConstants.RETRACT_PISTON);
+
+    this.tiltForward();
+
+    leftEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
+    rightEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
+
   }
 
   @Override
@@ -89,6 +106,7 @@ public class Climber extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putBoolean("Left Climber Extended", this.isLeftExtended());
     // SmartDashboard.putBoolean("Right Climber Extended", this.isRightExtended());
+    SmartDashboard.putNumber("Climber right encoder", rightEncoder.getPosition());
 
   }
 
@@ -96,6 +114,7 @@ public class Climber extends SubsystemBase {
   {
     speed = filter.calculate(speed);
     leftMotorController.set(speed);
+    leftClimberMotor.setDouble(speed);
   }
 
   public void setRightSpeed(double speed)
@@ -103,6 +122,8 @@ public class Climber extends SubsystemBase {
     speed = filter.calculate(speed);
     rightMotorController.set(speed);
     // SmartDashboard.putNumber("Climber speed ", speed);
+    rightClimberMotor.setDouble(speed);
+
   }
 
   public boolean isLeftExtended()
@@ -124,5 +145,20 @@ public class Climber extends SubsystemBase {
   public boolean isRightRetracted()
   {
     return (rightEncoder.getPosition() < ClimberConstants.MIN_HEIGHT);
+  }
+
+  public double getClimberHeight()
+  {
+    return (leftEncoder.getPosition() + rightEncoder.getPosition())/2;
+  }
+
+  public void tiltBack()
+  {
+    piston.set(Value.kForward);
+  }
+
+  public void tiltForward()
+  {
+    piston.set(Value.kReverse);
   }
 }

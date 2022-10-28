@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
@@ -34,10 +35,11 @@ import frc.robot.commands.indexer.*;
 import frc.robot.commands.intake.*;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.commands.intakearm.RetractIntakeArm;
-//import frc.robot.commands.robot.PointAndShoot;
-// import frc.robot.commands.robot.PointAndShoot;
+import frc.robot.commands.robot.PointAndShoot;
+import frc.robot.commands.robot.UpperShootFromFender;
 import frc.robot.commands.shooter.*;
 import frc.robot.subsystems.*;
+import frc.robot.util.DPadButton;
 import frc.robot.util.DriveTurnControls;
 
 /**
@@ -79,10 +81,15 @@ public class RobotContainer {
     // Robot
     private static InstantCommand killCommand = new InstantCommand(() -> CommandScheduler.getInstance().cancelAll());
 
+    private static InstantCommand toggleSpeedCommand = new InstantCommand(() -> ArcadeDriveCmd.isSlow = !ArcadeDriveCmd.isSlow);
+
 
     // Shooter 
     private static InstantCommand startShooter = new InstantCommand(() -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT, ShooterConstants.BOTTOM_SETPOINT), m_shooter);
     private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
+
+    //Turn To Hub
+    private static Command turnToHub = new TurnToHub(m_driveTrain);
 
     // private  static Command shoot = new SequentialCommandGroup(
     //     new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
@@ -104,8 +111,10 @@ public class RobotContainer {
 
         
     private static Command spitOutBall = new ParallelCommandGroup(
+        new ExtendIntakeArm(m_intake),
         new IndexerBackCmd(m_indexer),
         new IntakeCmd(m_intake, -IntakeConstants.INTAKESPEED));
+    
 
     public static Command upperShootFromTarmac = new SequentialCommandGroup(
         new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
@@ -114,6 +123,8 @@ public class RobotContainer {
         new WaitUntilCommand(() -> m_shooter.correctSpeed()),
         new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
     
+
+
 
     
     
@@ -130,7 +141,7 @@ public class RobotContainer {
     private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer);
 
     // Ultimate command
-    //private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
+    private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
     // Collect balls
     private static ParallelCommandGroup collectBall = new ParallelCommandGroup(
@@ -146,6 +157,34 @@ public class RobotContainer {
     // Climber
     private static ExtendClimber extendClimberCmd = new ExtendClimber(m_climber, 1.0);
     private static RetractClimber retractClimberCmd = new RetractClimber(m_climber, 1.0);
+
+    public static Command reachUp = new ExtendClimber(m_climber, 1.0);
+    public static Command pullUp = new RetractClimber(m_climber, 1.0);
+    public static Command reachBack = new SequentialCommandGroup(
+        new ExtendClimber(m_climber, 0.3),
+        new WaitUntilCommand(() -> m_climber.getClimberHeight() > ClimberConstants.MAX_HEIGHT / 4), // TODO: edit later
+        new ParallelCommandGroup(
+            new InstantCommand(
+                 () -> m_climber.tiltBack()),
+            new ExtendClimber(m_climber, 0.3),
+            new PrintCommand("reach back activated")
+        )
+    );
+
+    public static Command tiltBack = new InstantCommand( () -> m_climber.tiltBack());
+    public static Command tiltForward = new InstantCommand( () -> m_climber.tiltForward());
+
+
+
+
+    public static Command grabNextBar = new SequentialCommandGroup(
+        new RetractClimber(m_climber, 0.3),
+        new WaitUntilCommand(() -> m_climber.getClimberHeight() < ClimberConstants.MAX_HEIGHT / 2), // TODO: edit later
+        new PrintCommand("grab next bar activated")
+    );
+
+    private static RetractRightClimber retractRightClimberCmd = new RetractRightClimber(m_climber, 0.3);
+    private static ExtendRightClimber extendRightClimberCmd = new ExtendRightClimber(m_climber, 0.3);
 
     // Drive Train
     public static TurnToNAngle m_turnToNAngle = new TurnToNAngle(0, m_driveTrain);
@@ -174,7 +213,7 @@ public class RobotContainer {
     private static Command m_pop = new PopAndDriveOutAuton(m_driveTrain, m_shooter, m_indexer);
 
 
-    // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
+    private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
    // private static Command m_driveStraightGivenDistance = new DriveStraightGivenDistance(0.5, 10, m_driveTrain);
 
@@ -184,7 +223,7 @@ public class RobotContainer {
     // A chooser for autonomous commands
     static SendableChooser < Command > m_chooser = new SendableChooser < > ();
     public final static ComplexWidget autonChooser = Shuffleboard.getTab("Driver")
-    .add("Choose Auton", m_chooser).withWidget(BuiltInWidgets.kSplitButtonChooser).withPosition(0, 4).withSize(9, 1);
+    .add("Choose Auton", m_chooser).withWidget(BuiltInWidgets.kSplitButtonChooser).withPosition(4, 4).withSize(9, 1);
 
     PowerDistribution pdp = new PowerDistribution(0, ModuleType.kCTRE);
 
@@ -193,30 +232,22 @@ public class RobotContainer {
 
     private RobotContainer() {
 
-        // PortForwarder.add(5800, "photovision.local", 5800);
-
-        PortForwarder.add(5800, "10.23.99.11", 5800);
-        PortForwarder.add(5801, "10.23.99.11", 5801);
-        PortForwarder.add(5802, "10.23.99.11", 5802);
-        PortForwarder.add(5803, "10.23.99.11", 5803);
-        PortForwarder.add(5804, "10.23.99.11", 5804);
-        PortForwarder.add(5805, "10.23.99.11", 5805);
         
         // camera not in simulator to make it not crash
         if (RobotBase.isReal())
         {
-            CameraServer.startAutomaticCapture();
+           // CameraServer.startAutomaticCapture();
         }
 
         // Add commands to the autonomous command chooser
-        m_chooser.addOption("Index and Shoot Both", m_bread);
-        m_chooser.addOption("position 2 auton", m_PB);
-        m_chooser.addOption("Jelly Strawberry auton", m_jellyStrawberryAuton);
+        m_chooser.addOption("Bread - position 1 (2 ball)", m_bread);
+        m_chooser.addOption("Peanut Butter - position 2 (2 ball)", m_PB);
+        m_chooser.addOption("Strawberry Jelly - position 3 (3 ball)", m_jellyStrawberryAuton);
         m_chooser.addOption("Turn Auto", m_turnAuto);
         m_chooser.addOption("Drive Straight Auto", m_driveStraightAuto);
-        m_chooser.addOption("Position 3 (jelly)", m_jelly);
-        m_chooser.addOption("Position 4 (stale bread)", m_stale);
-        m_chooser.addOption("Position 5 (crunchy PB)", m_crunchy);
+        m_chooser.addOption("Jelly - position 3 (2 ball)", m_jelly);
+        m_chooser.addOption("Stale Bread - position 1 (2 ball)", m_stale);
+        m_chooser.addOption("Crunchy Peanut Butter - position 2 (3 ball)", m_crunchy);
         m_chooser.addOption("Do nothing (air)", m_air);
         m_chooser.addOption("Drive out tarmac (banana)", m_banana);
         m_chooser.addOption("Ploop and drive out", m_ploop);
@@ -235,15 +266,6 @@ public class RobotContainer {
         // FollowTarget(m_driveTrain));
         // Shuffleboard.getTab("SmartDashboard").add("Buttery Follow Target", new
         // ButterySmoothFollowTarget(m_driveTrain));
-
-        // //Shuffleboard.getTab("Robot").add("Index and Shoot", new
-        // SequentialCommandGroup(
-        // new InstantCommand(
-        // () -> m_shooter.setSpeedWithPID(ShooterConstants.TOP_SETPOINT,
-        // ShooterConstants.BOTTOM_SETPOINT),
-        // m_shooter),
-        // new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        // new IndexerCmdForGivenTime(m_indexer, 0.5, 2)));
 
         Shuffleboard.getTab("Shooter").add(
             "Start Shooter", startShooter.perpetually()
@@ -328,7 +350,9 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // Robot
-        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(killCommand);
+       new JoystickButton(JOYSTICK, 7).whenPressed(killCommand);
+       // new DPadButton(XBOX, DPadButton.Direction.DOWN).whenPressed(killCommand);
+        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(toggleSpeedCommand);
 
         // Drive train
         new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
@@ -336,52 +360,30 @@ public class RobotContainer {
 
         Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
              upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
-        // WE DISABLED FOR SAFETY WHEN TESTING
-        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT).whenPressed(m_turnRight);
-        // new JoystickButton(XBOX, XboxConstants.TURN_LEFT).whenPressed(m_turnLeft);
-        // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
-        // Intake
-        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_BACK).whileHeld(intakeBackCmd);
-        // Sets the intake command to the left trigger
         
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
              intakeTrigger.whileActiveContinuous(collectBall);
              intakeTrigger.whenInactive(noCollectBall);
 
-        
-
-        // new JoystickButton(XBOX, XboxMappingToJoystick.LEFT_STICK_PUSH).whenPressed(collectBall);
-        // new JoystickButton(XBOX, XboxMappingToJoystick.RIGHT_STICK_PUSH).whenPressed(noCollectBall);
-
-        //new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
-
-        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_EXTEND).whenPressed(extendIntakeArm);
-        // new JoystickButton(JOYSTICK, JoystickConstants.INTAKE_ARM_RETRACT).whenPressed(retractIntakeArm);
-
-        // Indexer
-        new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_FWD).whileHeld(indexerFwdCmd);
-        new JoystickButton(JOYSTICK, JoystickConstants.INDEXER_BACK).whileHeld(indexerBackCmd);
-
-        // new JoystickButton(XBOX, XboxConstants.INDEXER_AND_SHOOT).whileHeld();
-        // new JoystickButton(XBOX, XboxConstants.POINT_AND_SHOOT).whenPressed(m_pointAndShoot);
-
-        //turning
-        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CCW).whenPressed(m_turnRight);
-        // new JoystickButton(XBOX, XboxConstants.TURN_RIGHT_90_CW).whenPressed(m_turnLeft);
-        // new JoystickButton(XBOX, XboxConstants.TURN_180).whenPressed(m_turn180);
 
         // Climber
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_DOWN).whileHeld(retractClimberCmd);
-        new JoystickButton(JOYSTICK, JoystickConstants.CLIMBER_UP).whileHeld(extendClimberCmd);
+        new JoystickButton(JOYSTICK, 2).whileHeld(retractClimberCmd);
+        new JoystickButton(JOYSTICK, 1).whileHeld(extendClimberCmd);
+        new JoystickButton(JOYSTICK, 3).whenPressed(tiltForward);
+        new JoystickButton(JOYSTICK, 4).whenPressed(pullUp);
+        new JoystickButton(JOYSTICK, 5).whenPressed(tiltBack);
+        new JoystickButton(JOYSTICK, 6).whenPressed(grabNextBar);
 
+        new JoystickButton(JOYSTICK, 10).whileHeld(extendRightClimberCmd);
+        new JoystickButton(JOYSTICK, 9).whileHeld(retractRightClimberCmd);
         // Shooter
         // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
         new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
+        // new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall);
+        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall).whenReleased(noCollectBall);
         
 
     }
