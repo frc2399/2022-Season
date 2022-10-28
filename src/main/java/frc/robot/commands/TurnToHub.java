@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Constants;
+import frc.robot.Constants.PhotonLimelightConstants;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotState;
@@ -25,6 +27,9 @@ public class TurnToHub extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+  
+    PhotonLimelight.turnLEDOn();
+  
     System.out.println("TurnToHub initialized!");
 
     // Sets motors to brake mode
@@ -35,10 +40,10 @@ public class TurnToHub extends CommandBase {
   @Override
   public void execute() {
 
-    double error = PhotonLimelight.angleToHub();
+    double error = PhotonLimelight.getAngleToHub();
     SmartDashboard.putNumber("hub error", error);
 
-    double outputSpeed = Constants.DriveConstants.TURN_TO_HUB_KP * error;
+    double outputSpeed = Constants.DriveConstants.TURN_TO_HUB_KP * -error;
     outputSpeed = MathUtil.clamp(outputSpeed, -0.1, 0.1);
 
     SmartDashboard.putNumber("hub outputSpeed", outputSpeed);
@@ -70,11 +75,17 @@ public class TurnToHub extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-   double errorTolerance = DriveTrain.angleErrorTolerance.getDouble(5);
+   double errorTolerance = PhotonLimelightConstants.ANGLE_ERROR_TOLERANCE;
     // SmartDashboard.getNumber("Error Tolerance", 5);
     //System.out.println("difference " + Math.abs(modAngle(newAngle - currentAngle)));
-    double error = PhotonLimelight.angleToHub();
-    if (Math.abs(modAngle(error)) <= errorTolerance) {
+    double error = PhotonLimelight.getAngleToHub();
+    System.out.println("Error: " + error);
+    System.out.println("Error Tolerance: " + errorTolerance);
+    if (PhotonLimelight.has_targets  && Math.abs(modAngle(error)) <= errorTolerance ){
+      System.out.println("turn to hub finished!!");
+      
+      PhotonLimelight.turnLEDOff();
+
       return true;
     }
     return false;

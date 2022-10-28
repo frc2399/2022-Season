@@ -41,7 +41,7 @@ public class Shifter extends SubsystemBase {
 	 * @param setShifter
 	 */
 	public void setShifterHighSpeed() {
-		shifter.set(Value.kForward);
+		shifter.set(Value.kReverse);
 		highSpeedEntry.setBoolean(true);
 		highTorqueEntry.setBoolean(false);
 
@@ -50,7 +50,7 @@ public class Shifter extends SubsystemBase {
 	}
 	
 	public void setShifterHighTorque() {
-		shifter.set(Value.kReverse);
+		shifter.set(Value.kForward);
 		highTorqueEntry.setBoolean(true);
 		highSpeedEntry.setBoolean(false);
 

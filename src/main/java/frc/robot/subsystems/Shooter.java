@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -81,8 +82,8 @@ public class Shooter extends SubsystemBase {
   // private static final double RANGE = 650;
   private static final double RANGE_PERCENT = .02;
 
-  static double calculatedOptimalTopSpeed;
-  static double calculatedOptimalBottomSpeed;
+  public static double calculatedOptimalTopSpeed;
+  public static double calculatedOptimalBottomSpeed;
 
   static List<List<Double>> shooterTable;
 
@@ -202,8 +203,14 @@ public class Shooter extends SubsystemBase {
 
   // Checks to see if both motors are within range of the setpoints
   public boolean correctSpeed() {
-    return (checkWithinRange(topSetpoint, topEncoder.getVelocity(), (topSetpoint*RANGE_PERCENT)) &&
-        checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), (bottomSetpoint*RANGE_PERCENT)));
+    SmartDashboard.putNumber("topSetpoint", topSetpoint);
+    double topEncoderVelocity = topEncoder.getVelocity();
+    double bottomEncoderVelocity = bottomEncoder.getVelocity();
+    SmartDashboard.putNumber("top encoder velocity", topEncoderVelocity);
+    SmartDashboard.putNumber("bottom encoder velocity", bottomEncoderVelocity);
+    SmartDashboard.putNumber("bottomSetpoint", bottomSetpoint);
+    return (checkWithinRange(topSetpoint, topEncoderVelocity, (topSetpoint*RANGE_PERCENT)) &&
+        checkWithinRange(bottomSetpoint, bottomEncoderVelocity, (bottomSetpoint*RANGE_PERCENT)));
   }
 
   // THIS NEEDS TO BE FIXED BUT ITS A WAY TO GET THE PID VALUES FROM SMART
@@ -279,16 +286,20 @@ public static double[] shootingInterpolation(Double distance, List<List<Double>>
 
 public static void calculateSpeedGivenDistance()
 {
-  double[] optimalSpeeds = shootingInterpolation(PhotonLimelight.distanceToHub, shooterTable);
-  calculatedOptimalBottomSpeed = optimalSpeeds[0];
-  calculatedOptimalTopSpeed = optimalSpeeds[1];
+  // double[] optimalSpeeds = shootingInterpolation(PhotonLimelight.distanceToHub, shooterTable);
+  // calculatedOptimalBottomSpeed = optimalSpeeds[0];
+  // calculatedOptimalTopSpeed = optimalSpeeds[1];
+
+  calculatedOptimalBottomSpeed = ShooterConstants.TARMAC_UPPER_SHOOTER_BOTTOM_SPEED;
+  calculatedOptimalTopSpeed = ShooterConstants.TARMAC_UPPER_SHOOTER_TOP_SPEED;
 }
 
 public void setOptimalSpeedWithPID() {
-  bottomPIDController.setReference(calculatedOptimalBottomSpeed, CANSparkMax.ControlType.kVelocity);
-  topPIDController.setReference(calculatedOptimalTopSpeed, CANSparkMax.ControlType.kVelocity);
+  //bottomPIDController.setReference(calculatedOptimalBottomSpeed, CANSparkMax.ControlType.kVelocity);
+  //topPIDController.setReference(calculatedOptimalTopSpeed, CANSparkMax.ControlType.kVelocity);
   topSetpoint = calculatedOptimalTopSpeed;
   bottomSetpoint = calculatedOptimalBottomSpeed;
+  setMotors(topSetpoint, bottomSetpoint);
 }
 }
 

@@ -19,6 +19,7 @@ public class ExtendClimber extends CommandBase {
 
     @Override
     public void initialize() {
+        System.out.println("Extend climber started");
     
     }
 
@@ -26,6 +27,7 @@ public class ExtendClimber extends CommandBase {
     public void execute() {
         this.m_climber.setLeftSpeed(speed);
         this.m_climber.setRightSpeed(speed);
+        System.out.println("Climber Speed from Execute" + speed);
 
 
     //     if (m_climber.isLeftExtended()){

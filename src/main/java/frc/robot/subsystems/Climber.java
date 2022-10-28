@@ -7,6 +7,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
 import frc.robot.RobotContainer;
+import frc.robot.Constants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.util.SimEncoder;
@@ -39,6 +40,9 @@ public class Climber extends SubsystemBase {
 
 
   public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
+  public static final NetworkTableEntry leftClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Left Climber Motor", 0).getEntry();
+  public static final NetworkTableEntry rightClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Right Climber Motor", 0).getEntry();
+
 
 
   SlewRateLimiter filter;
@@ -117,6 +121,11 @@ public class Climber extends SubsystemBase {
           VecBuilder.fill(0.01) //standard deviation of the measurements, adds noise to the simulation
         ); 
     }
+    this.tiltForward();
+
+    leftEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
+    rightEncoder.setPositionConversionFactor(Constants.DriveConstants.HIGH_TORQUE_REVOLUTION_TO_INCH_CONVERSION);
+
   }
 
   @Override
@@ -147,6 +156,7 @@ public class Climber extends SubsystemBase {
   {
     speed = filter.calculate(speed);
     leftMotorController.set(speed);
+    leftClimberMotor.setDouble(speed);
   }
 
   public void setRightSpeed(double speed)
@@ -154,6 +164,8 @@ public class Climber extends SubsystemBase {
     speed = filter.calculate(speed);
     rightMotorController.set(speed);
     // SmartDashboard.putNumber("Climber speed ", speed);
+    rightClimberMotor.setDouble(speed);
+
   }
 
   public boolean isLeftExtended()
