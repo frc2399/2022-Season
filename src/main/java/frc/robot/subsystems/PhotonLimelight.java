@@ -11,6 +11,8 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
+import org.photonvision.SimVisionSystem;
+import org.photonvision.SimVisionTarget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-//import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -38,67 +39,78 @@ public class PhotonLimelight extends SubsystemBase {
   public static double angleToHub;
   public static boolean has_targets;
 
-  Boolean photonNotFoundMessagePrinted = false ;
+  //static Boolean cameraConnected = false;
 
   public PhotonLimelight() {
 
     PhotonLimelight.turnLEDOff();
     camera = new PhotonCamera("gloworm");
 
+    //if (Robot.isSimulation()) {
+
+    //}
+    //PhotonCamera.setVersionCheckEnabled(false); // Shuts off version check, which prints error stack if LimeLight not connected
+
+    //if (cameraConnected) {
+      //System.out.println("\n\nCamera connected.\n\n");
+    //}
+    //else {
+      //System.out.println("\n\nWarning: camera not connected.\n\n");
+    //}
   }
 
   @Override
   public void periodic() {
+    
+    //if (!Robot.isSimulation()) {
+      var result = camera.getLatestResult();
+      has_targets = result.hasTargets();
+      SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
+      if (has_targets) {
 
-    var result = camera.getLatestResult();
+          // List<PhotonTrackedTarget> targets = result.getTargets();
+          PhotonTrackedTarget best_target = result.getBestTarget();
 
-    has_targets = result.hasTargets();
-
-    SmartDashboard.putBoolean("Photon Limelight hasTargets: ", has_targets);
-    if (has_targets) {
-
-        // List<PhotonTrackedTarget> targets = result.getTargets();
-        PhotonTrackedTarget best_target = result.getBestTarget();
-
-        double distance_to_target = PhotonUtils.calculateDistanceToTargetMeters(
-          PhotonLimelightConstants.CAMERA_HEIGHT_INCHES,
-          PhotonLimelightConstants.TARGET_HEIGHT_INCHES,
-          Units.degreesToRadians(PhotonLimelightConstants.TILT_DEGREES),
-          Units.degreesToRadians(best_target.getPitch())
-        );
-
-
-        Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
-          distance_to_target, Rotation2d.fromDegrees(-best_target.getYaw()));
+          double distance_to_target = PhotonUtils.calculateDistanceToTargetMeters(
+            PhotonLimelightConstants.CAMERA_HEIGHT_INCHES,
+            PhotonLimelightConstants.TARGET_HEIGHT_INCHES,
+            Units.degreesToRadians(PhotonLimelightConstants.TILT_DEGREES),
+            Units.degreesToRadians(best_target.getPitch())
+          );
 
 
-        double x_translation = translation.getX();
-        double y_translation = translation.getY();
+          Translation2d translation = PhotonUtils.estimateCameraToTargetTranslation(
+            distance_to_target, Rotation2d.fromDegrees(-best_target.getYaw()));
 
-        hub_x_entry.setNumber(x_translation);
-        hub_y_entry.setNumber(y_translation);
-        double hub_dist = Math.hypot(x_translation, y_translation);
-        angleToHub = Units.radiansToDegrees(Math.atan2(y_translation, x_translation));
-        hub_distance_entry.setNumber(hub_dist);
-        hub_angle_entry.setNumber(angleToHub);
-        int countTargets = result.getTargets().size();
-        amountTargets.setNumber(countTargets);
-        boolean isInLine = Math.abs(angleToHub) < 7.5;
-        in_line_entry.setBoolean(isInLine);
-        
 
+          double x_translation = translation.getX();
+          double y_translation = translation.getY();
+
+          hub_x_entry.setNumber(x_translation);
+          hub_y_entry.setNumber(y_translation);
+          double hub_dist = Math.hypot(x_translation, y_translation);
+          angleToHub = Units.radiansToDegrees(Math.atan2(y_translation, x_translation));
+          hub_distance_entry.setNumber(hub_dist);
+          hub_angle_entry.setNumber(angleToHub);
+          int countTargets = result.getTargets().size();
+          amountTargets.setNumber(countTargets);
+          boolean isInLine = Math.abs(angleToHub) < 7.5;
+          in_line_entry.setBoolean(isInLine);
+          
+
+      }
+      else {
+        hub_x_entry.setNumber(0);
+        hub_y_entry.setNumber(0);
+        hub_distance_entry.setNumber(0);
+        hub_angle_entry.setNumber(0);
+        amountTargets.setNumber(0);
+        in_line_entry.setBoolean(false);
+        angleToHub = 0;
+
+      }
     }
-    else {
-      hub_x_entry.setNumber(0);
-      hub_y_entry.setNumber(0);
-      hub_distance_entry.setNumber(0);
-      hub_angle_entry.setNumber(0);
-      amountTargets.setNumber(0);
-      in_line_entry.setBoolean(false);
-      angleToHub = 0;
-
-    }
-  }
+  //}
 
 
   public static double getAngleToHub() {
@@ -394,7 +406,7 @@ public class PhotonLimelight extends SubsystemBase {
 
   public static ArrayList<Coords> get_target_centers () {
     ArrayList<Coords> centers = new ArrayList<Coords>();
-
+    
     var result = camera.getLatestResult();
     if (result.hasTargets()) {
       // System.out.println("Photon Limelight has targets!");
@@ -409,6 +421,7 @@ public class PhotonLimelight extends SubsystemBase {
       }
     }
     return centers;
+    
   }
 
   public static void turnLEDOn() {

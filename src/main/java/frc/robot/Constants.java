@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+import org.photonvision.SimVisionTarget;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants.  This class should not be used for any other purpose.  All constants should be
@@ -214,6 +217,8 @@ public class Constants {
         // public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
 
         public static final double ANGLE_ERROR_TOLERANCE = 3; 
+
+        public static final String kCamName = "gloworm";
     }
 }
 

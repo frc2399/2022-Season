@@ -20,6 +20,7 @@ import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants;
 //import frc.robot.Robot;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.PhotonLimelightConstants;
 import frc.robot.util.SimEncoder;
 import frc.robot.util.SimGyro;
 
@@ -32,6 +33,8 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
@@ -45,12 +48,15 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.util.NavX;
 // import edu.wpi.first.wpilibj.simulation.EncoderSim;
 // import edu.wpi.first.wpilibj.simulation.AnalogGyroSim;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 //import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import org.photonvision.SimVisionSystem;
+import org.photonvision.SimVisionTarget;
 
 
 
@@ -98,7 +104,8 @@ public class DriveTrain extends SubsystemBase {
     public SimEncoder leftEncoderSim;
     public SimEncoder rightEncoderSim;
     public SimGyro gyroSim;
-    private DifferentialDrivetrainSim driveSim;
+    public DifferentialDrivetrainSim driveSim;
+    public SimVisionSystem simVision;
     private Field2d field = new Field2d();
 
 
@@ -159,7 +166,7 @@ public class DriveTrain extends SubsystemBase {
 
         // this code is instantiating the simulated sensors and actuators when the robot is in simulation
         if (RobotBase.isSimulation()) {
-
+            
             leftEncoderSim = new SimEncoder("Left Drive");
             rightEncoderSim = new SimEncoder("Right Drive");
             gyroSim = new SimGyro("NavX");
@@ -181,12 +188,61 @@ public class DriveTrain extends SubsystemBase {
                 VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
             );
 
+            // Simulated Vision System.
+            // Configure these to match your PhotonVision Camera,
+            // pipeline, and LED setup.
+            double camDiagFOV = 75.0; // degrees
+            double camPitch = 15.0; // degrees
+            double camHeightOffGround = 0.85; // meters
+            double maxLEDRange = 20; // meters
+            int camResolutionWidth = 640; // pixels
+            int camResolutionHeight = 480; // pixels
+            double minTargetArea = 10; // square pixels
+
+            simVision = new SimVisionSystem(
+                        PhotonLimelightConstants.kCamName,
+                        camDiagFOV,
+                        camPitch,
+                        //new Transform2d(
+                                //Constants.kCameraToRobot.getTranslation().toTranslation2d(),
+                                //Constants.kCameraToRobot.getRotation().toRotation2d()),
+                        new Transform2d(),
+                        camHeightOffGround,
+                        maxLEDRange,
+                        camResolutionWidth,
+                        camResolutionHeight,
+                        minTargetArea);
+
+
+            // target 1
+            double targetWidth = Units.inchesToMeters(41.30) - Units.inchesToMeters(6.70); // meters
+            double targetHeight = Units.inchesToMeters(98.19) - Units.inchesToMeters(81.19); // meters
+            double tgtXPos = Units.feetToMeters(54);
+            double tgtYPos =
+                    Units.feetToMeters(27 / 2) - Units.inchesToMeters(43.75) - Units.inchesToMeters(48.0 / 2.0);
+            Pose2d farTargetPose = new Pose2d(new Translation2d(tgtXPos, tgtYPos), new Rotation2d(0.0));
+            double TARGET_HEIGHT_METERS = Units.inchesToMeters(81.19);
+
+            // target 2
+            double tgt2YPos =
+                    Units.feetToMeters(27 / 2) + Units.inchesToMeters(43.75) + Units.inchesToMeters(48.0 / 2.0);
+            
             field = new Field2d();
 
-            // Ethan is suspicious and thinks we need to re-enable this but it doesn't matter
-            SmartDashboard.putData("Field", field);
-
             field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
+            Pose2d farTarget2Pose = new Pose2d(new Translation2d(tgtXPos, tgt2YPos), new Rotation2d(0.0));
+            
+            // Add target
+            simVision.addSimVisionTarget(new SimVisionTarget(farTargetPose, TARGET_HEIGHT_METERS, targetWidth, targetHeight));
+            simVision.addSimVisionTarget(new SimVisionTarget(farTarget2Pose, TARGET_HEIGHT_METERS, targetWidth, targetHeight));
+            
+            // Add targets to field
+            FieldObject2d target = field.getObject("Target 1");
+            target.setPose(farTargetPose);
+            FieldObject2d target2 = field.getObject("Target 2");
+            target2.setPose(farTarget2Pose);
+
+            SmartDashboard.putData("Field", field);
         }
 
     
@@ -207,8 +263,10 @@ public class DriveTrain extends SubsystemBase {
         // robotAngle.setDouble(ahrs.getAngle());
         // SmartDashboard.putNumber("Angle", ahrs.getAngle());
 
-        double error = PhotonLimelight.angleToHub();
-        SmartDashboard.putNumber("hub error!!!!!!", error);
+        //if (!RobotBase.isSimulation()) {
+            // double error = PhotonLimelight.angleToHub();
+            // SmartDashboard.putNumber("hub error!!!!!!", error);
+        //}
 
 // 
         // System.out.println("drive train periodic");
@@ -244,7 +302,7 @@ public class DriveTrain extends SubsystemBase {
             leftEncoderSim.getDistance(),
             rightEncoderSim.getDistance()
         );
-        field.setRobotPose(odometry.getPoseMeters());
+        //field.setRobotPose(odometry.getPoseMeters());
 
         driveSim.setInputs(
             leftFrontMotorController.get() * RobotController.getInputVoltage(),
@@ -265,7 +323,11 @@ public class DriveTrain extends SubsystemBase {
         // inverts so the code reads it as positive after the simulator (we want CW is positive, CCW is negative)
         gyroSim.setAngle(new Rotation2d(-driveSim.getHeading().getRadians()));
 
+        simVision.processFrame(odometry.getPoseMeters());
 
+        field.setRobotPose(odometry.getPoseMeters());
+
+        //simVision.tgtList;
     }
 
     // Put methods for controlling this subsystem
