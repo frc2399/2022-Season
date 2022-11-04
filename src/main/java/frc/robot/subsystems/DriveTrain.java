@@ -232,7 +232,7 @@ public class DriveTrain extends SubsystemBase {
             field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
             Pose2d farTarget2Pose = new Pose2d(new Translation2d(tgtXPos, tgt2YPos), new Rotation2d(0.0));
             
-            // Add target
+            // Add SimVisionTargets
             simVision.addSimVisionTarget(new SimVisionTarget(farTargetPose, TARGET_HEIGHT_METERS, targetWidth, targetHeight));
             simVision.addSimVisionTarget(new SimVisionTarget(farTarget2Pose, TARGET_HEIGHT_METERS, targetWidth, targetHeight));
             
@@ -302,7 +302,6 @@ public class DriveTrain extends SubsystemBase {
             leftEncoderSim.getDistance(),
             rightEncoderSim.getDistance()
         );
-        //field.setRobotPose(odometry.getPoseMeters());
 
         driveSim.setInputs(
             leftFrontMotorController.get() * RobotController.getInputVoltage(),
@@ -326,8 +325,6 @@ public class DriveTrain extends SubsystemBase {
         simVision.processFrame(odometry.getPoseMeters());
 
         field.setRobotPose(odometry.getPoseMeters());
-
-        //simVision.tgtList;
     }
 
     // Put methods for controlling this subsystem

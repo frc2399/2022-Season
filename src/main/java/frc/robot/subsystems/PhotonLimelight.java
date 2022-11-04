@@ -39,24 +39,13 @@ public class PhotonLimelight extends SubsystemBase {
   public static double angleToHub;
   public static boolean has_targets;
 
-  //static Boolean cameraConnected = false;
-
   public PhotonLimelight() {
 
     PhotonLimelight.turnLEDOff();
     camera = new PhotonCamera("gloworm");
 
-    //if (Robot.isSimulation()) {
-
-    //}
-    //PhotonCamera.setVersionCheckEnabled(false); // Shuts off version check, which prints error stack if LimeLight not connected
-
-    //if (cameraConnected) {
-      //System.out.println("\n\nCamera connected.\n\n");
-    //}
-    //else {
-      //System.out.println("\n\nWarning: camera not connected.\n\n");
-    //}
+    // Uncomment below if you want to silence error message due to bug
+    PhotonCamera.setVersionCheckEnabled(false); // Shuts off version check, which prints error stack if LimeLight not connected
   }
 
   @Override
