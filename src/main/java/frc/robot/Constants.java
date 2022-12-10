@@ -19,9 +19,9 @@ public class Constants {
         public static final int LEFT_BACK_MOTOR_ID = 8;
 
         //solenoids
-        public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 0;
-	    public static final int SHIFT_HIGH_TORQUE_PORT= 1;
-        public static final int PCM_ADDRESS = 3;
+        public static final int SHIFT_HIGH_SPEED_SOLENOID_PORT = 2;
+	    public static final int SHIFT_HIGH_TORQUE_PORT= 3;
+        public static final int PCM_ADDRESS = 0;
         public static final double SHIFT_TIMER = 0.5;
 
         //follow vision target cmd speeds
@@ -125,8 +125,8 @@ public class Constants {
         public static final double INTAKE_SLEW = 5;
 
         //intake arm
-        public static final int EXTEND_INTAKE_ARM = 2;
-        public static final int RETRACT_INTAKE_ARM = 3;
+        public static final int EXTEND_INTAKE_ARM = 1;
+        public static final int RETRACT_INTAKE_ARM = 0;
     }
 
     public static final class ShooterConstants {
