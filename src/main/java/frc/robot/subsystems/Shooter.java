@@ -2,7 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -28,21 +28,21 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
  */
 public class Shooter extends SubsystemBase {
 
-  public static final NetworkTableEntry topVelocity = Shuffleboard.getTab("Shooter").add("Top Velocity", 0).getEntry();
-  public static final NetworkTableEntry bottomVelocity = Shuffleboard.getTab("Shooter").add("Bottom Velocity", 0).getEntry();
+  public static final GenericEntry topVelocity = Shuffleboard.getTab("Shooter").add("Top Velocity", 0).getEntry();
+  public static final GenericEntry bottomVelocity = Shuffleboard.getTab("Shooter").add("Bottom Velocity", 0).getEntry();
 
-  public static final NetworkTableEntry p = Shuffleboard.getTab("Shooter").add("P Gain", 0).getEntry();
-  public static final NetworkTableEntry d = Shuffleboard.getTab("Shooter").add("D Gain", 0).getEntry();
-  public static final NetworkTableEntry i = Shuffleboard.getTab("Shooter").add("I Gain", 0).getEntry();
-  public static final NetworkTableEntry iz = Shuffleboard.getTab("Shooter").add("I Zone", 0).getEntry();
-  public static final NetworkTableEntry ff = Shuffleboard.getTab("Shooter").add("Feed Forward", 0).getEntry();
-  public static final NetworkTableEntry max = Shuffleboard.getTab("Shooter").add("Max Output", 0).getEntry();
-  public static final NetworkTableEntry min = Shuffleboard.getTab("Shooter").add("Min OUtput", 0).getEntry();
-  public static final NetworkTableEntry topSpeedInRange = Shuffleboard.getTab("Shooter").add("Top Speed in Range", false).getEntry();
-  public static final NetworkTableEntry bottomSpeedInRange = Shuffleboard.getTab("Shooter").add("Bottom Speed in Range", false).getEntry();
-  public static final NetworkTableEntry topSetpointEntry = Shuffleboard.getTab("Shooter").add("Top Setpoint", 0).getEntry();
-  public static final NetworkTableEntry bottomSetpointEntry = Shuffleboard.getTab("Shooter").add("Bottom Setpoint", 0).getEntry();
-  public static final NetworkTableEntry maxAccel = Shuffleboard.getTab("Shooter").add("Maximum Acceleration", 0).getEntry();
+  public static final GenericEntry p = Shuffleboard.getTab("Shooter").add("P Gain", 0).getEntry();
+  public static final GenericEntry d = Shuffleboard.getTab("Shooter").add("D Gain", 0).getEntry();
+  public static final GenericEntry i = Shuffleboard.getTab("Shooter").add("I Gain", 0).getEntry();
+  public static final GenericEntry iz = Shuffleboard.getTab("Shooter").add("I Zone", 0).getEntry();
+  public static final GenericEntry ff = Shuffleboard.getTab("Shooter").add("Feed Forward", 0).getEntry();
+  public static final GenericEntry max = Shuffleboard.getTab("Shooter").add("Max Output", 0).getEntry();
+  public static final GenericEntry min = Shuffleboard.getTab("Shooter").add("Min OUtput", 0).getEntry();
+  public static final GenericEntry topSpeedInRange = Shuffleboard.getTab("Shooter").add("Top Speed in Range", false).getEntry();
+  public static final GenericEntry bottomSpeedInRange = Shuffleboard.getTab("Shooter").add("Bottom Speed in Range", false).getEntry();
+  public static final GenericEntry topSetpointEntry = Shuffleboard.getTab("Shooter").add("Top Setpoint", 0).getEntry();
+  public static final GenericEntry bottomSetpointEntry = Shuffleboard.getTab("Shooter").add("Bottom Setpoint", 0).getEntry();
+  public static final GenericEntry maxAccel = Shuffleboard.getTab("Shooter").add("Maximum Acceleration", 0).getEntry();
 
   double kP;
   double kI;
@@ -176,8 +176,8 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     updatePIDGains();
-    topVelocity.setNumber(topEncoder.getVelocity());
-    bottomVelocity.setNumber(bottomEncoder.getVelocity());
+    topVelocity.setDouble(topEncoder.getVelocity());
+    bottomVelocity.setDouble(bottomEncoder.getVelocity());
     topSpeedInRange.setBoolean(checkWithinRange(topSetpoint, topEncoder.getVelocity(), (topSetpoint*RANGE_PERCENT)));
     bottomSpeedInRange.setBoolean(checkWithinRange(bottomSetpoint, bottomEncoder.getVelocity(), (bottomSetpoint*RANGE_PERCENT)));
     topSetpointEntry.setDouble(topSetpoint);

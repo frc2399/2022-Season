@@ -1,11 +1,10 @@
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.util.net.PortForwarder;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -13,7 +12,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -24,22 +22,54 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.*;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.JoystickConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.XboxConstants;
+import frc.robot.Constants.XboxMappingToJoystick;
 import frc.robot.commands.TurnToHub;
-import frc.robot.commands.autonomous.*;
-import frc.robot.commands.climber.*;
-import frc.robot.commands.drivetrain.*;
-import frc.robot.commands.indexer.*;
-import frc.robot.commands.intake.*;
+import frc.robot.commands.autonomous.DoNothingAuton;
+import frc.robot.commands.autonomous.DriveOutAuton;
+import frc.robot.commands.autonomous.LowerShootFromFender;
+import frc.robot.commands.autonomous.PloopAndDriveOutAuton;
+import frc.robot.commands.autonomous.PopAndDriveOutAuton;
+import frc.robot.commands.autonomous.Position1AutonBREAD;
+import frc.robot.commands.autonomous.Position2AutonPB;
+import frc.robot.commands.autonomous.Position3AutonJELLY;
+import frc.robot.commands.autonomous.Position4AutonStale;
+import frc.robot.commands.autonomous.Position5AutonCRUNCHY;
+import frc.robot.commands.autonomous.Position6AutonSTRAWBERRY;
+import frc.robot.commands.climber.ExtendClimber;
+import frc.robot.commands.climber.ExtendRightClimber;
+import frc.robot.commands.climber.RetractClimber;
+import frc.robot.commands.climber.RetractRightClimber;
+import frc.robot.commands.climber.StopClimber;
+import frc.robot.commands.drivetrain.ArcadeDriveCmd;
+import frc.robot.commands.drivetrain.DriveForwardGivenDistance;
+import frc.robot.commands.drivetrain.DriveForwardGivenTime;
+import frc.robot.commands.drivetrain.DriveStraightGivenDistance;
+import frc.robot.commands.drivetrain.TurnNAngle;
+import frc.robot.commands.drivetrain.TurnToNAngle;
+import frc.robot.commands.indexer.IndexerBackCmd;
+import frc.robot.commands.indexer.IndexerCmd;
+import frc.robot.commands.indexer.IndexerCmdForGivenTime;
+import frc.robot.commands.indexer.IndexerDefaultCmd;
+import frc.robot.commands.intake.IntakeCmd;
 import frc.robot.commands.intakearm.ExtendIntakeArm;
 import frc.robot.commands.intakearm.RetractIntakeArm;
 import frc.robot.commands.robot.PointAndShoot;
 import frc.robot.commands.robot.UpperShootFromFender;
-import frc.robot.commands.shooter.*;
-import frc.robot.subsystems.*;
-import frc.robot.util.DPadButton;
+import frc.robot.commands.shooter.SetShootPowerCmd;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.PhotonLimelight;
+import frc.robot.subsystems.Shifter;
+import frc.robot.subsystems.Shooter;
+// import frc.robot.util.DPadButton;
 import frc.robot.util.DriveTurnControls;
 
 /**
@@ -89,7 +119,7 @@ public class RobotContainer {
     private static SetShootPowerCmd stopShooter =  new SetShootPowerCmd(m_shooter, 0, 0);
 
     //Turn To Hub
-    private static Command turnToHub = new TurnToHub(m_driveTrain);
+    // private static Command turnToHub = new TurnToHub(m_driveTrain);
 
     // private  static Command shoot = new SequentialCommandGroup(
     //     new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
@@ -98,12 +128,12 @@ public class RobotContainer {
     //     new WaitUntilCommand(() -> m_shooter.correctSpeed()),
     //     new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
-    private  static Command maxShoot = new SequentialCommandGroup(
-        new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
-        new InstantCommand(
-            () -> m_shooter.setSpeedWithPID(ShooterConstants.MAX_SETPOINT,ShooterConstants.MAX_SETPOINT), m_shooter),
-        new WaitUntilCommand(() -> m_shooter.correctSpeed()),
-        new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
+    // private  static Command maxShoot = new SequentialCommandGroup(
+    //     new IndexerCmdForGivenTime(m_indexer, -0.5, 0.1),
+    //     new InstantCommand(
+    //         () -> m_shooter.setSpeedWithPID(ShooterConstants.MAX_SETPOINT,ShooterConstants.MAX_SETPOINT), m_shooter),
+    //     new WaitUntilCommand(() -> m_shooter.correctSpeed()),
+    //     new IndexerCmdForGivenTime(m_indexer, 0.5, 2));
 
     public static Command lowerShootFromFender = new LowerShootFromFender(m_indexer, m_shooter);
 
@@ -137,8 +167,8 @@ public class RobotContainer {
     private static Command defaultIntake = new IntakeCmd(m_intake, 0);
 
     // Indexer
-    private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer);
-    private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer);
+    // private static IndexerFwdCmd indexerFwdCmd = new IndexerFwdCmd(m_indexer);
+    // private static IndexerBackCmd indexerBackCmd = new IndexerBackCmd(m_indexer);
 
     // Ultimate command
     private static PointAndShoot pointAndShootCmd = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
@@ -213,11 +243,11 @@ public class RobotContainer {
     private static Command m_pop = new PopAndDriveOutAuton(m_driveTrain, m_shooter, m_indexer);
 
 
-    private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
+    // private static Command m_pointAndShoot = new PointAndShoot(m_driveTrain, m_shooter, m_indexer);
 
    // private static Command m_driveStraightGivenDistance = new DriveStraightGivenDistance(0.5, 10, m_driveTrain);
 
-    public static NetworkTableEntry a_value = Shuffleboard.getTab("Params")
+    public static GenericEntry a_value = Shuffleboard.getTab("Params")
         .addPersistent("Stick Sensitivity", 0.0).getEntry();
 
     // A chooser for autonomous commands
@@ -268,7 +298,7 @@ public class RobotContainer {
         // ButterySmoothFollowTarget(m_driveTrain));
 
         Shuffleboard.getTab("Shooter").add(
-            "Start Shooter", startShooter.perpetually()
+            "Start Shooter", startShooter.repeatedly()
             );
         Shuffleboard.getTab("Shooter").add(
             "Stop Shooter", stopShooter
@@ -316,7 +346,7 @@ public class RobotContainer {
                 () -> -driveTurnControls.getDrive(),
                 () -> driveTurnControls.getTurn()));
 
-        m_intake.setDefaultCommand(defaultIntake.perpetually());
+        m_intake.setDefaultCommand(defaultIntake.repeatedly());
         m_intake.setDefaultCommand(new IntakeCmd(m_intake, 0));
         m_shooter.setDefaultCommand(new SetShootPowerCmd(m_shooter, 0, 0));
         m_indexer.setDefaultCommand(new IndexerDefaultCmd(m_indexer));
@@ -350,16 +380,16 @@ public class RobotContainer {
 
     private void configureButtonBindings() {
         // Robot
-       new JoystickButton(JOYSTICK, 7).whenPressed(killCommand);
-       // new DPadButton(XBOX, DPadButton.Direction.DOWN).whenPressed(killCommand);
-        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).whenPressed(toggleSpeedCommand);
+       new JoystickButton(JOYSTICK, 7).onTrue(killCommand);
+       // new DPadButton(XBOX, DPadButton.Direction.DOWN).onTrue(killCommand);
+        new JoystickButton(XBOX, XboxMappingToJoystick.Y_BUTTON).onTrue(toggleSpeedCommand);
 
         // Drive train
-        new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).whenPressed(shiftHighTorque);
-        new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).whenPressed(shiftHighSpeed);
+        new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_TORQUE).onTrue(shiftHighTorque);
+        new JoystickButton(XBOX, XboxConstants.SHIFT_HIGH_SPEED).onTrue(shiftHighSpeed);
 
         Trigger upperShootFromTarmacTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kRightTrigger.value) > 0.05);
-             upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
+        upperShootFromTarmacTrigger.whileActiveContinuous(upperShootFromFender);
 
         
         Trigger intakeTrigger = new Trigger(() -> XBOX.getRawAxis(XboxController.Axis.kLeftTrigger.value) > 0.1);
@@ -368,22 +398,22 @@ public class RobotContainer {
 
 
         // Climber
-        new JoystickButton(JOYSTICK, 2).whileHeld(retractClimberCmd);
-        new JoystickButton(JOYSTICK, 1).whileHeld(extendClimberCmd);
-        new JoystickButton(JOYSTICK, 3).whenPressed(tiltForward);
-        new JoystickButton(JOYSTICK, 4).whenPressed(pullUp);
-        new JoystickButton(JOYSTICK, 5).whenPressed(tiltBack);
-        new JoystickButton(JOYSTICK, 6).whenPressed(grabNextBar);
+        new JoystickButton(JOYSTICK, 2).whileTrue(retractClimberCmd);
+        new JoystickButton(JOYSTICK, 1).whileTrue(extendClimberCmd);
+        new JoystickButton(JOYSTICK, 3).onTrue(tiltForward);
+        new JoystickButton(JOYSTICK, 4).onTrue(pullUp);
+        new JoystickButton(JOYSTICK, 5).onTrue(tiltBack);
+        new JoystickButton(JOYSTICK, 6).onTrue(grabNextBar);
 
-        new JoystickButton(JOYSTICK, 10).whileHeld(extendRightClimberCmd);
-        new JoystickButton(JOYSTICK, 9).whileHeld(retractRightClimberCmd);
+        new JoystickButton(JOYSTICK, 10).whileTrue(extendRightClimberCmd);
+        new JoystickButton(JOYSTICK, 9).whileTrue(retractRightClimberCmd);
         // Shooter
-        // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).whenPressed(shoot);
-        new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).whenPressed(lowerShootFromFender);
-        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).whenPressed(pointAndShootCmd);
-        // new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).whenPressed(maxShoot);
+        // new JoystickButton(JOYSTICK, JoystickConstants.SHOOTER_BTN).onTrue(shoot);
+        new JoystickButton(XBOX, XboxMappingToJoystick.B_BUTTON).onTrue(lowerShootFromFender);
+        new JoystickButton(XBOX, XboxMappingToJoystick.A_BUTTON).onTrue(pointAndShootCmd);
+        // new JoystickButton(JOYSTICK, JoystickConstants.MAX_SHOOT).onTrue(maxShoot);
 
-        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileHeld(spitOutBall).whenReleased(noCollectBall);
+        new JoystickButton(XBOX, XboxMappingToJoystick.X_BUTTON).whileTrue(spitOutBall).onFalse(noCollectBall);
         
 
     }

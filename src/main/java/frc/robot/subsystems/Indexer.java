@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import frc.robot.Constants.IndexerConstants;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -19,7 +19,7 @@ public class Indexer extends SubsystemBase {
 
   SlewRateLimiter filter;
 
-  public static NetworkTableEntry indexSpeedEntry, slewRateEntry;
+  public static GenericEntry indexSpeedEntry, slewRateEntry;
 
   /** Creates a new Indexer. */
   public Indexer() {

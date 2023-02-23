@@ -1,7 +1,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -14,7 +14,7 @@ import frc.robot.Constants.DriveConstants;
 
 public class Shifter extends SubsystemBase {
 
-	public static NetworkTableEntry highSpeedEntry, highTorqueEntry;
+	public static GenericEntry highSpeedEntry, highTorqueEntry;
 
 	private DoubleSolenoid shifter;
 

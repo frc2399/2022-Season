@@ -1,30 +1,28 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
-import frc.robot.RobotContainer;
-import frc.robot.Constants;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.util.SimEncoder;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.simulation.ElevatorSim;
-import edu.wpi.first.wpilibj.simulation.EncoderSim;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.util.SimEncoder;
 
 public class Climber extends SubsystemBase {
   
@@ -39,9 +37,9 @@ public class Climber extends SubsystemBase {
   private ElevatorSim climberSim; 
 
 
-  public static final NetworkTableEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
-  public static final NetworkTableEntry leftClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Left Climber Motor", 0).getEntry();
-  public static final NetworkTableEntry rightClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Right Climber Motor", 0).getEntry();
+  public static final GenericEntry slewRate = Shuffleboard.getTab("Params").addPersistent("Climber Slew Rate", 5.0).getEntry();
+  public static final GenericEntry leftClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Left Climber Motor", 0).getEntry();
+  public static final GenericEntry rightClimberMotor = Shuffleboard.getTab("Driver").addPersistent("Right Climber Motor", 0).getEntry();
 
 
 
@@ -118,6 +116,7 @@ public class Climber extends SubsystemBase {
           climberDrumRadius, //drum radius in meter
           0, //minimum height in meters
           Units.inchesToMeters(25), //maximum height in meters of climber
+          true, // simulate gravity
           VecBuilder.fill(0.01) //standard deviation of the measurements, adds noise to the simulation
         ); 
     }

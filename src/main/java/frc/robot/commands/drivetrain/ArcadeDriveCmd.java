@@ -2,7 +2,7 @@ package frc.robot.commands.drivetrain;
 
 import java.util.function.Supplier;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
@@ -13,8 +13,8 @@ import frc.robot.subsystems.DriveTrain;
 
 public class ArcadeDriveCmd extends CommandBase {
 
-    public static final NetworkTableEntry leftSpeed = Shuffleboard.getTab("Motor Diag").add("Left Speed", 0).getEntry();
-    public static final NetworkTableEntry rightSpeed = Shuffleboard.getTab("Motor Diag").add("Right Speed", 0).getEntry();
+    public static final GenericEntry leftSpeed = Shuffleboard.getTab("Motor Diag").add("Left Speed", 0).getEntry();
+    public static final GenericEntry rightSpeed = Shuffleboard.getTab("Motor Diag").add("Right Speed", 0).getEntry();
 
     private final DriveTrain driveSubsystem;
     private final Supplier<Double> speedFunction, turnFunction;
@@ -75,8 +75,8 @@ public class ArcadeDriveCmd extends CommandBase {
             this.driveSubsystem.setMotors(left, right);
         }
 
-        leftSpeed.setNumber(left);
-        rightSpeed.setNumber(right);
+        leftSpeed.setDouble(left);
+        rightSpeed.setDouble(right);
        // SmartDashboard.putNumber("left speed", left);
        // SmartDashboard.putNumber("right speed", right);
 

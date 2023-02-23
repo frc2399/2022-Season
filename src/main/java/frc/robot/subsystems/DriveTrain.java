@@ -35,7 +35,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
 // import edu.wpi.first.math.MathUtil;
@@ -52,10 +52,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 //import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 
-
-
-
-
 /**
  *
  */
@@ -69,13 +65,12 @@ public class DriveTrain extends SubsystemBase {
     private static CANSparkMax rightBackMotorController;
 
     public static RelativeEncoder leftEncoder;
-	public static RelativeEncoder rightEncoder;
+    public static RelativeEncoder rightEncoder;
 
     public static AHRS ahrs;
     public static PIDController turnController;
-    //public static DifferentialDrive myRobot;
-    //double rotateToAngleRate;
-
+    // public static DifferentialDrive myRobot;
+    // double rotateToAngleRate;
 
     public final double kP = 0.06;
     public final double kPSim = 0.5;
@@ -83,12 +78,11 @@ public class DriveTrain extends SubsystemBase {
     static final double kD = 0;
     static final double kF = 0;
 
-    //private static double currentAngle = 0;
-    //private static double targetAngle = 0;
+    // private static double currentAngle = 0;
+    // private static double targetAngle = 0;
     public static double outputSpeed;
 
-    
-    //static double kToleranceDegrees = 2.0f;
+    // static double kToleranceDegrees = 2.0f;
     /**
     *
     */
@@ -101,21 +95,20 @@ public class DriveTrain extends SubsystemBase {
     private DifferentialDrivetrainSim driveSim;
     private Field2d field = new Field2d();
 
-
     final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
-    public static final NetworkTableEntry angleErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Angle Err Tol", 2).getEntry();
-    public static final NetworkTableEntry distanceErrorTolerance = Shuffleboard.getTab("Params").addPersistent("Distance Err Tol", 5).getEntry();
-    public static final NetworkTableEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
-    public static final NetworkTableEntry angleErrorPValue = Shuffleboard.getTab("Params").add("angle err p", 0.01).getEntry();
-    public static final NetworkTableEntry encoderTickLeft = Shuffleboard.getTab("Testing").add("tick left", 0).getEntry();
-    public static final NetworkTableEntry encoderTickRight = Shuffleboard.getTab("Testing").add("tick right", 0).getEntry();
-    public static final NetworkTableEntry leftMotorSpeed = Shuffleboard.getTab("Driver").add("Left Motor Speed", 0).getEntry();
-    public static final NetworkTableEntry rightMotorSpeed = Shuffleboard.getTab("Driver").add("Right Motor Speed", 0).getEntry();
-
-
-
-
-
+    public static final GenericEntry angleErrorTolerance = Shuffleboard.getTab("Params")
+            .addPersistent("Angle Err Tol", 2).getEntry();
+    public static final GenericEntry distanceErrorTolerance = Shuffleboard.getTab("Params")
+            .addPersistent("Distance Err Tol", 5).getEntry();
+    public static final GenericEntry robotAngle = Shuffleboard.getTab("Driver").add("Angle of Robot", 0).getEntry();
+    public static final GenericEntry angleErrorPValue = Shuffleboard.getTab("Params").add("angle err p", 0.01)
+            .getEntry();
+    public static final GenericEntry encoderTickLeft = Shuffleboard.getTab("Testing").add("tick left", 0).getEntry();
+    public static final GenericEntry encoderTickRight = Shuffleboard.getTab("Testing").add("tick right", 0).getEntry();
+    public static final GenericEntry leftMotorSpeed = Shuffleboard.getTab("Driver").add("Left Motor Speed", 0)
+            .getEntry();
+    public static final GenericEntry rightMotorSpeed = Shuffleboard.getTab("Driver").add("Right Motor Speed", 0)
+            .getEntry();
 
     public DriveTrain() {
 
@@ -133,18 +126,19 @@ public class DriveTrain extends SubsystemBase {
         leftFrontMotorController.setInverted(true);
         rightFrontMotorController.setInverted(false);
 
-        //sets motor controllers following leaders
+        // sets motor controllers following leaders
         leftMiddleMotorController.follow(leftFrontMotorController);
         rightMiddleMotorController.follow(rightFrontMotorController);
         leftBackMotorController.follow(leftFrontMotorController);
         rightBackMotorController.follow(rightFrontMotorController);
 
-        //myRobot = new DifferentialDrive(leftFrontMotorController, rightFrontMotorControllefr);
+        // myRobot = new DifferentialDrive(leftFrontMotorController,
+        // rightFrontMotorControllefr);
 
         turnController = new PIDController(kP, kI, kD);
         turnController.enableContinuousInput(-180.0f, 180.0f);
 
-       //initialize motor encoder
+        // initialize motor encoder
         leftEncoder = leftFrontMotorController.getEncoder();
         rightEncoder = rightFrontMotorController.getEncoder();
 
@@ -157,46 +151,48 @@ public class DriveTrain extends SubsystemBase {
         ahrs = new AHRS(SPI.Port.kMXP);
         ahrs.reset();
 
-        // this code is instantiating the simulated sensors and actuators when the robot is in simulation
+        // this code is instantiating the simulated sensors and actuators when the robot
+        // is in simulation
         if (RobotBase.isSimulation()) {
 
             leftEncoderSim = new SimEncoder("Left Drive");
             rightEncoderSim = new SimEncoder("Right Drive");
             gyroSim = new SimGyro("NavX");
-            odometry = new DifferentialDriveOdometry(gyroSim.getAngle(), new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
+            odometry = new DifferentialDriveOdometry(gyroSim.getAngle(),
+                    driveSim.getLeftPositionMeters(),
+                    driveSim.getRightPositionMeters(),
+                    new Pose2d(9, 6.5, new Rotation2d(3.14 / 2)));
             // Create the simulation model of our drivetrain.
             driveSim = new DifferentialDrivetrainSim(
-                DCMotor.getNEO(3),       // 3 NEO motors on each side of the drivetrain.
-                8,                       // 8:1 gearing reduction. for now
-                6,                       // MOI of 6 kg m^2 (from CAD model). for now
-                Units.lbsToKilograms(140), // The mass of the robot is 140 lbs (with battery) which is 63 kg
-                Units.inchesToMeters(2.1), // The robot uses 2.1" radius wheels.
-                Units.inchesToMeters(27.811), // The track width is 27.811 inches.
+                    DCMotor.getNEO(3), // 3 NEO motors on each side of the drivetrain.
+                    8, // 8:1 gearing reduction. for now
+                    6, // MOI of 6 kg m^2 (from CAD model). for now
+                    Units.lbsToKilograms(140), // The mass of the robot is 140 lbs (with battery) which is 63 kg
+                    Units.inchesToMeters(2.1), // The robot uses 2.1" radius wheels.
+                    Units.inchesToMeters(27.811), // The track width is 27.811 inches.
 
-                // The standard deviations for measurement noise:
-                // x and y:          0 m
-                // heading:          0 rad
-                // l and r velocity: 0  m/s
-                // l and r position: 0 m
-                VecBuilder.fill(0, 0, 0, 0, 0, 0, 0)
-            );
+                    // The standard deviations for measurement noise:
+                    // x and y: 0 m
+                    // heading: 0 rad
+                    // l and r velocity: 0 m/s
+                    // l and r position: 0 m
+                    VecBuilder.fill(0, 0, 0, 0, 0, 0, 0));
 
             field = new Field2d();
 
-            // Ethan is suspicious and thinks we need to re-enable this but it doesn't matter
+            // Ethan is suspicious and thinks we need to re-enable this but it doesn't
+            // matter
             SmartDashboard.putData("Field", field);
 
-            field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14/2)));
+            field.setRobotPose(new Pose2d(9, 6.5, new Rotation2d(3.14 / 2)));
         }
-
-    
 
     }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-       
+
         // currentAngle = ahrs.getAngle();
         // targetAngle = Robot.targetAngle;
 
@@ -210,14 +206,14 @@ public class DriveTrain extends SubsystemBase {
         double error = PhotonLimelight.angleToHub();
         SmartDashboard.putNumber("hub error!!!!!!", error);
 
-// 
+        //
         // System.out.println("drive train periodic");
 
-        //SmartDashboard.putNumber("target angle", RobotContainer.m_turnToNAngle.targetAngle);
+        // SmartDashboard.putNumber("target angle",
+        // RobotContainer.m_turnToNAngle.targetAngle);
 
         // outputSpeed = MathUtil.clamp(outputSpeed, -0.5, 0.5);
         // setMotors(-outputSpeed, outputSpeed);
-
 
         // This will get the simulated sensor readings that we set
         // in the previous article while in simulation, but will use
@@ -229,8 +225,6 @@ public class DriveTrain extends SubsystemBase {
 
     }
 
-
-
     @Override
     public void simulationPeriodic() {
         // This method will be called once per scheduler run when in simulation
@@ -239,18 +233,16 @@ public class DriveTrain extends SubsystemBase {
         // robot controller voltage.
 
         odometry.update(
-            // changes the sign of input for turning because the simulator would invert it otherwise (we want CW is positive, CCW is negative)
-            new Rotation2d(-gyroSim.getAngle().getRadians()),
-            leftEncoderSim.getDistance(),
-            rightEncoderSim.getDistance()
-        );
+                // changes the sign of input for turning because the simulator would invert it
+                // otherwise (we want CW is positive, CCW is negative)
+                new Rotation2d(-gyroSim.getAngle().getRadians()),
+                leftEncoderSim.getDistance(),
+                rightEncoderSim.getDistance());
         field.setRobotPose(odometry.getPoseMeters());
 
         driveSim.setInputs(
-            leftFrontMotorController.get() * RobotController.getInputVoltage(),
-            rightFrontMotorController.get() * RobotController.getInputVoltage()
-        );
-    
+                leftFrontMotorController.get() * RobotController.getInputVoltage(),
+                rightFrontMotorController.get() * RobotController.getInputVoltage());
 
         // Advance the model by 20 ms. Note that if you are running this
         // subsystem in a separate thread or have changed the nominal timestep
@@ -262,9 +254,9 @@ public class DriveTrain extends SubsystemBase {
         leftEncoderSim.setSpeed(driveSim.getLeftVelocityMetersPerSecond());
         rightEncoderSim.setDistance(driveSim.getRightPositionMeters());
         rightEncoderSim.setSpeed(driveSim.getRightVelocityMetersPerSecond());
-        // inverts so the code reads it as positive after the simulator (we want CW is positive, CCW is negative)
+        // inverts so the code reads it as positive after the simulator (we want CW is
+        // positive, CCW is negative)
         gyroSim.setAngle(new Rotation2d(-driveSim.getHeading().getRadians()));
-
 
     }
 
@@ -272,51 +264,37 @@ public class DriveTrain extends SubsystemBase {
     // here. Call these from Commands.
 
     public void setMotors(double leftSpeed, double rightSpeed) {
-            leftFrontMotorController.set(leftSpeed);
-            rightFrontMotorController.set(rightSpeed);
-            leftMotorSpeed.setDouble(leftSpeed);
-            rightMotorSpeed.setDouble(rightSpeed);
-
-
-
-      
+        leftFrontMotorController.set(leftSpeed);
+        rightFrontMotorController.set(rightSpeed);
+        leftMotorSpeed.setDouble(leftSpeed);
+        rightMotorSpeed.setDouble(rightSpeed);
 
         // SmartDashboard.putNumber("outputSpeed", leftSpeed);
     }
 
-    public double getLeftEncoderPosition()
-    {
-        if (RobotBase.isSimulation())
-        {
+    public double getLeftEncoderPosition() {
+        if (RobotBase.isSimulation()) {
             return Units.metersToInches(leftEncoderSim.getDistance());
-        }
-        else
-        {
-            //gets position in inches
+        } else {
+            // gets position in inches
             return leftEncoder.getPosition();
         }
     }
 
-    public double getRightEncoderPosition()
-    {
-        if (RobotBase.isSimulation())
-        {
+    public double getRightEncoderPosition() {
+        if (RobotBase.isSimulation()) {
             return Units.metersToInches(rightEncoderSim.getDistance());
-        }
-        else
-        {
-            //gets position in inches
+        } else {
+            // gets position in inches
             return rightEncoder.getPosition();
         }
     }
 
-    public double getAngle()
-    { 
+    public double getAngle() {
         return ahrs.getAngle();
     }
 
-    public static void teleopInit()
-    {
+    public static void teleopInit() {
         leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
         rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
         leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
@@ -325,8 +303,7 @@ public class DriveTrain extends SubsystemBase {
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kCoast);
     }
 
-    public static void autonomousInit()
-    {
+    public static void autonomousInit() {
         leftFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         rightFrontMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
         leftMiddleMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
@@ -335,6 +312,4 @@ public class DriveTrain extends SubsystemBase {
         rightBackMotorController.setIdleMode(CANSparkMax.IdleMode.kBrake);
     }
 
-
 }
-

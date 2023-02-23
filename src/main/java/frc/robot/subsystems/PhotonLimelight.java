@@ -18,7 +18,7 @@ import java.util.List;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -27,12 +27,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PhotonLimelight extends SubsystemBase {
 
-  public static final NetworkTableEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
-  public static final NetworkTableEntry hub_x_entry = Shuffleboard.getTab("Driver").add("Hub X", 0).getEntry();
-  public static final NetworkTableEntry hub_y_entry = Shuffleboard.getTab("Driver").add("Hub Y", 0).getEntry();
-  public static final NetworkTableEntry hub_distance_entry = Shuffleboard.getTab("Driver").add("Hub dist", 0).getEntry();
-  public static final NetworkTableEntry hub_angle_entry = Shuffleboard.getTab("Driver").add("Hub angle", 0).getEntry();
-  public static final NetworkTableEntry in_line_entry = Shuffleboard.getTab("Driver").add("In Line", false).getEntry();
+  public static final GenericEntry amountTargets = Shuffleboard.getTab("Driver").add("Num of Targets", 0).getEntry();
+  public static final GenericEntry hub_x_entry = Shuffleboard.getTab("Driver").add("Hub X", 0).getEntry();
+  public static final GenericEntry hub_y_entry = Shuffleboard.getTab("Driver").add("Hub Y", 0).getEntry();
+  public static final GenericEntry hub_distance_entry = Shuffleboard.getTab("Driver").add("Hub dist", 0).getEntry();
+  public static final GenericEntry hub_angle_entry = Shuffleboard.getTab("Driver").add("Hub angle", 0).getEntry();
+  public static final GenericEntry in_line_entry = Shuffleboard.getTab("Driver").add("In Line", false).getEntry();
   static PhotonCamera camera;
   public static double distanceToHub;
   public static double angleToHub;
@@ -75,25 +75,25 @@ public class PhotonLimelight extends SubsystemBase {
         double x_translation = translation.getX();
         double y_translation = translation.getY();
 
-        hub_x_entry.setNumber(x_translation);
-        hub_y_entry.setNumber(y_translation);
+        hub_x_entry.setDouble(x_translation);
+        hub_y_entry.setDouble(y_translation);
         double hub_dist = Math.hypot(x_translation, y_translation);
         angleToHub = Units.radiansToDegrees(Math.atan2(y_translation, x_translation));
-        hub_distance_entry.setNumber(hub_dist);
-        hub_angle_entry.setNumber(angleToHub);
+        hub_distance_entry.setDouble(hub_dist);
+        hub_angle_entry.setDouble(angleToHub);
         int countTargets = result.getTargets().size();
-        amountTargets.setNumber(countTargets);
+        amountTargets.setDouble(countTargets);
         boolean isInLine = Math.abs(angleToHub) < 7.5;
         in_line_entry.setBoolean(isInLine);
         
 
     }
     else {
-      hub_x_entry.setNumber(0);
-      hub_y_entry.setNumber(0);
-      hub_distance_entry.setNumber(0);
-      hub_angle_entry.setNumber(0);
-      amountTargets.setNumber(0);
+      hub_x_entry.setDouble(0);
+      hub_y_entry.setDouble(0);
+      hub_distance_entry.setDouble(0);
+      hub_angle_entry.setDouble(0);
+      amountTargets.setDouble(0);
       in_line_entry.setBoolean(false);
       angleToHub = 0;
 

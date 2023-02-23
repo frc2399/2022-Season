@@ -1,19 +1,15 @@
 package frc.robot;
 
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveTrain;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.hal.can.CANStatus;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +33,7 @@ public class Robot extends TimedRobot {
     public static NetworkTableEntry ta = table.getEntry("ta");
     
     final ShuffleboardTab tab = Shuffleboard.getTab("Motor Diag");
-    final NetworkTableEntry pdp0Amps = tab.add("PDP 0 amps", 0).getEntry();
+    final GenericEntry pdp0Amps = tab.add("PDP 0 amps", 0).getEntry();
 
 
     /**
