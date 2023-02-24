@@ -177,7 +177,7 @@ public class Constants {
     public static final class IndexerConstants {
         public static final int INDEXER_MOTOR_ID = 2;
         public static final double INDEXERSPEED = 0.5;
-        public static final int LIMIT_SWITCH_ID = 0;
+        public static final int LIMIT_SWITCH_ID = 5;
         
         public static final int INDEXER_SLEW = 5;
     }
@@ -215,6 +215,17 @@ public class Constants {
         // public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
 
         public static final double ANGLE_ERROR_TOLERANCE = 3; 
+    }
+
+    public static final class LEDConstants {
+        public static final int RED_CHANNEL = 0;
+        public static final int GREEN_CHANNEL = 1;
+        public static final int BLUE_CHANNEL = 2;
+        public static final int WHITE_CHANNEL = 3;
+        public static final int[] blue2399 = {0, 100, 255};
+        public static final int[] pink2399 = {255, 50, 200};
+        public static final double WAIT_TIME = 1.0;
+
     }
 }
 
