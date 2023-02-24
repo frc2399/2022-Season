@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.ComplexWidget;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -66,6 +67,7 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.PhotonLimelight;
 import frc.robot.subsystems.Shifter;
 import frc.robot.subsystems.Shooter;
@@ -93,6 +95,7 @@ public class RobotContainer {
     public final static Indexer m_indexer = new Indexer();
     public static final Climber m_climber = new Climber();
     public final static PhotonLimelight m_photonLimelight = new PhotonLimelight();
+    public static LED led = new LED();
 
     // Joysticks
     public static Joystick JOYSTICK = new Joystick(JoystickConstants.JOYSTICK_PORT);
