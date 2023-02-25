@@ -18,7 +18,7 @@ public class ArcadeDriveCmd extends CommandBase {
 
     private final DriveTrain driveSubsystem;
     private final Supplier<Double> speedFunction, turnFunction;
-    public static boolean isSlow = false;
+    public static boolean isSlow = true;
 
     public ArcadeDriveCmd(DriveTrain driveSubsystem, //
             Supplier<Double> speedFunction, Supplier<Double> turnFunction) {
@@ -66,14 +66,17 @@ public class ArcadeDriveCmd extends CommandBase {
 
         double left = realTimeSpeed + realTimeTurn;
         double right = realTimeSpeed - realTimeTurn;
-        if (isSlow)
-        {        
+
+        // removed option for fast/normal speed mode
+
+        //if (isSlow)
+        //{        
             this.driveSubsystem.setMotors(left * DriveConstants.SLOW_SPEED_FRACTION, right * DriveConstants.SLOW_SPEED_FRACTION);
-        }
-        else
-        {
-            this.driveSubsystem.setMotors(left, right);
-        }
+        //}
+        // else
+        // {
+        //     this.driveSubsystem.setMotors(left, right);
+        // }
 
         leftSpeed.setDouble(left);
         rightSpeed.setDouble(right);
@@ -85,7 +88,7 @@ public class ArcadeDriveCmd extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         System.out.println("ArcadeDriveCmd ended!");
-        isSlow = false;
+        // isSlow = false;
     }
 
     @Override
