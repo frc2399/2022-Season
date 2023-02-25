@@ -224,7 +224,7 @@ public class Constants {
         public static final int WHITE_CHANNEL = 3;
         public static final int[] blue2399 = {0, 100, 255};
         public static final int[] pink2399 = {255, 50, 200};
-        public static final double WAIT_TIME = 1.0;
+        public static final double WAIT_TIME = 2.0;
 
     }
 }
