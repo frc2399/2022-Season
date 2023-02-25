@@ -110,7 +110,7 @@ public class Constants {
 
 
 
-        public static final double FORWARD_DEADBAND = 0.05;
+        public static final double FORWARD_DEADBAND = 0.1;
         public static final double TURN_DEADBAND = 0.1;
 
         public static final double DRIVE_SLEW_RATE = 5.0;
