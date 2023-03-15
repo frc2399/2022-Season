@@ -4,6 +4,8 @@ import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -44,6 +46,11 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
         // autonomous chooser on the dashboard.
+        DataLogManager.start();
+
+        // Record both DS control and joystick data
+        DriverStation.startDataLog(DataLogManager.getLog());
+
         m_robotContainer = RobotContainer.getInstance();
         // HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         // SmartDashboard.putNumber("Error Tolerance", 3);
